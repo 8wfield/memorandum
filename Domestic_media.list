@@ -6,8 +6,8 @@
 # 私密影院
 DOMAIN-SUFFIX, simiyy.com
 # 如意资源
-DOMAIN-SUFFIX,ryzyw.com,DIRECT
-DOMAIN-KEYWORD,ryplay,DIRECT
+DOMAIN-SUFFIX, ryzyw.com
+DOMAIN-KEYWORD, ryplay
 # 奈飞工厂
 DOMAIN-SUFFIX, netflixgc.com
 # 天空资源
