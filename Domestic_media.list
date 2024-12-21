@@ -76,7 +76,7 @@ DOMAIN, metrics.icloud.com
 # 小海报
 DOMAIN-SUFFIX, doubanio.com
 # 大封面
-DOMAIN-SUFFIX, themoviedb.org
+DOMAIN-SUFFIX, tmdb.org
 # 弹幕
 DOMAIN, dandanplay.net
 
