@@ -1,9 +1,10 @@
 #规则名称：MoviesDirect 直连影视库
 
 DOMAIN,rytv.tv
+DOMAIN,tv.yydsys.top
 DOMAIN-KEYWORD,wogg
 DOMAIN-KEYWORD,mogg
-DOMAIN-KEYWORD,moucpan
+DOMAIN-KEYWORD,muoupan
 DOMAIN-KEYWORD,ryplay
 DOMAIN-KEYWORD,mucpan
 
