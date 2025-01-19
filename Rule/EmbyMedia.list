@@ -4,13 +4,14 @@
 # 规则名称: Emby
 # 规则统计: 166
 
-DOMAIN， aca.misakaf.org
-DOMAIN， cc.coemn.com
-DOMAIN， cminf.sfcat.link
-DOMAIN， cuinf.sfcat.link
-DOMAIN， notnetflix.cos.cat
-DOMAIN， oversea.alphatvapp.top
+DOMAIN, aca.misakaf.org
+DOMAIN, cc.coemn.com
+DOMAIN, cminf.sfcat.link
+DOMAIN, cuinf.sfcat.link
+DOMAIN, notnetflix.cos.cat
+DOMAIN, oversea.alphatvapp.top
 DOMAIN-SUFFIX, 123456.al
+DOMAIN-SUFFIX, 28.al
 DOMAIN-SUFFIX, 16bit.cfd
 DOMAIN-SUFFIX, 20120714.xyz
 DOMAIN-SUFFIX, 252798.xyz
@@ -130,7 +131,6 @@ DOMAIN-SUFFIX, nivod4.tv
 DOMAIN-SUFFIX, ntrrr.am.sb
 DOMAIN-SUFFIX, nvidia.rip
 DOMAIN-SUFFIX, ohhhh.org
-DOMAIN-SUFFIX, ouonet.org
 DOMAIN-SUFFIX, pilipili.club
 DOMAIN-SUFFIX, pilipiliultra.com
 DOMAIN-SUFFIX, pilipiliultra.top
