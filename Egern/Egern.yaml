@@ -3,9 +3,6 @@
    # 更新时间 2025年2月2日
 
 
-   #  TUN模式
-vif_only: true
-
    # TUN模式
 vif_only: true
    # 劫持 DNS 服务器
