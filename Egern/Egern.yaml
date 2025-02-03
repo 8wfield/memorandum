@@ -1,5 +1,33 @@
+# 8wfield 自用配置
+# URL:https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern.yaml
+# 时间:2025-2-3 20:00
+
+
+# > TUN模式
 vif_only: true
-dns: {}
+# > 劫持 DNS 服务器
+hijack_dns:
+- '*:53'
+# > 自定义MaxMind数据库
+geoip_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.country-only-cn-private.mmdb
+# > 代理延迟测试
+proxy_latency_test_url: http://www.gstatic.com/generate_204
+# > 直连延迟测试
+direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
+dns:
+  # DNS 引导器：用于解析上游DNS(DoT、DoH、DoQ)，默认 system
+  bootstrap:
+    - system
+  upstreams:
+    # 国内公共 DNS
+    Domestic-DNS:
+    - 223.5.5.5
+    - 119.29.29.29
+  # DNS 转发规则
+  forward:
+  - wildcard: # 通配符规则
+      match: "*"
+      value: Domestic-DNS
 policy_groups:
 - external:
     name: Egern
