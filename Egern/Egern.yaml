@@ -15,15 +15,15 @@ proxy_latency_test_url: http://www.gstatic.com/generate_204
 # > 直连延迟测试
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 dns:
-  # DNS 引导器：用于解析上游DNS(DoT、DoH、DoQ)，默认 system
+# > DNS 引导器：用于解析上游DNS(DoT、DoH、DoQ)，默认 system
   bootstrap:
     - system
   upstreams:
-    # 国内公共 DNS
+# > 国内公共 DNS
     Domestic-DNS:
     - 223.5.5.5
-    - 119.29.29.29
-  # DNS 转发规则
+    - 119.29.29.2
+# > DNS 转发规则
   forward:
   - wildcard: # 通配符规则
       match: "*"
