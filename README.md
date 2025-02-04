@@ -9,3 +9,8 @@
 ### Egern配置：
 
 * [Egern.yaml](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern.yaml)
+
+### 推荐可莉的Loon资源库|插件|脚本:
+
+* [可莉资源库](https://github.com/luestr/ProxyResource)
+
