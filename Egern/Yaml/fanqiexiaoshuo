@@ -1,0 +1,87 @@
+name: 番茄小说去广告
+description: 移除番茄小说开屏广告、移除文章底部和章末广告、移除听书页面广告、移除悬浮部件和底栏多余的福利标签。
+open_url: https://apps.apple.com/app/id1468454200
+author: 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
+icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DragonRead.png
+rules:
+- url_regex:
+    match: '"^http:\/\/p\d+-be-pack-sign\.pglstatp-toutiao\.com\/(ad-app-package|web\.business\.image)\/"'
+    policy: REJECT
+- domain:
+    match: mon.zijieapi.com
+    policy: REJECT
+- domain:
+    match: lf-ad-ies.bytecdn.cn
+    policy: REJECT
+- domain:
+    match: i.snssdk.com
+    policy: REJECT
+- domain:
+    match: is.snssdk.com
+    policy: REJECT
+- domain:
+    match: bds.snssdk.com
+    policy: REJECT
+- domain:
+    match: dm.bytedance.com
+    policy: REJECT
+- domain:
+    match: dm.pstatp.com
+    policy: REJECT
+- domain:
+    match: dm.toutiao.com
+    policy: REJECT
+- domain:
+    match: log.snssdk.com
+    policy: REJECT
+- domain:
+    match: s3a.pstatp.com
+    policy: REJECT
+- domain:
+    match: sdfp.snssdk.com
+    policy: REJECT
+- domain:
+    match: tosv.boe.byted.org
+    policy: REJECT
+- domain:
+    match: tosv.byted.org
+    policy: REJECT
+- domain:
+    match: extlog.snssdk.com
+    policy: REJECT
+- domain:
+    match: mssdk-bu.bytedance.com
+    policy: REJECT
+- domain:
+    match: toblog.ctobsnssdk.com
+    policy: REJECT
+- domain:
+    match: mssdk.volces.com
+    policy: REJECT
+- domain:
+    match: pangolin.snssdk.com
+    policy: REJECT
+- domain:
+    match: gromore.pangolin-sdk-toutiao.com
+    policy: REJECT
+- domain:
+    match: ether-pack.pangolin-sdk-toutiao.com
+    policy: REJECT
+- domain_keyword:
+    match: -ad-sign.byteimg.com
+    policy: REJECT
+- domain_keyword:
+    match: api-access.pangolin-sdk-toutiao
+    policy: REJECT
+- domain_keyword:
+    match: log-api.pangolin-sdk-toutiao
+    policy: REJECT
+- domain_keyword:
+    match: -ad.byteoversea.com
+    policy: REJECT
+- domain_keyword:
+    match: video-cn.snssdk.com
+    policy: REJECT
+- domain_keyword:
+    match: asiad.byteactivity
+    policy: REJECT
