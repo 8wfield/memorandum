@@ -1,5 +1,5 @@
-name: GitHub
-author: blackmatrix7
+#name: GitHub
+#author: blackmatrix7
 
 domain_suffix_set:
   - atom.io
