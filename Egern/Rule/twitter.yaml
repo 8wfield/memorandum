@@ -1,6 +1,7 @@
 #NAME: Twitter
 #AUTHOR: blackmatrix7
 
+no_resolve: true
 domain_keyword_set:
   - twitter
 
