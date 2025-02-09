@@ -1,7 +1,7 @@
-# NAME: GitHub
-# AUTHOR: blackmatrix7
+name: GitHub
+author: blackmatrix7
 
-domain_suffix:
+domain_suffix_set:
   - atom.io
   - dependabot.com
   - ghcr.io
@@ -32,5 +32,5 @@ domain_suffix:
   - repo.new
   - thegithubshop.com
 
-domain_keyword:
+domain_keyword_set:
   - github
