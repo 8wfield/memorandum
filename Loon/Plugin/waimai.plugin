@@ -1,0 +1,19 @@
+[General]
+name = "歪麦霸王餐自动签到"
+desc = "每天自动签到领取饭票"
+author = "你的名字"
+version = "1.0"
+
+[Script]
+# ✅ 自动签到任务（每天 08:00 运行）
+歪麦霸王餐签到 = type=cron, script-path=https://raw.githubusercontent.com/8wfield/memorandum/main/Loon/js/waimai-signin.js, cronexp=0 8 * * *, wake-system=true, timeout=60
+
+# ✅ 获取 Token（可在 Loon 插件设置中开启/关闭）
+歪麦霸王餐获取Token = type=http-request, pattern=^https:\/\/api\.waimai\.com\/user\/info, requires-body=1， script-path=https://raw.githubusercontent.com/8wfield/memorandum/main/Loon/js/waimai-token.js, enabled=true
+
+[MitM]
+hostname = api.waimai.com
+
+[Panel]
+# ✅ 插件 UI 配置（显示 Token 状态 & 开关获取 Token）
+"歪麦霸王餐" = script-name=歪麦霸王餐获取Token, update-interval=86400， style=switch, label="Token 获取", default=on
