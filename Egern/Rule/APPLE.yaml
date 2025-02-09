@@ -1,6 +1,7 @@
 #name: Apple
 #author: https://github.com/sooyaaabo/Loon/blob/main/Rule/Apple.list
 
+no_resolve: true
 domain_set:
   - albert.apple.com
   - captive.apple.com
