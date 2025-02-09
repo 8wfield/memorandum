@@ -1,6 +1,7 @@
 #NAME: OpenAI
 #AUTHOR: blackmatrix7
 
+no_resolve: true
 domain_set:
   - browser-intake-datadoghq.com
   - chat.openai.com.cdn.cloudflare.net
