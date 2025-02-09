@@ -1,0 +1,10 @@
+#name: Instagram
+#author: blackmatrix7
+
+domain_suffix_set:
+  - cdninstagram.com
+  - instagr.am
+  - instagram.com
+
+domain_keyword_set:
+  - instagram
