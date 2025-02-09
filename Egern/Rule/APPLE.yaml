@@ -1,34 +1,7 @@
-#参考：https://github.com/sooyaaabo/Loon/blob/main/Rule/Apple.list
+#name: Apple
+#author: https://github.com/sooyaaabo/Loon/blob/main/Rule/Apple.list
 
-domain_suffix:
-  - aaplimg.com
-  - apple-mapkit.com
-  - apple-support.akadns.net
-  - apple.co
-  - apple.com
-  - apple.com.cn
-  - apple.com.edgekey.net
-  - itunes.apple.com
-  - apps.apple.com
-  - mzstatic.com
-  - apple-cloudkit.com
-  - apple-livephotoskit.com
-  - apzones.com
-  - cdn-apple.com
-  - gc.apple.com
-  - icloud.com
-  - icloud.com.cn
-  - icloud.apple.com
-  - icloud-content.com
-  - iwork.apple.com
-  - smoot.apple.com
-
-domain_keyword:
-  - apple.com.akadns.net
-  - apple.com.edgekey.net
-  - apple-support.akadns.net
-
-domain:
+domain_set:
   - albert.apple.com
   - captive.apple.com
   - gs.apple.com
@@ -87,14 +60,42 @@ domain:
   - app-site-association.cdn-apple.com
   - app-site-association.networking.apple
 
-ip_cidr:
+domain_keyword_set:
+  - apple.com.akadns.net
+  - apple.com.edgekey.net
+  - apple-support.akadns.net
+
+domain_suffix_set:
+  - aaplimg.com
+  - apple-mapkit.com
+  - apple-support.akadns.net
+  - apple.co
+  - apple.com
+  - apple.com.cn
+  - apple.com.edgekey.net
+  - itunes.apple.com
+  - apps.apple.com
+  - mzstatic.com
+  - apple-cloudkit.com
+  - apple-livephotoskit.com
+  - apzones.com
+  - cdn-apple.com
+  - gc.apple.com
+  - icloud.com
+  - icloud.com.cn
+  - icloud.apple.com
+  - icloud-content.com
+  - iwork.apple.com
+  - smoot.apple.com
+
+ip_cidr_set:
   - 17.249.0.0/16
   - 17.252.0.0/16
   - 17.57.144.0/22
   - 17.188.128.0/18
   - 17.188.20.0/23
 
-ip_cidr6:
+ip_cidr6_set:
   - 2620:149:a44::/48
   - 2403:300:a42::/48
   - 2403:300:a51::/48
