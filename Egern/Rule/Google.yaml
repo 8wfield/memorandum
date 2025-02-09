@@ -1,6 +1,7 @@
 #Name: Google
 #AUTHOR: blackmatrix7
 
+no_resolve: true
 domain_set:
 - voice.telephony.goog
 domain_keyword_set:
