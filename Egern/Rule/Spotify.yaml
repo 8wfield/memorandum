@@ -1,6 +1,7 @@
 #name: Spotify
 #author: blackmatrix7
 
+no_resolve: true
 domain_set:
   - audio4-ak-spotify-com.akamaized.net
   - cdn-spotify-experiments.conductrics.com
