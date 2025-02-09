@@ -1,29 +1,32 @@
 #!name=歪麦霸王餐自动签到
-#!desc=每天自动签到领取饭票
-#!author=Your Name
-#!homepage=https://yourhomepage.com
+#!desc=每天自动签到领取饭票，需要先获取Token
+#!author=8wfield
+#!homepage=https://raw.githubusercontent.com/8wfield/memorandum/main/Loon/waimai.plugin
 #!icon=https://youriconurl.com/icon.png
-#!system=iOS
-#!system_version=15
-#!loon_version=3.2.1(372)
-#!tag=签到,自动化
+#!tag=功能增强
+#!system=
+#!system_version=
+#!loon_version=3.2.6(821)
+#!date=2025-02-10 12:00
 
-[General]
-bypass-tun = 192.168.0.0/16
-skip-proxy = 10.0.0.0/8
-real-ip = true
-dns-server = 8.8.8.8, 8.8.4.4
+# 说明：
+# 1. 使用前需获取 `Token` 并填入插件设置中
+# 2. Token 获取方法：
+#    - 在 Loon 代理模式下打开歪麦 APP
+#    - 在 HTTP 请求中找到 `api.waimai.com` 相关请求
+#    - 提取 `Authorization` 头部内容作为 Token
+# 3. 默认每日早上 8:00 执行签到
+
+[Argument]
+waimaiToken = input, "", tag=歪麦 Token, desc=输入歪麦授权 Token（Authorization）
+cron-waimai = input, "0 8 * * *", tag=签到时间, desc=输入 cron 表达式来定时运行签到任务
 
 [Script]
-# 自动签到任务（每天 08:00 运行）
-歪麦霸王餐签到 = type=cron, script-path=https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Loon/js/waimai-signin.js, cronexp=0 8 * * *, wake-system=true, timeout=60
+# 自动签到任务
+cron {cron-waimai} script-path=https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Loon/js/waimai-signin.js, timeout=60, tag=歪麦霸王餐签到, argument=[{waimaiToken}]
 
-# 获取 Token（可在 Loon 插件设置中开启/关闭）
-歪麦霸王餐获取Token = type=http-request, pattern=^https:\/\/api\.waimai\.com\/user\/info, requires-body=1, script-path=https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Loon/js/waimai-token.js, enabled=true
+# 获取 Token
+http-request ^https:\/\/api\.waimai\.com\/user\/info script-path=https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Loon/js/waimai-token.js, requires-body=true, tag=歪麦 Token 获取
 
 [MitM]
 hostname = api.waimai.com
-
-[Panel]
-# 插件 UI 配置（显示 Token 获取开关）
-"Token 获取开关" = script-name=歪麦霸王餐获取Token, update-interval=86400, style=switch, label="Token 获取", default=on
