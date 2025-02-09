@@ -1,6 +1,7 @@
 #name: YouTube
 #author: blackmatrix7
 
+no_resolve: true
 domain_suffix_set:
   - ggpht.cn
   - ggpht.com
