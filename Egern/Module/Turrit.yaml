@@ -1,8 +1,5 @@
-#! name：Turrit
-#! 描述：Telegram 外部链接跳转至 Turrit
-#! 作者：8wField
-#! 标签：功能增强
-#! 更新日期：2025-02-12 19:00
+#!name = Turrit
+#!desc = Telegram外部链接跳转至Turrit
 
 url_rewrites:
   - match: "(https://)?t\\.me/(.+)"
