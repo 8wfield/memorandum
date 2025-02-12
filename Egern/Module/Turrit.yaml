@@ -1,10 +1,9 @@
-#!name = Turrit
-#!desc = Telegram外部链接跳转至Turrit
+#!name=Turrit
+#!desc=Telegram外部链接跳转至Turrit
+#!author=FieldW18
 
-url_rewrites:
-  - match: "(https://)?t\\.me/(.+)"
-    location: "turrit://resolve?domain=$2"
-    status_code: 307
-mitm:
-  hostnames:
-    - "t.me"
+[URL Rewrite]
+^https?:\/\/t\.me\/(.+) turrit://resolve?domain=$1 307
+
+[MITM]
+hostname = t.me
