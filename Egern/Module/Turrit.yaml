@@ -1,14 +1,13 @@
-# 模块名称：Turrit
-# 描述：Telegram 外部链接跳转至 Turrit
-# 作者：8wField
-# 标签：功能增强
-# 更新日期：2025-02-12 19:00
+#! name：Turrit
+#! 描述：Telegram 外部链接跳转至 Turrit
+#! 作者：8wField
+#! 标签：功能增强
+#! 更新日期：2025-02-12 19:00
 
 url_rewrites:
   - match: "(https://)?t\\.me/(.+)"
     location: "turrit://resolve?domain=$2"
     status_code: 307
-
 mitm:
   hostnames:
     - "t.me"
