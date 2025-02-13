@@ -151,7 +151,6 @@ policy_groups:
     - 我的节点
     flatten: true
     filter: (?i)🇭🇰|香港|(\b(HK|Hong)\b)
-    tolerance: 50
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/HongKong.png
 - auto_test:
     name: 台湾优选
@@ -159,7 +158,6 @@ policy_groups:
     - 我的节点
     flatten: true
     filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)
-    tolerance: 50
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Taiwan.png
 - auto_test:
     name: 日本优选
@@ -167,7 +165,6 @@ policy_groups:
     - 我的节点
     flatten: true
     filter: (?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)
-    tolerance: 50
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Japan.png
 - auto_test:
     name: 新国优选
@@ -175,7 +172,6 @@ policy_groups:
     - 我的节点
     flatten: true
     filter: (?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)
-    tolerance: 50
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Singapore.png
 - auto_test:
     name: 美国优选
@@ -183,7 +179,6 @@ policy_groups:
     - 我的节点
     flatten: true
     filter: (?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States)\b)
-    tolerance: 50
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/UnitedStates.png
 - fallback:
     name: Final
