@@ -1,15 +1,13 @@
 # 📌 Loon & Egern 自用配置  
 
-## 🔹 Loon 自用配置  
-**下载链接：**  
-
+## 🔹 Loon 自用配置    
+```
 https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Loon/Loon.conf
-
-## 🔹 Egern 自用配置  
-**下载链接：**  
-
+```
+## 🔹 Egern 自用配置    
+```
 https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern.yaml
-
+```
 ---
 
 # 🔗 资源推荐  
