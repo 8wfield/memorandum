@@ -15,23 +15,26 @@ https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern
 * [Surge模块库](https://surge.qingr.moe)
 
 ---
-### 声明：任何机场服务都可能存在运营中断的风险，因此建议优先选择月付，以降低潜在风险。（此建议适用于所有机场服务，并非针对特定平台）
-# 自用机场推荐
-  **OuO Network**   
+## ✈️ 自用机场推荐 | **OuO Network**  
+
 [立即注册](https://login.ouonetwork.com/register?aff=g5BFenej)  
- **长期75折优惠码：`DUANG114514`**  
+🔹 **长期75折优惠码：`DUANG114514`**  
 
-**▎核心优势**  
-✅ 全专线零复用 | ✅ 全流媒体深度解锁  
-✅ 免费三网直连Emby | ✅ 节点覆盖广  
+### 🚀 核心优势  
+✅ **全专线零复用** —— 高速稳定，无拥挤  
+✅ **全流媒体深度解锁** —— 轻松观看全球资源  
+✅ **免费三网直连 Emby** —— 畅享高清影视体验  
+✅ **全球节点覆盖广** —— 低延迟，快速响应  
 
-**▎套餐选择**  
-- 小杯，月付10，流量100G
-- 中杯，月付18，流量200G
-- 大杯，月付43，流量500G
-- 超大杯，月付85，流量1000G
+### 📦 套餐选择  
+| 套餐 | 价格 | 月流量 |  
+|------|------|--------|  
+| **小杯** | ￥10/月 | 100G |  
+| **中杯** | ￥18/月 | 200G |  
+| **大杯** | ￥43/月 | 500G |  
+| **超大杯** | ￥85/月 | 1000G |  
 
-**▎联系我们**  
-[通知频道](https://t.me/OuOnotification)
-[用户群组](https://t.me/OuONetwork)
-[EMBY机器人](https://t.me/ouoemby_bot)
+### 📢 联系我们  
+📣 [通知频道](https://t.me/OuOnotification) | 💬 [用户群组](https://t.me/OuONetwork) | 🤖 [Emby 机器人](https://t.me/ouoemby_bot)  
+
+⚠ **声明**：任何机场服务均可能存在运营中断风险，建议优先选择 **月付** 以降低潜在风险。
