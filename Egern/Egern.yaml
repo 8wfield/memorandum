@@ -184,10 +184,10 @@ policy_groups:
     name: Final
     policies:
     - 香港优选
-    - 美国优选
     - 台湾优选
     - 日本优选
     - 新国优选
+    - 美国优选
     icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/Egern.png
 # > 代理分流规则
 rules:
