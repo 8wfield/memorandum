@@ -24,19 +24,19 @@ https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern
 **# OuO Network - 全专线机场**  
 [点击注册](https://login.ouonetwork.com/register?aff=g5BFenej)・**长期75折码：`DUANG114514`**  
 ━━━━━━━━━━━━━━━━━━  
-🗓️ **套餐方案**  
+ **套餐方案**  
 ▫️ 小杯 10元/100G・中杯 18元/200G  
 ▫️ 大杯 43元/500G・超大杯 85元/1000G  
 
-🚀 **核心优势**  
+ **核心优势**  
 » 全专线零复用・深度流媒体解锁  
 » 独享Emby三网直连・全天技术支持  
 » 原生IP独立资源・企业级中转链路  
 
-📞 **联系渠道**  
-TG频道・[通知公告](https://t.me/OuOnotification)  
-用户群组・[问题反馈](https://t.me/OuONetwork)  
-EMBY服务・[账号机器人](https://t.me/ouoemby_bot)
+ **联系方式**
+官方频道：[OuOnotification](https://t.me/OuOnotification)
+官方群组：[OuONetwork](https://t.me/OuONetwork)
+EMBY 账号机器人：[ouoemby_bot](https://t.me/ouoemby_bot)
 ---
 
 **⚠️ 注意事项**  
