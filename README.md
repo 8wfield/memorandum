@@ -16,12 +16,13 @@ https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern
 
 ---
 ### 声明：任何机场服务都可能存在运营中断的风险，因此建议优先选择月付，以降低潜在风险。（此建议适用于所有机场服务，并非针对特定平台）
-**# OuO Network  **  
+# 自用机场推荐
+  **OuO Network**   
 [立即注册](https://login.ouonetwork.com/register?aff=g5BFenej)  
  **长期75折优惠码：`DUANG114514`**  
 
 **▎核心优势**  
-✅ 全专线零复用 | ✅ 流媒体深度解锁  
+✅ 全专线零复用 | ✅ 全流媒体深度解锁  
 ✅ 免费三网直连Emby | ✅ 节点覆盖广  
 
 **▎套餐选择**  
