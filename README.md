@@ -13,7 +13,7 @@ https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Egern
 # 🔗 资源推荐  
 
 - [可莉资源库](https://github.com/luestr/ProxyResource) | [可莉分流库](https://github.com/luestr/ShuntRules)  
-- [Surge 模块库](https://surge.qingr.moe)  
+- [Surge模块库](https://surge.qingr.moe)  
 
 ---
 
