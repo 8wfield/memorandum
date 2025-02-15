@@ -224,7 +224,7 @@ rules:
     policy: Instagram
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/github.yaml
-    policy: Google
+    policy: GitHub
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Google.yaml
     policy: Google
