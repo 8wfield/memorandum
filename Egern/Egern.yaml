@@ -35,6 +35,7 @@ proxy_latency_test_url: http://www.gstatic.com/generate_204
 # > 直连延迟测试URL
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
+# > 路由系统服务（默认）
 compat_route: false
 include_all_networks: false
 include_apns: false
@@ -62,6 +63,8 @@ dns:
   - wildcard:
       match: '*'
       value: AliNDS
+
+# > 公网IP查询
   public_ip_lookup_url: https://ifconfig.me/ip
 
 # > 策略组配置
