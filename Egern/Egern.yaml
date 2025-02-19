@@ -82,7 +82,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Telegram.png
 - select:
     name: TikTok
@@ -92,7 +91,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/TikTok.png
 - select:
     name: ChatGPT
@@ -111,7 +109,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/YouTube.png
 - select:
     name: Twitter
@@ -121,7 +118,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Twitter.png
 - select:
     name: Spotify
@@ -131,7 +127,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Spotify.png
 - select:
     name: Instagram
@@ -143,6 +138,16 @@ policy_groups:
     - 美国优选
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Instagram.png
 - select:
+    name: Emby
+    policies:
+    - DIRECT
+    - 香港优选
+    - 台湾优选
+    - 日本优选
+    - 新国优选
+    - 美国优选
+    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby.png
+- select:
     name: GitHub
     policies:
     - 香港优选
@@ -150,7 +155,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png
 - select:
     name: Google
@@ -160,7 +164,6 @@ policy_groups:
     - 日本优选
     - 新国优选
     - 美国优选
-    flatten: false
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
 - auto_test:
     name: 香港优选
@@ -240,6 +243,9 @@ rules:
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Instagram.yaml
     policy: Instagram
+- rule_set:
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Emby.yaml
+    policy: Emby
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/github.yaml
     policy: GitHub
