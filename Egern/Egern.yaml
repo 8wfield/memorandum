@@ -232,7 +232,7 @@ rules:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/twitter.yaml
     policy: Twitter
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/ref/heads/main/Egern/Rule/OpenAI.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/OpenAI.yaml
     policy: ChatGPT
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/youtube.yaml
