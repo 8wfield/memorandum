@@ -1,0 +1,36 @@
+name: QQ
+description: QQ链接解锁，解除QQ内访问非白名单之外的地址提示停止访问该页面的限制，并移除跟踪参数。使用前需要清除QQ的缓存数据。
+open_url: https://apps.apple.com/app/id444934666
+author: 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
+icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/QQ.png
+url_rewrites:
+- match: (^https:\/\/c\.pc\.qq\.com\/middlem\.html\?pfurl=)(http.*)(&pfuin=.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/c\.pc\.qq\.com\/middlect\.html\?pfuin=.*&pfurl=)(http.*)(&gjsublevel=.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/c\.pc\.qq\.com\/middlect\.html\?iscontinue=.*pfurl=)(http.*)(&pfuin=.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/pingtas\.qq\.com\/webview\/pingd\?dm=c\.pc\.qq\.com&pvi=\d+&si=s\d+&url=\/middlem\.html\?pfurl%3d)(http.*)(%26pfuin%3d.*%26pfuin%3d.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/cgi\.connect\.qq\.com\/qqconnectopen\/get_urlinfoForQQV2\?url=)(http.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/c\.pc\.qq\.com\/index\.html\?pfurl=)(http.*)(&pfuin=.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/c\.pc\.qq\.com\/ios\.html\?url=)(http.*)(&level=.*)
+  location: $2
+  status_code: 307
+- match: (^https:\/\/pingtas\.qq\.com\/webview\/pingd\?dm=c\.pc\.qq\.com&pvi=\d+&si=s\d+&url=\/ios\.html\?url%3d)(http.*)(%26level.*%26level.*)
+  location: $2
+  status_code: 307
+mitm:
+  hostnames:
+    includes:
+    - pingtas.qq.com
+    - c.pc.qq.com
+    - cgi.connect.qq.com
