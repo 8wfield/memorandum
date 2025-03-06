@@ -1,0 +1,160 @@
+name: 哔哩哔哩去广告
+description: 过滤哔哩哔哩广告
+open_url: https://apps.apple.com/app/id736536022
+author: RuCu6[https://github.com/RuCu6], kokoryh[https://github.com/kokoryh], Maasea[https://github.com/Maasea], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
+icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/BilibiliRed.png
+rules:
+- domain:
+    match: api.biliapi.com
+    policy: REJECT
+- domain:
+    match: app.biliapi.com
+    policy: REJECT
+- domain:
+    match: api.biliapi.net
+    policy: REJECT
+- domain:
+    match: app.biliapi.net
+    policy: REJECT
+- url_regex:
+    match: '"^http:\/\/upos-sz-static\.bilivideo\.com\/ssaxcode\/\w{2}\/\w{2}\/\w{32}-1-SPLASH"'
+    policy: REJECT
+- url_regex:
+    match: '"^http:\/\/[\d\.]+:8000\/v1\/resource\/\w{32}-1-SPLASH"'
+    policy: REJECT
+url_rewrites:
+- match: (^https:\/\/live\.bilibili\.com\/\d+)(\/?\?.*)
+  location: $1
+  status_code: 302
+- match: (^https:\/\/(?:www|m)\.bilibili\.com\/video\/(?:BV\w{10}|av\d{9}))(\/?\?.*)
+  location: $1
+  status_code: 302
+map_locals:
+- match: ^https:\/\/(?:api\.bilibili\.com\/x\/mengqi\/v1\/resource|app\.bilibili\.com\/x\/resource\/peak\/download)
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.bilibili\.com\/x\/v2\/dm\/qoe\/show\?
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.bilibili\.com\/x\/vip\/ads\/materials\?
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v1\/ecommerce-user\/get_shopping_info\?
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.bilibili\.com\/x\/web-interface\/zone\?jsonp
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/app\.bilibili\.com\/x\/resource\/ip
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/app\.bilibili\.com\/x\/resource\/patch\/tab\?
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.view\.v1\.View\/TFInfo$
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.bilibili\.com\/pgc\/activity\/deliver\/material\/receive\?
+  status_code: 200
+  headers:
+    Content-Type: text/plain
+  body: '{"code":0,"data":{"closeType":"close_win","container":[],"showTime":""},"message":"success"}'
+- match: ^https:\/\/ap[ip]\.bilibili\.com\/x\/(?:resource\/(?:top\/activity|patch\/tab)|v2\/search\/square|vip\/ads\/materials)\?
+  status_code: 200
+  headers:
+    Content-Type: text/plain
+  body: '{"code":-404,"message":"-404","ttl":1,"data":null}'
+scriptings:
+- http_response:
+    name: body_rewrite_47
+    match: ^https:\/\/app\.bilibili\.com\/x\/resource\/show\/skin\?
+    script_url: https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/scripts/body-rewrite.js
+    arguments:
+      _compat.$argument: '%5B%5B%22json-del%22%2C%5B%22data.common_equip%22%5D%5D%5D'
+    timeout: 30
+    body_required: true
+- http_response:
+    name: 移除动态页面广告
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.dynamic\.v2\.Dynamic\/DynAll$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    arguments:
+      _compat.$argument: '[{showUpList}]'
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除青少年模式弹窗
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除热门话题
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.show\.v1\.Popular\/Index$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除播放页面广告 playview
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.playurl\.v1\.PlayURL\/PlayView$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除播放页面广告 playerunite
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.playerunite\.v1\.Player\/PlayViewUnite$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除播放页面广告 view
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.view\.v1\.View\/(?:View|ViewProgress|TFInfo)$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除播放页面广告 viewunite
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.viewunite\.v1\.View\/(?:View|ViewProgress|RelatesFeed)$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除交互式弹幕
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.community\.service\.dm\.v1\.DM\/(?:DmView|DmSegMobile)$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除评论区广告
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.main\.community\.reply\.v1\.Reply\/MainList$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除播放器开通会员横幅
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.pgc\.gateway\.player\.v2\.PlayURL\/PlayView$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除搜索结果广告
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.polymer\.app\.search\.v1\.Search\/SearchAll$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 移除搜索框关键词
+    match: ^https:\/\/(?:app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/master/dist/bilibili.protobuf.js
+    body_required: true
+    binary_body: true
+mitm:
+  hostnames:
+    includes:
+    - ap?.bilibili.com
+    - grpc.biliapi.net
+    - www.bilibili.com
+    - m.bilibili.com
+    - '*live.bilibili.com'
