@@ -1,8 +1,7 @@
-name: QQ
+name: QQ外部链接解锁
 description: QQ链接解锁，解除QQ内访问非白名单之外的地址提示停止访问该页面的限制，并移除跟踪参数。使用前需要清除QQ的缓存数据。
 open_url: https://apps.apple.com/app/id444934666
 author: 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
-icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/QQ.png
 url_rewrites:
 - match: (^https:\/\/c\.pc\.qq\.com\/middlem\.html\?pfurl=)(http.*)(&pfuin=.*)
   location: $2
