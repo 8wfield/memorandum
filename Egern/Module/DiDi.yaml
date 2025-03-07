@@ -1,101 +1,93 @@
 name: 滴滴出行去广告
-desc: 移除开屏广告、精简首页、底栏和我的页面。
-openUrl: https://apps.apple.com/app/id554499054
-author: ZenmoFeiShi[https://github.com/ZenmoFeiShi], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
-homepage: https://github.com/luestr/ProxyResource/blob/main/README.md
-date: 2025-03-06 14:59:35
-
+description: 移除开屏广告、精简首页、底栏和我的页面。
+open_url: https://apps.apple.com/app/id554499054
+author: ZenmoFeiShi[https://github.com/ZenmoFeiShi],可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
+icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DiDi.png
 rules:
-  - DOMAIN:
-      match: hd.xiaojukeji.com
-    action: REJECT
-
-  - DOMAIN:
-      match: gwp.xiaojukeji.com
-    action: REJECT
-
-  - and:
-      match:
-        - asn:
-            match: '45090'
-            no_resolve: true
-        - dest_port:
-            match: '25641'
-        - protocol:
-            match: tcp
+- domain:
+    match: hd.xiaojukeji.com
     policy: REJECT
-
-  - and:
-      match:
-        - asn:
-            match: '63646'
-            no_resolve: true
-        - dest_port:
-            match: '25641'
-        - protocol:
-            match: tcp
+- domain:
+    match: gwp.xiaojukeji.com
     policy: REJECT
-
-rewrites:
-  - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/getMulti\?
-    action: reject_dict
-
-  - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/xpget
-    action: reject_dict
-
-  - pattern: ^https:\/\/ct\.xiaojukeji\.com\/agent\/v3\/feeds
-    action: reject_dict
-
-  - pattern: ^https:\/\/freight\.xiaojukeji\.com\/gateway
-    action: reject_dict
-
-  - pattern: ^https:\/\/daijia\.kuaidadi\.com:443\/gateway
-    action: reject_dict
-
-  - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/mget
-    action: reject_dict
-
-  - pattern: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/fast
-    action: reject_dict
-
-  - pattern: ^https:\/\/conf\.diditaxi\.com\.cn\/dynamic\/conf
-    action: reject_dict
-
-  - pattern: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v1\/other\/slow
-    action: reject_dict
-
-  - pattern: ^https:\/\/common\.diditaxi\.com\.cn\/common\/v\d\/usercenter\/me
-    action: response_body_json_jq
-    jq: '.data.cards |= map(select(.title != "天天领福利" and .title != "金融服务" and .title != "更多服务" and .title != "企业服务" and .title != "安全中心")) | .data.cards[] |= if .tag == "wallet" then .items |= map(select(.title == "优惠券")) | if .card_type == 4 then .bottom_items |= map(select(.title == "省钱套餐" or .title == "出行里程")) else . end else . end'
-
-  - pattern: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/core
-    action: response_body_json_jq
-    jq: '.data.order_cards.nav_list_card.data |= map(select(.nav_id == "dache_anycar" or .nav_id == "driverservice" or .nav_id == "bike" or .nav_id == "carmate")) | .data.disorder_cards.bottom_nav_list.data |= map(select(.id == "v6x_home" or .id == "home_page" or .id == "user_center"))'
-
-  - pattern: ^https:\/\/api\.udache\.com\/gulfstream\/pre-sale\/v1\/other\/pGetSceneList
-    action: response_body_json_jq
-    jq: '.data.scene_list |= map(select(.text != "优惠商城")) | .data.show_data[] |= (if .scene_ids then .scene_ids |= map(select(. != "scene_coupon_mall")) else . end)'
-
-  - pattern: ^https:\/\/conf\.diditaxi\.com\.cn\/ota\/na\/yuantu\/infoList
-    action: response_body_json_jq
-    jq: '.data.disorder_cards.top_banner_card.data |= if .[0].T == "yuentu_top_banner" then .[1:] else . end'
-
-  - pattern: ^https:\/\/api\.udache\.com\/gulfstream\/passenger-center\/v2\/other\/pInTripLayout
-    action: response_body_json_jq
-    jq: '.data.order_components |= map(select(.name != "passenger_common_casper"))'
-
+- and:
+    match:
+    - asn:
+        match: '45090'
+        no_resolve: true
+    - dest_port:
+        match: '25641'
+    - protocol:
+        match: TCP
+    policy: REJECT
+- and:
+    match:
+    - asn:
+        match: '63646'
+        no_resolve: true
+    - dest_port:
+        match: '25641'
+    - protocol:
+        match: TCP
+    policy: REJECT
+map_locals:
+- match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/getMulti\?
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/xpget
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/ct\.xiaojukeji\.com\/agent\/v3\/feeds
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/freight\.xiaojukeji\.com\/gateway
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/daijia\.kuaidadi\.com:443\/gateway
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/mget
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/fast
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/conf\.diditaxi\.com\.cn\/dynamic\/conf
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v1\/other\/slow
+  status_code: 200
+  body: '{}'
+body_rewrites:
+  - response_jq:
+      match: ^https:\/\/common\.diditaxi\.com\.cn\/common\/v\d\/usercenter\/me
+      filter: .data.cards |= map(select(.title != "天天领福利" and .title != "金融服务" and .title != "更多服务" and .title != "企业服务" and .title != "安全中心")) | .data.cards[] |= if .tag == "wallet" then .items |= map(select(.title == "优惠券")) | if .card_type == 4 then .bottom_items |= map(select(.title == "省钱套餐" or .title == "出行里程")) else . end else . end
+  - response_jq:
+      match: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/core
+      filter: .data.order_cards.nav_list_card.data |= map(select(.nav_id == "dache_anycar" or .nav_id == "driverservice" or .nav_id == "bike" or .nav_id == "carmate")) | .data.disorder_cards.bottom_nav_list.data |= map(select(.id == "v6x_home" or .id == "home_page" or .id == "user_center"))
+  - response_jq:
+      match: ^https:\/\/api\.udache\.com\/gulfstream\/pre-sale\/v1\/other\/pGetSceneList
+      filter: .data.scene_list |= map(select(.text != "优惠商城")) | .data.show_data[] |= (if .scene_ids then .scene_ids |= map(select(. != "scene_coupon_mall")) else . end)
+  - response_jq:
+      match: ^https:\/\/conf\.diditaxi\.com\.cn\/ota\/na\/yuantu\/infoList
+      filter: .data.disorder_cards.top_banner_card.data |= if .[0].T == "yuentu_top_banner" then .[1:] else . end
+  - response_jq:
+      match: ^https:\/\/api\.udache\.com\/gulfstream\/passenger-center\/v2\/other\/pInTripLayout
+      filter: .data.order_components |= map(select(.name != "passenger_common_casper"))
 mitm:
-  - hostname: common.diditaxi.com.cn
-  - hostname: freight.xiaojukeji.com
-  - hostname: daijia.kuaidadi.com
-  - hostname: 162.14.157.*
-  - hostname: ct.xiaojukeji.com
-  - hostname: res.xiaojukeji.com
-  - hostname: conf.diditaxi.com.cn
-  - hostname: api.udache.com
-  - hostname: 123.207.209.*
-  - hostname: 112.53.55.225
-  - hostname: 120.241.142.*
-  - hostname: 120.241.143.*
-  - hostname: 116.85.*
-  - hostname: 139.199.240.84
+  hostnames:
+    includes:
+    - common.diditaxi.com.cn
+    - freight.xiaojukeji.com
+    - daijia.kuaidadi.com
+    - 162.14.157.*
+    - ct.xiaojukeji.com
+    - res.xiaojukeji.com
+    - conf.diditaxi.com.cn
+    - api.udache.com
+    - 123.207.209.*
+    - 112.53.55.225
+    - 120.241.142.*
+    - 120.241.143.*
+    - 116.85.*
+    - 139.199.240.84
