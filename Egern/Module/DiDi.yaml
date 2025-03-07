@@ -3,32 +3,46 @@ desc: 移除开屏广告、精简首页、底栏和我的页面。
 openUrl: https://apps.apple.com/app/id554499054
 author: ZenmoFeiShi[https://github.com/ZenmoFeiShi], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
 tag: 去广告
+system: ""
+system_version: ""
+loon_version: 3.2.4(787)
 homepage: https://github.com/luestr/ProxyResource/blob/main/README.md
+icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DiDi.png
 date: 2025-03-06 14:59:35
 
 rules:
-  - DOMAIN: hd.xiaojukeji.com
+  - DOMAIN:
+      match: hd.xiaojukeji.com
     action: REJECT
 
-  - DOMAIN: gwp.xiaojukeji.com
+  - DOMAIN:
+      match: gwp.xiaojukeji.com
     action: REJECT
 
-  - condition:
-      IP-ASN: 45090
-      no-resolve: true
-      DEST-PORT: 25641
-      PROTOCOL: TCP
-    action: REJECT
+  - and:
+      match:
+        - asn:
+            match: '45090'
+            no_resolve: true
+        - dest_port:
+            match: '25641'
+        - protocol:
+            match: tcp
+    policy: REJECT
 
-  - condition:
-      IP-ASN: 63646
-      no-resolve: true
-      DEST-PORT: 25641
-      PROTOCOL: TCP
-    action: REJECT
+  - and:
+      match:
+        - asn:
+            match: '63646'
+            no_resolve: true
+        - dest_port:
+            match: '25641'
+        - protocol:
+            match: tcp
+    policy: REJECT
 
 rewrites:
-  - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/getMulti\? 
+  - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/getMulti\?
     action: reject-dict
 
   - pattern: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/xpget
