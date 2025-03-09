@@ -29,10 +29,11 @@ jobs:
 
       - name: Create converter script
         run: |
-          cat << 'EOF' > convert.py  # 修改为 convert.py
+          cat << 'EOF' > convert.py
           import os
           import re
           import yaml
+          from yaml import SafeDumper
 
           CONVERSION_RULES = {
               "#!name": "name",
@@ -44,68 +45,154 @@ jobs:
               "#!date": "date",
           }
 
-          RULES_SECTION = {
-              "DOMAIN": "rules",
-              "URL-REGEX": "rules",
-              "AND": "rules",
-              "302": "rules",
-              "mock-response-body": "map_locals",
-              "reject-dict": "map_locals",
-              "response-body-json-del": "body_rewrites",
-              "response-body-json-jq": "body_rewrites",
-          }
+          def clean_value(value):
+              value = value.strip()
+              if value.startswith('#'):
+                  value = value[1:].strip()
+              if '»' in value:
+                  value = value.split('»')[-1].strip()
+              if '[' in value and ']' in value:
+                  authors = []
+                  for author in value.split(','):
+                      author = author.strip()
+                      name = author.split('[')[0].strip()
+                      url = author.split('[')[1].split(']')[0].strip()
+                      authors.append(f"{name}[{url}]")
+                  return ', '.join(authors)
+              return value
 
-          SCRIPT_SECTION = {
-              "http-response": "scriptings"
-          }
+          def parse_line_to_yaml(line):
+              line = line.strip()
+              if not line or line.startswith('#'):
+                  return None
 
-          MITM_SECTION = {
-              "hostname": "mitm"
-          }
+              if line.startswith("AND"):
+                  conditions = re.findall(r'\((.*?)\)', line)
+                  policy = line.split(',')[-1].strip()
+                  rule = {"and": {"match": [], "policy": policy}}
+                  for condition in conditions:
+                      if "URL-REGEX" in condition:
+                          regex = condition.split(',')[1].strip().strip('"')
+                          rule["and"]["match"].append({"url_regex": {"match": regex}})
+                      elif "USER-AGENT" in condition:
+                          ua = condition.split(',')[1].strip().strip('"')
+                          rule["and"]["match"].append({"user_agent": {"match": ua}})
+                  return rule
+
+              elif "DOMAIN" in line:
+                  parts = line.split(',')
+                  domain = parts[1].strip()
+                  policy = parts[2].strip() if len(parts) > 2 else "REJECT"
+                  return {"domain": {"match": domain, "policy": policy}}
+
+              elif "reject-dict" in line:
+                  url = line.split('reject-dict')[0].strip()
+                  return {"url": {"match": url, "policy": "reject-dict"}}
+
+              elif "response-body-json-del" in line:
+                  parts = line.split(' ', 1)
+                  url = parts[0].strip('^')
+                  keys = parts[1].split('response-body-json-del')[1].strip().split()
+                  return {"url": {"match": url, "response-body-json-del": keys}}
+
+              elif "response-body-json-jq" in line:
+                  parts = line.split(' ', 1)
+                  url = parts[0].strip('^')
+                  jq_filter = parts[1].split('response-body-json-jq')[1].strip()
+                  return {"url": {"match": url, "response-body-json-jq": jq_filter}}
+
+              elif "http-response" in line:
+                  parts = line.split(',')
+                  url = parts[0].split(' ')[1].strip()
+                  script_path = parts[1].split('=')[1].strip()
+                  tag = parts[-1].split('=')[1].strip()
+                  return {
+                      "http_response": {
+                          "match": url,
+                          "script-path": script_path,
+                          "requires-body": True,
+                          "tag": tag
+                      }
+                  }
+              return None
 
           def convert_plugin_to_yaml(plugin_content):
               yaml_data = {}
-              for line in plugin_content.splitlines():
+              lines = plugin_content.splitlines()
+              
+              meta_lines = []
+              rules_lines = []
+              scriptings_lines = []
+              mitm_lines = []
+
+              for line in lines:
                   line = line.strip()
+                  if not line:
+                      continue
+                  if any(line.startswith(key) for key in CONVERSION_RULES):
+                      meta_lines.append(line)
+                  elif "hostname =" in line:
+                      mitm_lines.append(line)
+                  elif "http-response" in line:
+                      scriptings_lines.append(line)
+                  elif line.startswith("AND") or "DOMAIN" in line or "reject-dict" in line or "response-body-json-" in line:
+                      rules_lines.append(line)
+
+              for line in meta_lines:
                   for key, new_key in CONVERSION_RULES.items():
                       if line.startswith(key):
-                          yaml_data[new_key] = line.split('»')[-1].strip()
+                          yaml_data[new_key] = clean_value(line)
+
               rules = []
-              scripts = []
-              mitm_list = []
-              for line in plugin_content.splitlines():
-                  line = line.strip()
-                  for key, section in RULES_SECTION.items():
-                      if key in line:
-                          rules.append(line)
-                  for key, section in SCRIPT_SECTION.items():
-                      if key in line:
-                          scripts.append(line)
-                  if "hostname =" in line:
-                      mitm_list = line.split('=')[-1].strip().split(',')
+              for line in rules_lines:
+                  parsed = parse_line_to_yaml(line)
+                  if parsed:
+                      rules.append(parsed)
               if rules:
                   yaml_data['rules'] = rules
-              if scripts:
-                  yaml_data['scriptings'] = scripts
-              if mitm_list:
-                  yaml_data['mitm'] = {'hostnames': {'includes': [host.strip() for host in mitm_list]}}
+
+              scriptings = []
+              for line in scriptings_lines:
+                  parsed = parse_line_to_yaml(line)
+                  if parsed:
+                      scriptings.append(parsed)
+              if scriptings:
+                  yaml_data['scriptings'] = scriptings
+
+              if mitm_lines:
+                  hosts = mitm_lines[0].split('=')[1].strip().split(',')
+                  yaml_data['mitm'] = {'hostnames': {'includes': [host.strip() for host in hosts]}}
+
               return yaml_data
+
+          class OrderedDumper(SafeDumper):
+              pass
+
+          def represent_dict_order(self, data):
+              return self.represent_mapping('tag:yaml.org,2002:map', data.items())
+
+          OrderedDumper.add_representer(dict, represent_dict_order)
 
           def main():
               plugin_dir = "Loon/Plugin/"
               yaml_dir = "Egern/Module/"
               os.makedirs(yaml_dir, exist_ok=True)
+
               for filename in os.listdir(plugin_dir):
                   if filename.endswith(".plugin"):
                       plugin_path = os.path.join(plugin_dir, filename)
                       yaml_filename = filename.replace('.plugin', '.yaml')
                       yaml_path = os.path.join(yaml_dir, yaml_filename)
+
                       try:
                           with open(plugin_path, 'r', encoding='utf-8') as f:
                               plugin_content = f.read()
+
                           yaml_data = convert_plugin_to_yaml(plugin_content)
+
                           with open(yaml_path, 'w', encoding='utf-8') as f:
-                              yaml.dump(yaml_data, f, allow_unicode=True, default_flow_style=False, indent=4)
+                              yaml.dump(yaml_data, f, Dumper=OrderedDumper, allow_unicode=True, default_flow_style=False, indent=2)
+
                           print(f"✅ 转换成功: {filename} → {yaml_filename}")
                       except Exception as e:
                           print(f"❌ 转换失败: {filename}，错误信息: {e}")
