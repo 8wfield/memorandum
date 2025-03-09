@@ -1,45 +1,34 @@
-# workflow.yml
-name: Plugin Converter Workflow
+name: Convert Loon Plugin to Egern Module
 
-# 触发条件
 on:
   push:
+    branches: [ main ]
     paths:
-      - 'Loon/Plugin/*.plugin'  # 监听 Loon/Plugin 目录下的 .plugin 文件变化
+      - 'Loon/Plugin/**.plugin'
+  workflow_dispatch:
 
-# 任务
 jobs:
-  convert-plugin:
+  convert:
     runs-on: ubuntu-latest
+    
     steps:
-      # 检出代码
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      # 设置 Python 环境
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          python-version: '3.x'
-
-      # 安装依赖（如果 convert.py 需要）
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt  # 如果有依赖文件
+          node-version: '16'
           
-      # 执行转换
-      - name: Convert Plugin to YAML
+      - name: Install Dependencies
+        run: npm install js-yaml
+        
+      - name: Convert Plugins
+        run: node convert.js
+        
+      - name: Commit Changes
         run: |
-          python convert.py \
-            --source "Loon/Plugin/*.plugin" \
-            --output "Egern/Module/" \
-            --format "yaml"
-
-      # 提交转换后的文件
-      - name: Commit Converted Files
-        run: |
-          git config --local user.name "github-actions"
-          git config --local user.email "actions@github.com"
-          git add Egern/Module/*.yaml
-          git commit -m "Auto convert .plugin to .yaml" || echo "No changes to commit"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Egern/Moudle/*.yaml
+          git commit -m "Convert Loon plugins to Egern modules" || echo "No changes to commit"
           git push
