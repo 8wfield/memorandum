@@ -1,0 +1,99 @@
+name: '!name = 拼多多'
+author: '!author = ZenmoFeiShi[https://github.com/ZenmoFeiShi], RuCu6[https://github.com/RuCu6],
+  可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]'
+tag: '!tag = 去广告'
+date: '!date = 2025.1.1'
+rules:
+- and:
+    match:
+    - url_regex:
+        match: ^http:\/\/((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?
+    - user_agent:
+        match: '*com.xunmeng.pinduoduo*'
+    policy: REJECT
+- and:
+    match:
+    - url_regex:
+        match: ^http:\/\/\[((([0-9A-Fa-f]{1
+    - user_agent:
+        match: '*com.xunmeng.pinduoduo*'
+    policy: REJECT
+- domain:
+    match: ta-a.pinduoduo.com
+    policy: REJECT
+- domain:
+    match: ta.pinduoduo.com
+    policy: REJECT
+- domain:
+    match: th-a.pinduoduo.com
+    policy: REJECT
+- domain:
+    match: th-b.pinduoduo.com
+    policy: REJECT
+- domain:
+    match: th.pinduoduo.com
+    policy: REJECT
+- domain:
+    match: titan.pinduoduo.com
+    policy: REJECT
+- url:
+    match: ^https:\/\/api\.(?:pinduoduo|yangkeduo)\.com\/api\/cappuccino\/splash\?
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/alexa\/goods\/back_up\?
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/aquarius\/hungary\/global\/homepage\?
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/brand-olay\/goods_detail\/bybt_guide
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/(?:likes|my_order_group|new_chat_group|order_express_group|personal)
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/engels\/reviews\/require\/append
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/flow\/hungary\/window\/global\/v2\?
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/zaire_biz\/chat\/resource\/get_list_data
+    policy: reject-dict
+- url:
+    match: ^https:\/\/api\.pinduoduo\.com\/search_hotquery\?
+    policy: reject-dict
+- url:
+    match: https:\/\/api\.pinduoduo\.com\/search
+    response-body-json-del:
+    - expansion
+- url:
+    match: https:\/\/api\.pinduoduo\.com\/api\/philo\/personal\/hub\?
+    response-body-json-del:
+    - monthly_card_entrance
+    - personal_center_style_v2_vo
+    - icon_set.icons
+    - icon_set.top_personal_icons
+    - title_bar_items
+- url:
+    match: https:\/\/api\.pinduoduo\.com\/api\/oak\/integration\/render
+    response-body-json-del:
+    - bottom_section_list
+    - ui.bottom_section
+    - ui.live_section.float_info
+- url:
+    match: https:\/\/api\.pinduoduo\.com\/api\/alexa\/homepage\/hub\?
+    response-body-json-jq: '''.result |= (.bottom_tabs |= map(select(.title | IN("首页",
+      "聊天", "个人中心"))) | .buffer_bottom_tabs |= map(select(.title | IN("首页", "聊天",
+      "个人中心"))) | del(.top_skin, .search_bar_hot_query, .dy_module.irregular_banner_dy))'''
+scriptings:
+- http_response:
+    match: ^https:\/\/api\.pinduoduo\.com\/api\/alexa\/homepage\/hub\?
+    script-path: 'true'
+    requires-body: true
+    tag: 精简首页
+mitm:
+  hostnames:
+    includes:
+    - api.pinduoduo.com
+    - api.yangkeduo.com
