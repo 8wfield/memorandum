@@ -1,0 +1,10 @@
+author: '#!author = NobyDa[https://github.com/NobyDa], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]'
+date: '#!date = 2025-02-04 17:00'
+mitm:
+    hostnames:
+        includes:
+        - testflight.apple.com
+name: '#!name = TestFlight'
+rules:
+- DOMAIN， testflight.apple.com, PROXY
+tag: '#!tag = 功能增强'
