@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add Egern/Moudle/*.yaml
+          git add Egern/Module/*.yaml
           git commit -m "Convert Loon plugins to Egern modules" || echo "No changes to commit"
           git push
