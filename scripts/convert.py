@@ -2,6 +2,7 @@ import os
 import re
 import yaml
 from urllib.parse import quote
+from yaml import SafeDumper
 
 # 定义转换规则
 CONVERSION_RULES = {
@@ -13,6 +14,12 @@ CONVERSION_RULES = {
     "#licon": "icon",
     "#!date": "date",
 }
+
+# 定义输出顺序
+FIELD_ORDER = [
+    "name", "description", "open_url", "author", "icon", "date", "tag",
+    "rules", "map_locals", "scriptings", "mitm"
+]
 
 def clean_value(value):
     """清理值，去除多余的标记和格式化作者信息"""
@@ -164,18 +171,27 @@ def convert_plugin_to_yaml(plugin_content):
     yaml_data['open_url'] = "https://apps.apple.com/app/id1044283059"
 
     # 按顺序组装结果
-    if meta_lines:
-        yaml_data = {k: yaml_data[k] for k in CONVERSION_RULES.values() if k in yaml_data}
-    if rules:
-        yaml_data['rules'] = rules
-    if map_locals:
-        yaml_data['map_locals'] = map_locals
-    if scriptings:
-        yaml_data['scriptings'] = scriptings
-    if mitm_lines:
-        yaml_data['mitm'] = yaml_data.pop('mitm')  # 确保 mitm 在最后
+    ordered_data = {}
+    for field in FIELD_ORDER:
+        if field in yaml_data:
+            ordered_data[field] = yaml_data[field]
+        elif field == "rules" and rules:
+            ordered_data[field] = rules
+        elif field == "map_locals" and map_locals:
+            ordered_data[field] = map_locals
+        elif field == "scriptings" and scriptings:
+            ordered_data[field] = scriptings
 
-    return yaml_data
+    return ordered_data
+
+# 自定义 YAML Dumper 以保持顺序
+class OrderedDumper(SafeDumper):
+    pass
+
+def represent_dict_order(self, data):
+    return self.represent_mapping('tag:yaml.org,2002:map', data.items())
+
+OrderedDumper.add_representer(dict, represent_dict_order)
 
 def main():
     plugin_dir = "Loon/Plugin/"
@@ -195,7 +211,7 @@ def main():
                 yaml_data = convert_plugin_to_yaml(plugin_content)
 
                 with open(yaml_path, 'w', encoding='utf-8') as f:
-                    yaml.dump(yaml_data, f, allow_unicode=True, default_flow_style=False, indent=2)
+                    yaml.dump(yaml_data, f, Dumper=OrderedDumper, allow_unicode=True, default_flow_style=False, indent=2)
 
                 print(f"✅ 转换成功: {filename} → {yaml_filename}")
             except Exception as e:
