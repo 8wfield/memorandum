@@ -1,7 +1,6 @@
 import os
 import re
 import yaml
-from urllib.parse import quote
 from yaml import SafeDumper
 
 # 定义转换规则
@@ -14,12 +13,6 @@ CONVERSION_RULES = {
     "#licon": "icon",
     "#!date": "date",
 }
-
-# 定义输出顺序
-FIELD_ORDER = [
-    "name", "description", "open_url", "author", "icon", "date", "tag",
-    "rules", "map_locals", "scriptings", "mitm"
-]
 
 def clean_value(value):
     """清理值，去除多余的标记和格式化作者信息"""
@@ -39,69 +32,68 @@ def clean_value(value):
         return ', '.join(authors)
     return value
 
-def parse_and_rule(line):
-    """解析 AND 规则为嵌套结构"""
-    conditions = re.findall(r'\((.*?)\)', line)
-    policy = line.split(',')[-1].strip()
-    
-    and_rule = {"and": {"match": [], "policy": policy}}
-    for condition in conditions:
-        if "URL-REGEX" in condition:
-            regex = condition.split(',')[1].strip().strip('"')
-            and_rule["and"]["match"].append({"url_regex": {"match": regex}})
-        elif "USER-AGENT" in condition:
-            ua = condition.split(',')[1].strip().strip('"')
-            and_rule["and"]["match"].append({"user_agent": {"match": ua}})
-    return and_rule
+def parse_line_to_yaml(line):
+    """将单行转换为 YAML 格式，仅调整语法"""
+    line = line.strip()
+    if not line or line.startswith('#'):
+        return None
 
-def parse_domain_rule(line):
-    """解析 DOMAIN 规则"""
-    parts = line.split(',')
-    domain = parts[1].strip()
-    policy = parts[2].strip() if len(parts) > 2 else "REJECT"
-    return {"domain": {"match": domain, "policy": policy}}
+    # 处理 AND 规则
+    if line.startswith("AND"):
+        conditions = re.findall(r'\((.*?)\)', line)
+        policy = line.split(',')[-1].strip()
+        rule = {"and": {"match": [], "policy": policy}}
+        for condition in conditions:
+            if "URL-REGEX" in condition:
+                regex = condition.split(',')[1].strip().strip('"')
+                rule["and"]["match"].append({"url_regex": {"match": regex}})
+            elif "USER-AGENT" in condition:
+                ua = condition.split(',')[1].strip().strip('"')
+                rule["and"]["match"].append({"user_agent": {"match": ua}})
+        return rule
 
-def parse_map_local(line):
-    """解析 reject-dict 为 map_locals"""
-    url = line.split('reject-dict')[0].strip()
-    return {"match": url, "status_code": 200, "body": "{}"}
+    # 处理 DOMAIN 规则
+    elif "DOMAIN" in line:
+        parts = line.split(',')
+        domain = parts[1].strip()
+        policy = parts[2].strip() if len(parts) > 2 else "REJECT"
+        return {"domain": {"match": domain, "policy": policy}}
 
-def parse_body_rewrite(line, is_jq=False):
-    """解析 response-body-json-del 或 response-body-json-jq"""
-    parts = line.split(' ', 1)
-    url = parts[0].strip('^')
-    if is_jq:
-        jq_filter = parts[1].split('response-body-json-jq')[1].strip()
-        args = quote(f'[["jq","{jq_filter}"]]')
-    else:
+    # 处理 reject-dict
+    elif "reject-dict" in line:
+        url = line.split('reject-dict')[0].strip()
+        return {"url": {"match": url, "policy": "reject-dict"}}
+
+    # 处理 response-body-json-del
+    elif "response-body-json-del" in line:
+        parts = line.split(' ', 1)
+        url = parts[0].strip('^')
         keys = parts[1].split('response-body-json-del')[1].strip().split()
-        args = quote(f'[["json-del",{str(keys)}]]')
-    
-    return {
-        "http_response": {
-            "name": f"body_rewrite_{hash(url) % 100}",
-            "match": url,
-            "script_url": "https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/scripts/body-rewrite.js",
-            "arguments": {"_compat.$argument": args},
-            "timeout": 30,
-            "body_required": True
-        }
-    }
+        return {"url": {"match": url, "response-body-json-del": keys}}
 
-def parse_http_response(line):
-    """解析 http-response"""
-    parts = line.split(',')
-    url = parts[0].split(' ')[1].strip()
-    script_path = parts[1].split('=')[1].strip()
-    tag = parts[-1].split('=')[1].strip()
-    return {
-        "http_response": {
-            "name": tag,
-            "match": url,
-            "script_url": script_path,
-            "body_required": True
+    # 处理 response-body-json-jq
+    elif "response-body-json-jq" in line:
+        parts = line.split(' ', 1)
+        url = parts[0].strip('^')
+        jq_filter = parts[1].split('response-body-json-jq')[1].strip()
+        return {"url": {"match": url, "response-body-json-jq": jq_filter}}
+
+    # 处理 http-response
+    elif "http-response" in line:
+        parts = line.split(',')
+        url = parts[0].split(' ')[1].strip()
+        script_path = parts[1].split('=')[1].strip()
+        tag = parts[-1].split('=')[1].strip()
+        return {
+            "http_response": {
+                "match": url,
+                "script-path": script_path,
+                "requires-body": True,
+                "tag": tag
+            }
         }
-    }
+
+    return None
 
 def convert_plugin_to_yaml(plugin_content):
     yaml_data = {}
@@ -109,13 +101,11 @@ def convert_plugin_to_yaml(plugin_content):
     
     # 按类别存储内容，保留顺序
     meta_lines = []
-    rules = []
-    map_locals = []
-    scriptings = []
+    rules_lines = []
+    scriptings_lines = []
     mitm_lines = []
 
     # 第一遍：按类别分组
-    current_section = None
     for line in lines:
         line = line.strip()
         if not line:
@@ -125,64 +115,41 @@ def convert_plugin_to_yaml(plugin_content):
             meta_lines.append(line)
         elif "hostname =" in line:
             mitm_lines.append(line)
-        elif line.startswith("AND") or "DOMAIN" in line:
-            rules.append(line)
-        elif "reject-dict" in line:
-            map_locals.append(line)
-        elif "response-body-json-del" in line or "response-body-json-jq" in line:
-            scriptings.append(line)
         elif "http-response" in line:
-            scriptings.append(line)
+            scriptings_lines.append(line)
+        elif line.startswith("AND") or "DOMAIN" in line or "reject-dict" in line or "response-body-json-" in line:
+            rules_lines.append(line)
 
-    # 第二遍：处理元信息
+    # 处理元信息
     for line in meta_lines:
         for key, new_key in CONVERSION_RULES.items():
             if line.startswith(key):
                 yaml_data[new_key] = clean_value(line)
 
-    # 第三遍：处理规则
-    for line in rules:
-        if line.startswith("AND"):
-            rules[rules.index(line)] = parse_and_rule(line)
-        elif "DOMAIN" in line:
-            rules[rules.index(line)] = parse_domain_rule(line)
+    # 处理 rules，保持原始顺序
+    rules = []
+    for line in rules_lines:
+        parsed = parse_line_to_yaml(line)
+        if parsed:
+            rules.append(parsed)
+    if rules:
+        yaml_data['rules'] = rules
 
-    # 第四遍：处理 map_locals
-    for line in map_locals:
-        map_locals[map_locals.index(line)] = parse_map_local(line)
-
-    # 第五遍：处理 scriptings
-    for line in scriptings:
-        if "response-body-json-del" in line:
-            scriptings[scriptings.index(line)] = parse_body_rewrite(line)
-        elif "response-body-json-jq" in line:
-            scriptings[scriptings.index(line)] = parse_body_rewrite(line, is_jq=True)
-        elif "http-response" in line:
-            scriptings[scriptings.index(line)] = parse_http_response(line)
+    # 处理 scriptings，保持原始顺序
+    scriptings = []
+    for line in scriptings_lines:
+        parsed = parse_line_to_yaml(line)
+        if parsed:
+            scriptings.append(parsed)
+    if scriptings:
+        yaml_data['scriptings'] = scriptings
 
     # 处理 MITM
     if mitm_lines:
         hosts = mitm_lines[0].split('=')[1].strip().split(',')
         yaml_data['mitm'] = {'hostnames': {'includes': [host.strip() for host in hosts]}}
 
-    # 添加固定的 description 和 icon
-    yaml_data['description'] = "移除开屏广告、底栏多多视频、会场入口、聊天页面精选推荐及推广，精简首页和个人中心。"
-    yaml_data['icon'] = "https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/PinDuoDuo.png"
-    yaml_data['open_url'] = "https://apps.apple.com/app/id1044283059"
-
-    # 按顺序组装结果
-    ordered_data = {}
-    for field in FIELD_ORDER:
-        if field in yaml_data:
-            ordered_data[field] = yaml_data[field]
-        elif field == "rules" and rules:
-            ordered_data[field] = rules
-        elif field == "map_locals" and map_locals:
-            ordered_data[field] = map_locals
-        elif field == "scriptings" and scriptings:
-            ordered_data[field] = scriptings
-
-    return ordered_data
+    return yaml_data
 
 # 自定义 YAML Dumper 以保持顺序
 class OrderedDumper(SafeDumper):
