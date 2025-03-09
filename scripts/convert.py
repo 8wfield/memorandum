@@ -3,7 +3,7 @@ import re
 import yaml
 from yaml import SafeDumper
 
-# 定义元信息转换规则
+# 元信息转换规则
 CONVERSION_RULES = {
     "#!name": "name",
     "#desc": "description",
@@ -15,7 +15,7 @@ CONVERSION_RULES = {
 }
 
 def clean_value(value):
-    """清理值，去除多余的标记和格式化作者信息"""
+    """清理值，去除多余标记并格式化作者信息"""
     value = value.strip()
     if value.startswith('#'):
         value = value[1:].strip()
@@ -32,7 +32,7 @@ def clean_value(value):
     return value
 
 def parse_rule(line):
-    """解析规则部分 [Rule]"""
+    """解析规则部分 [Rule]，适配不同类型规则"""
     line = line.strip()
     if not line or line.startswith('#'):
         return None
@@ -44,17 +44,33 @@ def parse_rule(line):
         policy = parts[2].strip() if len(parts) > 2 else "REJECT"
         return {"domain": {"match": domain, "policy": policy.upper()}}
 
-    # URL-REGEX ... REJECT-DICT
-    elif "URL-REGEX" in line and "REJECT-DICT" in line:
-        regex = re.search(r'URL-REGEX,\s*"([^"]+)"', line).group(1)
-        return {"url_regex": {"match": regex, "policy": "REJECT"}}
+    # URL-REGEX 重定向（如 307）
+    elif "URL-REGEX" in line and any(code in line for code in ["302", "307"]):
+        regex_match = re.search(r'URL-REGEX,\s*"([^"]+)"', line)
+        if regex_match:
+            regex = regex_match.group(1)
+            status_code = 307 if "307" in line else 302
+            target = line.split(str(status_code))[-1].strip()
+            return {
+                "match": f"^{regex}",
+                "location": target,
+                "status_code": status_code
+            }, "url_rewrites"
+
+    # URL-REGEX ... REJECT-DICT 或其他策略
+    elif "URL-REGEX" in line:
+        regex_match = re.search(r'URL-REGEX,\s*"([^"]+)"', line)
+        if regex_match:
+            regex = regex_match.group(1)
+            policy = line.split(',')[-1].strip().upper()
+            return {"url_regex": {"match": regex, "policy": policy}}
 
     # AND - 转换为脚本
     elif line.startswith("AND"):
         conditions = re.findall(r'\((.*?)\)', line)
         policy = line.split(',')[-1].strip().upper()
         script_content = []
-        match_url = ".*"  # 默认匹配所有 URL
+        match_url = ".*"
         for condition in conditions:
             if "URL-REGEX" in condition:
                 regex = condition.split(',')[1].strip().strip('"')
@@ -80,18 +96,6 @@ def parse_rule(line):
                 "binary_mode": False
             }
         }
-
-    # URL-REGEX ... 302
-    elif "302" in line:
-        regex = re.search(r'URL-REGEX,\s*"([^"]+)"', line)
-        if regex:
-            regex = regex.group(1)
-            target = line.split('302')[-1].strip()
-            return {
-                "match": regex,
-                "status_code": 302,
-                "headers": {"Location": target}
-            }, "map_locals"
     return None
 
 def parse_rewrite(line):
@@ -114,19 +118,16 @@ def parse_rewrite(line):
         url = line.split('reject-dict')[0].strip()
         return {"match": url, "status_code": 200, "body": "{}"}, "map_locals"
 
-    # response-body-json-del
-    elif "response-body-json-del" in line:
+    # response-body-json-del 或 jq
+    elif "response-body-json-" in line:
         parts = line.split(' ', 1)
         url = parts[0].strip('^')
-        fields = parts[1].split('response-body-json-del')[1].strip().split()
-        return {"response_jq": {"match": url, "filter": f"del({' '.join(fields)})"}}, "body_rewrites"
-
-    # response-body-json-jq
-    elif "response-body-json-jq" in line:
-        parts = line.split(' ', 1)
-        url = parts[0].strip('^')
-        jq_filter = parts[1].split('response-body-json-jq')[1].strip().strip("'")
-        return {"response_jq": {"match": url, "filter": jq_filter}}, "body_rewrites"
+        if "response-body-json-del" in line:
+            fields = parts[1].split('response-body-json-del')[1].strip().split()
+            return {"response_jq": {"match": url, "filter": f"del({' '.join(fields)})"}}, "body_rewrites"
+        elif "response-body-json-jq" in line:
+            jq_filter = parts[1].split('response-body-json-jq')[1].strip().strip("'")
+            return {"response_jq": {"match": url, "filter": jq_filter}}, "body_rewrites"
 
     return None, None
 
@@ -164,6 +165,7 @@ def convert_plugin_to_yaml(plugin_content):
     script_lines = []
     mitm_lines = []
 
+    # 分组解析
     for line in lines:
         line = line.strip()
         if not line:
@@ -185,13 +187,13 @@ def convert_plugin_to_yaml(plugin_content):
             if line.startswith(key):
                 yaml_data[new_key] = clean_value(line)
 
-    # 规则
+    # 规则处理
     rules = []
-    map_locals_from_rules = []
+    url_rewrites = []
     for line in rules_lines:
         parsed = parse_rule(line)
-        if isinstance(parsed, tuple):  # 302 重定向
-            map_locals_from_rules.append(parsed[0])
+        if isinstance(parsed, tuple):  # 重定向规则
+            url_rewrites.append(parsed[0])
         elif parsed:
             if "http_response" in parsed:
                 yaml_data.setdefault("scriptings", []).append(parsed)
@@ -199,10 +201,10 @@ def convert_plugin_to_yaml(plugin_content):
                 rules.append(parsed)
     if rules:
         yaml_data["rules"] = rules
-    if map_locals_from_rules:
-        yaml_data.setdefault("map_locals", []).extend(map_locals_from_rules)
+    if url_rewrites:
+        yaml_data["url_rewrites"] = url_rewrites
 
-    # 重写
+    # 重写处理
     map_locals = []
     body_rewrites = []
     for line in rewrite_lines:
@@ -212,17 +214,17 @@ def convert_plugin_to_yaml(plugin_content):
         elif parsed and section == "body_rewrites":
             body_rewrites.append(parsed)
     if map_locals:
-        yaml_data.setdefault("map_locals", []).extend(map_locals)
+        yaml_data["map_locals"] = map_locals
     if body_rewrites:
         yaml_data["body_rewrites"] = body_rewrites
 
-    # 脚本
+    # 脚本处理
     for line in script_lines:
         parsed = parse_script(line)
         if parsed:
             yaml_data.setdefault("scriptings", []).append(parsed)
 
-    # MITM
+    # MITM 处理
     if mitm_lines:
         hosts = mitm_lines[0].split('=')[1].strip().split(',')
         yaml_data["mitm"] = {"hostnames": {"includes": [host.strip() for host in hosts]}}
