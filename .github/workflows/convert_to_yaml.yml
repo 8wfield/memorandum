@@ -1,35 +1,37 @@
 name: Convert Loon Plugin to Egern Module
 
-on:
+on: 
   push:
     paths:
       - 'Loon/Plugin/*.plugin'
-  workflow_dispatch:  # 手动触发
 
 jobs:
   convert:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 确保完整的提交历史（重要）
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Convert .plugin to .yaml
-        run: |
-          python scripts/convert.py
+      - name: Run conversion script
+        run: python scripts/convert.py
 
-      - name: Commit 和 Push Changes
+      - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add Egern/Module/*.yaml
-          git diff --staged --quiet || git commit -m "Convert .plugin to .yaml"
-          git push
+          git add Egern/Module/
+          git commit -m "Convert .plugin to .yaml" || echo "No changes to commit"
+          git push origin main  # 确保这里的 `main` 替换为你的分支名
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
