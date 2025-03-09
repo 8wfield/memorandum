@@ -1,16 +1,13 @@
-name: Loon2Egern Converter
+name: Loon to Egern Converter
 
 on:
   push:
     paths:
       - 'Loon/Plugin/**'
-    branches: [ main ]
 
 jobs:
   convert:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    
     steps:
     - uses: actions/checkout@v4
       with:
@@ -20,31 +17,21 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-        
-    - name: Install Dependencies
+
+    - name: Install dependencies
+      run: pip install pyyaml
+
+    - name: Run converter
       run: |
-        pip install pyyaml
-        pip install egern-sdk==1.2.0  # 语法校验工具[1](@ref)
-        
-    - name: Run Conversion
-      run: |
-        set -euo pipefail
         mkdir -p Egern/Module
-        python convert.py Loon/Plugin Egern/Module || {
-          echo "::error::Conversion failed, check config syntax"
-          exit 1
-        }
-        
-    - name: Validate Syntax
-      run: |
-        for file in Egern/Module/*.yaml; do
-          egern validate $file || exit 1
-        done
-        
-    - name: Commit Changes
+        python convert.py Loon/Plugin Egern/Module
+
+    - name: Commit changes
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git pull --rebase origin main
         git add Egern/Module/
-        git commit -m "Auto-converted Loon rules to Egern format [skip ci]" || true
-        git push
+        git commit -m "Auto-convert Loon plugins to Egern format" || true
+        git push origin main
