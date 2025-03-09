@@ -1,0 +1,8 @@
+author: '#!author = sooyaaabo[https://github.com/sooyaaabo]'
+date: '#!date = 2025-01-01'
+mitm:
+    hostnames:
+        includes:
+        - t.me
+name: '#!name = Swiftgram'
+tag: '#!tag = 功能增强'
