@@ -4,8 +4,10 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Loon/Plugin/**.plugin'
-  workflow_dispatch:
+      - 'Loon/Plugin/**.plugin'  # 当 Loon/Plugin 下有 .plugin 文件变更时触发
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 时间 0 点（北京时间 8 点）运行
+  workflow_dispatch:  # 保留手动触发选项
 
 jobs:
   convert:
@@ -22,8 +24,33 @@ jobs:
       - name: Install Dependencies
         run: npm install js-yaml
         
-      - name: Convert Plugins
-        run: node convert.js
+      - name: Check and Convert Plugins
+        run: |
+          # 获取 Loon/Plugin 和 Egern/Module 下的文件列表
+          mkdir -p Egern/Module
+          LOON_FILES=$(ls Loon/Plugin/*.plugin 2>/dev/null || echo "")
+          MODULE_FILES=$(ls Egern/Module/*.yaml 2>/dev/null || echo "")
+          
+          # 将文件列表转为文件名（不带路径和扩展名）
+          LOON_BASENAMES=$(echo "$LOON_FILES" | xargs -n 1 basename | sed 's/\.plugin$//' | sort)
+          MODULE_BASENAMES=$(echo "$MODULE_FILES" | xargs -n 1 basename | sed 's/\.yaml$//' | sort)
+          
+          # 检查是否有需要转换的文件
+          NEEDS_CONVERSION=false
+          for LOON_FILE in $LOON_BASENAMES; do
+            if ! echo "$MODULE_BASENAMES" | grep -Fx "$LOON_FILE" > /dev/null; then
+              NEEDS_CONVERSION=true
+              break
+            fi
+          done
+          
+          # 如果有需要转换的文件，则运行转换脚本
+          if [ "$NEEDS_CONVERSION" = true ] || [ -n "$(git diff --name-only Loon/Plugin/*.plugin)" ]; then
+            echo "Detected changes or missing modules, running conversion script..."
+            node convert.js
+          else
+            echo "No new or modified plugins, or all modules are up-to-date. Skipping conversion."
+          fi
         
       - name: Commit Changes
         run: |
