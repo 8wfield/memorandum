@@ -14,25 +14,6 @@ CONVERSION_RULES = {
     "#!date": "date",
 }
 
-RULES_SECTION = {
-    "DOMAIN": "rules",
-    "URL-REGEX": "rules",
-    "AND": "rules",
-    "302": "rules",
-    "mock-response-body": "map_locals",
-    "reject-dict": "map_locals",
-    "response-body-json-del": "body_rewrites",
-    "response-body-json-jq": "body_rewrites",
-}
-
-SCRIPT_SECTION = {
-    "http-response": "scriptings"
-}
-
-MITM_SECTION = {
-    "hostname": "mitm"
-}
-
 def clean_value(value):
     """清理值，去除多余的标记和格式化作者信息"""
     value = value.strip()
@@ -53,7 +34,6 @@ def clean_value(value):
 
 def parse_and_rule(line):
     """解析 AND 规则为嵌套结构"""
-    # 提取 AND 规则中的条件和策略
     conditions = re.findall(r'\((.*?)\)', line)
     policy = line.split(',')[-1].strip()
     
@@ -92,7 +72,7 @@ def parse_body_rewrite(line, is_jq=False):
     
     return {
         "http_response": {
-            "name": f"body_rewrite_{hash(url) % 100}",  # 生成唯一名称
+            "name": f"body_rewrite_{hash(url) % 100}",
             "match": url,
             "script_url": "https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/scripts/body-rewrite.js",
             "arguments": {"_compat.$argument": args},
@@ -101,74 +81,99 @@ def parse_body_rewrite(line, is_jq=False):
         }
     }
 
+def parse_http_response(line):
+    """解析 http-response"""
+    parts = line.split(',')
+    url = parts[0].split(' ')[1].strip()
+    script_path = parts[1].split('=')[1].strip()
+    tag = parts[-1].split('=')[1].strip()
+    return {
+        "http_response": {
+            "name": tag,
+            "match": url,
+            "script_url": script_path,
+            "body_required": True
+        }
+    }
+
 def convert_plugin_to_yaml(plugin_content):
     yaml_data = {}
+    lines = plugin_content.splitlines()
+    
+    # 按类别存储内容，保留顺序
+    meta_lines = []
+    rules = []
+    map_locals = []
+    scriptings = []
+    mitm_lines = []
 
-    # 解析元信息
-    for line in plugin_content.splitlines():
+    # 第一遍：按类别分组
+    current_section = None
+    for line in lines:
         line = line.strip()
+        if not line:
+            continue
+            
+        if any(line.startswith(key) for key in CONVERSION_RULES):
+            meta_lines.append(line)
+        elif "hostname =" in line:
+            mitm_lines.append(line)
+        elif line.startswith("AND") or "DOMAIN" in line:
+            rules.append(line)
+        elif "reject-dict" in line:
+            map_locals.append(line)
+        elif "response-body-json-del" in line or "response-body-json-jq" in line:
+            scriptings.append(line)
+        elif "http-response" in line:
+            scriptings.append(line)
+
+    # 第二遍：处理元信息
+    for line in meta_lines:
         for key, new_key in CONVERSION_RULES.items():
             if line.startswith(key):
                 yaml_data[new_key] = clean_value(line)
 
-    # 解析规则部分
-    rules = []
-    map_locals = []
-    scriptings = []
-
-    for line in plugin_content.splitlines():
-        line = line.strip()
-        if not line:
-            continue
-
-        # 处理 AND 规则
+    # 第三遍：处理规则
+    for line in rules:
         if line.startswith("AND"):
-            rules.append(parse_and_rule(line))
-        # 处理 DOMAIN 规则
+            rules[rules.index(line)] = parse_and_rule(line)
         elif "DOMAIN" in line:
-            rules.append(parse_domain_rule(line))
-        # 处理 reject-dict
-        elif "reject-dict" in line:
-            map_locals.append(parse_map_local(line))
-        # 处理 response-body-json-del
-        elif "response-body-json-del" in line:
-            scriptings.append(parse_body_rewrite(line))
-        # 处理 response-body-json-jq
+            rules[rules.index(line)] = parse_domain_rule(line)
+
+    # 第四遍：处理 map_locals
+    for line in map_locals:
+        map_locals[map_locals.index(line)] = parse_map_local(line)
+
+    # 第五遍：处理 scriptings
+    for line in scriptings:
+        if "response-body-json-del" in line:
+            scriptings[scriptings.index(line)] = parse_body_rewrite(line)
         elif "response-body-json-jq" in line:
-            scriptings.append(parse_body_rewrite(line, is_jq=True))
-        # 处理 http-response
+            scriptings[scriptings.index(line)] = parse_body_rewrite(line, is_jq=True)
         elif "http-response" in line:
-            parts = line.split(',')
-            url = parts[0].split(' ')[1].strip()
-            script_path = parts[1].split('=')[1].strip()
-            tag = parts[-1].split('=')[1].strip()
-            scriptings.append({
-                "http_response": {
-                    "name": tag,
-                    "match": url,
-                    "script_url": script_path,
-                    "body_required": True
-                }
-            })
+            scriptings[scriptings.index(line)] = parse_http_response(line)
 
     # 处理 MITM
-    mitm_list = re.findall(r'hostname\s*=\s*(.+)', plugin_content)
-    if mitm_list:
-        hosts = mitm_list[0].split(',')
+    if mitm_lines:
+        hosts = mitm_lines[0].split('=')[1].strip().split(',')
         yaml_data['mitm'] = {'hostnames': {'includes': [host.strip() for host in hosts]}}
 
-    # 添加清理后的 description 和 icon（示例值）
+    # 添加固定的 description 和 icon
     yaml_data['description'] = "移除开屏广告、底栏多多视频、会场入口、聊天页面精选推荐及推广，精简首页和个人中心。"
     yaml_data['icon'] = "https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/PinDuoDuo.png"
     yaml_data['open_url'] = "https://apps.apple.com/app/id1044283059"
 
-    # 合并结果
+    # 按顺序组装结果
+    if meta_lines:
+        yaml_data = {k: yaml_data[k] for k in CONVERSION_RULES.values() if k in yaml_data}
     if rules:
         yaml_data['rules'] = rules
     if map_locals:
         yaml_data['map_locals'] = map_locals
     if scriptings:
         yaml_data['scriptings'] = scriptings
+    if mitm_lines:
+        yaml_data['mitm'] = yaml_data.pop('mitm')  # 确保 mitm 在最后
 
     return yaml_data
 
