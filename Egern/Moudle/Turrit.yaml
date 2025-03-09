@@ -1,9 +1,0 @@
-meta: {}
-rules: []
-map_locals: []
-body_rewrites: []
-scriptings: []
-mitm:
-  hostnames:
-    includes:
-      - t.me
