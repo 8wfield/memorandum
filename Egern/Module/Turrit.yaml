@@ -7,3 +7,7 @@ loon_version : 3.2.5(805)
 homepage : https://github.com/sooyaaabo/Loon/blob/main/README.md
 icon : https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/Turrit.png
 date : 2025-01-01 00:00
+mitm:
+  hostnames:
+    includes:
+      - t.me

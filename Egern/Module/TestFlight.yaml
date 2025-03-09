@@ -9,3 +9,7 @@ loon_version : 3.2.6(821)
 homepage : https://github.com/sooyaaabo/Loon/blob/main/README.md
 icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/TestFlight-02.png
 date : 2025-02-04 17:00
+mitm:
+  hostnames:
+    includes:
+      - testflight.apple.com
