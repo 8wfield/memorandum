@@ -1,270 +1,50 @@
-name: Convert Loon Plugins to Egern Modules
+name: Loon2Egern Converter
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'Loon/Plugin/**'  # 只在插件目录变化时触发
-  pull_request:
-    branches: [ main ]
     paths:
       - 'Loon/Plugin/**'
-
-permissions:
-  contents: write
+    branches: [ main ]
 
 jobs:
-  convert-plugins:
+  convert:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml
-
-      - name: Create converter script
-        run: |
-          cat << 'EOF' > convert.py
-          import os
-          import re
-          import yaml
-          from yaml import SafeDumper
-
-          CONVERSION_RULES = {
-              "#!name": "name",
-              "#desc": "description",
-              "#lopenUrl": "open_url",
-              "#!author": "author",
-              "#!tag": "tag",
-              "#licon": "icon",
-              "#!date": "date",
-          }
-
-          def clean_value(value):
-              value = value.strip()
-              if value.startswith('#'):
-                  value = value[1:].strip()
-              if '»' in value:
-                  value = value.split('»')[-1].strip()
-              if '[' in value and ']' in value:
-                  authors = []
-                  for author in value.split(','):
-                      author = author.strip()
-                      name = author.split('[')[0].strip()
-                      url = author.split('[')[1].split(']')[0].strip()
-                      authors.append(f"{name}[{url}]")
-                  return ', '.join(authors)
-              return value
-
-          def parse_rule(line):
-              line = line.strip()
-              if not line or line.startswith('#'):
-                  return None
-
-              if "DOMAIN" in line:
-                  parts = line.split(',')
-                  domain = parts[1].strip()
-                  policy = parts[2].strip() if len(parts) > 2 else "REJECT"
-                  return {"domain": {"match": domain, "policy": policy}}
-
-              elif "URL-REGEX" in line and "REJECT-DICT" in line:
-                  regex = re.search(r'URL-REGEX,\s*"([^"]+)"', line).group(1)
-                  return {"url_regex": {"match": regex, "policy": "REJECT-DICT"}}
-
-              elif line.startswith("AND"):
-                  conditions = re.findall(r'\((.*?)\)', line)
-                  policy = line.split(',')[-1].strip()
-                  rule = {"and": {"match": [], "policy": policy}}
-                  for condition in conditions:
-                      if "URL-REGEX" in condition:
-                          regex = condition.split(',')[1].strip().strip('"')
-                          rule["and"]["match"].append({"url_regex": {"match": regex}})
-                      elif "USER-AGENT" in condition:
-                          ua = condition.split(',')[1].strip().strip('"')
-                          rule["and"]["match"].append({"user_agent": {"match": ua}})
-                  return rule
-
-              elif "302" in line:
-                  regex = re.search(r'URL-REGEX,\s*"([^"]+)"', line)
-                  if regex:
-                      regex = regex.group(1)
-                      target = line.split('302')[-1].strip()
-                      return {"url_regex": {"match": regex, "rewrite": {"status_code": 302, "location": target}}}
-              return None
-
-          def parse_rewrite(line):
-              line = line.strip()
-              if not line or line.startswith('#'):
-                  return None, None
-
-              if "mock-response-body" in line:
-                  regex = line.split(' ')[0].strip()
-                  status_code = re.search(r'status-code=(\d+)', line)
-                  body = re.search(r'data="([^"]+)"', line)
-                  status_code = int(status_code.group(1)) if status_code else 200
-                  body = body.group(1) if body else ""
-                  return {"match": regex, "status_code": status_code, "body": body}, "map_locals"
-
-              elif "reject-dict" in line:
-                  url = line.split('reject-dict')[0].strip()
-                  return {"match": url, "status_code": 200, "body": "{}"}, "map_locals"
-
-              elif "response-body-json-del" in line:
-                  parts = line.split(' ', 1)
-                  url = parts[0].strip('^')
-                  fields = parts[1].split('response-body-json-del')[1].strip().split()
-                  return {"response_jq": {"match": url, "filter": f"del({' '.join(fields)})"}}, "body_rewrites"
-
-              elif "response-body-json-jq" in line:
-                  parts = line.split(' ', 1)
-                  url = parts[0].strip('^')
-                  jq_filter = parts[1].split('response-body-json-jq')[1].strip().strip("'")
-                  return {"response_jq": {"match": url, "filter": jq_filter}}, "body_rewrites"
-
-              return None, None
-
-          def parse_script(line):
-              if "http-response" in line:
-                  parts = line.split(',')
-                  url = parts[0].split(' ')[1].strip()
-                  script_path = parts[1].split('=')[1].strip()
-                  requires_body = "requires-body=true" in line
-                  binary_mode = "binary-body-mode=true" in line
-                  tag = parts[-1].split('=')[1].strip() if "tag=" in line else f"script_{hash(url) % 100}"
-                  return {
-                      "http_response": {
-                          "name": tag,
-                          "match": url,
-                          "script_url": script_path,
-                          "update_interval": 86400,
-                          "timeout": 30,
-                          "max_size": 131072,
-                          "debug": False,
-                          "body_required": requires_body,
-                          "binary_mode": binary_mode
-                      }
-                  }
-              return None
-
-          def convert_plugin_to_yaml(plugin_content):
-              yaml_data = {}
-              lines = plugin_content.splitlines()
-              
-              meta_lines = []
-              rules_lines = []
-              rewrite_lines = []
-              script_lines = []
-              mitm_lines = []
-
-              for line in lines:
-                  line = line.strip()
-                  if not line:
-                      continue
-                  if any(line.startswith(key) for key in CONVERSION_RULES):
-                      meta_lines.append(line)
-                  elif "hostname =" in line:
-                      mitm_lines.append(line)
-                  elif "http-response" in line:
-                      script_lines.append(line)
-                  elif "mock-response-body" in line or "reject-dict" in line or "response-body-json-" in line:
-                      rewrite_lines.append(line)
-                  elif line.startswith("AND") or "DOMAIN" in line or "URL-REGEX" in line:
-                      rules_lines.append(line)
-
-              for line in meta_lines:
-                  for key, new_key in CONVERSION_RULES.items():
-                      if line.startswith(key):
-                          yaml_data[new_key] = clean_value(line)
-
-              rules = []
-              for line in rules_lines:
-                  parsed = parse_rule(line)
-                  if parsed:
-                      rules.append(parsed)
-              if rules:
-                  yaml_data['rules'] = rules
-
-              map_locals = []
-              body_rewrites = []
-              for line in rewrite_lines:
-                  parsed, section = parse_rewrite(line)
-                  if parsed and section == "map_locals":
-                      map_locals.append(parsed)
-                  elif parsed and section == "body_rewrites":
-                      body_rewrites.append(parsed)
-              if map_locals:
-                  yaml_data['map_locals'] = map_locals
-              if body_rewrites:
-                  yaml_data['body_rewrites'] = body_rewrites
-
-              scriptings = []
-              for line in script_lines:
-                  parsed = parse_script(line)
-                  if parsed:
-                      scriptings.append(parsed)
-              if scriptings:
-                  yaml_data['scriptings'] = scriptings
-
-              if mitm_lines:
-                  hosts = mitm_lines[0].split('=')[1].strip().split(',')
-                  yaml_data['mitm'] = {'hostnames': {'includes': [host.strip() for host in hosts]}}
-
-              return yaml_data
-
-          class OrderedDumper(SafeDumper):
-              pass
-
-          def represent_dict_order(self, data):
-              return self.represent_mapping('tag:yaml.org,2002:map', data.items())
-
-          OrderedDumper.add_representer(dict, represent_dict_order)
-
-          def main():
-              plugin_dir = "Loon/Plugin/"
-              yaml_dir = "Egern/Module/"
-              os.makedirs(yaml_dir, exist_ok=True)
-
-              for filename in os.listdir(plugin_dir):
-                  if filename.endswith(".plugin"):
-                      plugin_path = os.path.join(plugin_dir, filename)
-                      yaml_filename = filename.replace('.plugin', '.yaml')
-                      yaml_path = os.path.join(yaml_dir, yaml_filename)
-
-                      try:
-                          with open(plugin_path, 'r', encoding='utf-8') as f:
-                              plugin_content = f.read()
-
-                          yaml_data = convert_plugin_to_yaml(plugin_content)
-
-                          with open(yaml_path, 'w', encoding='utf-8') as f:
-                              yaml.dump(yaml_data, f, Dumper=OrderedDumper, allow_unicode=True, default_flow_style=False, indent=2)
-
-                          print(f"✅ 转换成功: {filename} → {yaml_filename}")
-                      except Exception as e:
-                          print(f"❌ 转换失败: {filename}，错误信息: {e}")
-
-          if __name__ == "__main__":
-              main()
-          EOF
-
-      - name: Run conversion
-        run: python convert.py
-
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
-          git add Egern/Module/*
-          git diff --staged --quiet || git commit -m "Convert Loon plugins to Egern modules"
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install Dependencies
+      run: |
+        pip install pyyaml
+        pip install egern-sdk==1.2.0  # 语法校验工具[1](@ref)
+        
+    - name: Run Conversion
+      run: |
+        set -euo pipefail
+        mkdir -p Egern/Module
+        python convert.py Loon/Plugin Egern/Module || {
+          echo "::error::Conversion failed, check config syntax"
+          exit 1
+        }
+        
+    - name: Validate Syntax
+      run: |
+        for file in Egern/Module/*.yaml; do
+          egern validate $file || exit 1
+        done
+        
+    - name: Commit Changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add Egern/Module/
+        git commit -m "Auto-converted Loon rules to Egern format [skip ci]" || true
+        git push
