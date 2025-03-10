@@ -1,0 +1,11 @@
+name: Turrit
+description: Telegram外部链接跳转至Turrit
+author: FieldW18
+url_rewrites:
+- match: ^https?:\/\/t\.me\/(.+)
+  location: turrit://resolve?domain=$1
+  status_code: 307
+mitm:
+  hostnames:
+    includes:
+    - t.me
