@@ -1,0 +1,23 @@
+name: MissAV去广告
+description: 去广告，禁弹窗，禁止失焦自动暂停
+rules:
+- domain_suffix:
+    match: creative.myavlive.com
+    policy: REJECT
+- domain_suffix:
+    match: trackwilltrk.com
+    policy: REJECT
+- domain_suffix:
+    match: tsyndicate.com
+    policy: REJECT
+scriptings:
+- http_response:
+    name: MissAV去广告
+    match: ^https:\/\/missav\.(?:ai|ws)\/(?!(build|fonts|img|js|api|cdn-cgi)\/).
+    script_url: https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/missav.html.js
+    body_required: true
+mitm:
+  hostnames:
+    includes:
+    - missav.ai
+    - missav.ws
