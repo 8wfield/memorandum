@@ -1,0 +1,104 @@
+name: 小红书去广告
+description: 过滤信息流推广，移除笔记以及评论区图片、live图及视频水印，如有异常，请先清除缓存再尝试。
+author: RuCu6[https://github.com/RuCu6], fmz200[https://github.com/fmz200]
+icon: https://raw.githubusercontent.com/mist-whisper/Lcons/refs/heads/master/App_icon/120px/RedPaper.png
+rules:
+- and:
+    match:
+    - protocol:
+        match: QUIC
+    - domain_suffix:
+        match: xiaohongshu.com
+    policy: REJECT
+body_rewrites:
+- response_regex:
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/comment\/list
+    find: red_id
+    replace: fmz200
+map_locals:
+- match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/surprisebox\/(?:get_style|open|submit_action)
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/www\.xiaohongshu\.com\/api\/marketing\/box\/trigger\?
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/guide\?
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/guide\/user_banner
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/www\.xiaohongshu\.com\/api\/sns\/(v\d\/ads\/resource|v\d\/hey\/\w+\/hey_gallery)
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/ci\.xiaohongshu\.com\/system_config\/watermark
+  status_code: 200
+  body: ''
+scriptings:
+- http_response:
+    name: 移除搜索页广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/(banner|hot)_list
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除搜索页广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/(hint|trending)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除搜索页广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/notes\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除开屏广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/system_service\/config\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除开屏广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/system_service\/splash_config
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除详情页感兴趣的人
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/widgets
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/v\d\/note\/(imagefeed|live_photo\/save)
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/v\d\/(followfeed|homefeed)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/(v2\/note\/feed|v3\/note\/videofeed)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/(v4\/note\/videofeed|v10\/note\/video\/save)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+mitm:
+  hostnames:
+    includes:
+    - edith.xiaohongshu.com
+    - www.xiaohongshu.com
+    - ci.xiaohongshu.com
+    - rec.xiaohongshu.com
