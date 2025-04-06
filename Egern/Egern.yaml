@@ -78,110 +78,120 @@ policy_groups:
 - select:
     name: Telegram
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Telegram.png
 - select:
     name: TikTok
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/TikTok.png
 - select:
     name: ChatGPT
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png
 - select:
     name: YouTube
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/YouTube.png
 - select:
     name: Twitter
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Twitter.png
 - select:
     name: Spotify
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Spotify.png
 - select:
     name: Instagram
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Instagram.png
 - select:
     name: Emby
     policies:
     - DIRECT
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby.png
 - select:
     name: GitHub
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png
 - select:
     name: Google
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
 - select:
-    name: 香港优选
+    name: 香港节点
     policies:
     - 代理节点
     flatten: true
     filter: (?i)🇭🇰|香港|(\b(HK|Hong)\b)
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/HongKong.png
 - select:
-    name: 台湾优选
+    name: 台湾节点
     policies:
     - 代理节点
     flatten: true
     filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Taiwan.png
 - select:
-    name: 日本优选
+    name: 日本节点
     policies:
     - 代理节点
     flatten: true
@@ -195,14 +205,14 @@ policy_groups:
     filter: (?i)🇰🇷|韩国|首尔|(\b(KR|Korea)\b)
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
 - select:
-    name: 新国优选
+    name: 新国节点
     policies:
     - 代理节点
     flatten: true
     filter: (?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Singapore.png
 - select:
-    name: 美国优选
+    name: 美国节点
     policies:
     - 代理节点
     flatten: true
@@ -211,11 +221,12 @@ policy_groups:
 - fallback:
     name: 兜底策略
     policies:
-    - 香港优选
-    - 台湾优选
-    - 日本优选
-    - 新国优选
-    - 美国优选
+    - 香港节点
+    - 台湾节点
+    - 日本节点
+    - 韩国节点
+    - 新国节点
+    - 美国节点
     icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/Egern.png
 
 # > 代理分流规则
