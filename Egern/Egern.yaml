@@ -50,7 +50,7 @@ dns:
 
 # > 上游DNS服务列表
   upstreams:
-    AliDNS:
+    Ali:
     - quic://dns.alidns.com:853
     Google:
     - https://dns.google/dns-query
@@ -62,18 +62,19 @@ dns:
       value: Google
   - wildcard:
       match: '*'
-      value: AliNDS
+      value: Ali
 
 # > 公网IP查询
-  public_ip_lookup_url: https://ifconfig.me/ip
+  public_ip_lookup_url: https://api.ipify.org
 
 # > 策略组配置
 policy_groups:
 - external:
-    name: 我的节点
+    name: 代理节点
     type: select
     urls:
     - “复制你的订阅链接”
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
 - select:
     name: Telegram
     policies:
@@ -165,53 +166,50 @@ policy_groups:
     - 新国优选
     - 美国优选
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
-- auto_test:
+- select:
     name: 香港优选
     policies:
-    - 我的节点
+    - 代理节点
     flatten: true
     filter: (?i)🇭🇰|香港|(\b(HK|Hong)\b)
-    tolerance: 0
-    timeout: 2
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/HongKong.png
-- auto_test:
+- select:
     name: 台湾优选
     policies:
-    - 我的节点
+    - 代理节点
     flatten: true
     filter: (?i)🇨🇳|🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)
-    tolerance: 0
-    timeout: 2
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Taiwan.png
-- auto_test:
+- select:
     name: 日本优选
     policies:
-    - 我的节点
+    - 代理节点
     flatten: true
     filter: (?i)🇯🇵|日本|东京|(\b(JP|Japan)\b)
-    tolerance: 0
-    timeout: 2
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Japan.png
-- auto_test:
+- select:
+    name: 韩国节点
+    policies:
+    - 代理节点
+    flatten: true
+    filter: (?i)🇰🇷|韩国|首尔|(\b(KR|Korea)\b)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+- select:
     name: 新国优选
     policies:
-    - 我的节点
+    - 代理节点
     flatten: true
     filter: (?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)
-    tolerance: 0
-    timeout: 2
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Singapore.png
-- auto_test:
+- select:
     name: 美国优选
     policies:
-    - 我的节点
+    - 代理节点
     flatten: true
     filter: (?i)🇺🇸|美国|洛杉矶|圣何塞|(\b(US|United States)\b)
-    tolerance: 0
-    timeout: 2
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/UnitedStates.png
 - fallback:
-    name: Final
+    name: 兜底策略
     policies:
     - 香港优选
     - 台湾优选
@@ -264,7 +262,7 @@ rules:
     no_resolve: true
     disabled: false
 - default:
-    policy: Final
+    policy: 兜底策略
 
 # > MITM配置
 mitm:
