@@ -13,7 +13,7 @@ hijack_dns:
 # > 自定义Geoip数据库URL
 geoip_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.country-only-cn-private.mmdb
 # > 自定义ASN数据库URL
-asn_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.asn
+asn_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.asn.mmdb
 
 # > 代理延迟测试URL
 proxy_latency_test_url: http://www.gstatic.com/generate_204
