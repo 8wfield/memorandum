@@ -1,9 +1,9 @@
 name: Turrit
-description: Telegram外部链接跳转至Turrit
-author: FieldW18
+description: 
+  Telegram外部链接跳转至Turrit
 url_rewrites:
 - match: ^https?:\/\/t\.me\/(.+)
-  location: turrit://resolve?domain=$1
+  location: turrit://resolve?domain=$2
   status_code: 307
 mitm:
   hostnames:
