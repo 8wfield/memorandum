@@ -235,19 +235,19 @@ policy_groups:
 # > 代理分流规则
 rules:
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/telegram.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Telegram.yaml
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/tiktok.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Tiktok.yaml
     policy: TikTok
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/twitter.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Twitter.yaml
     policy: Twitter
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/OpenAI.yaml
     policy: ChatGPT
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/youtube.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Youtube.yaml
     policy: YouTube
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Spotify.yaml
@@ -259,7 +259,7 @@ rules:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Emby.yaml
     policy: Emby
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/github.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Github.yaml
     policy: GitHub
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Google.yaml
