@@ -1,188 +1,61 @@
 name: 网易云音乐
-description: 网易云音乐全面净化
-open_url: https://apps.apple.com/app/id590338362
-author: RuCu6[https://github.com/RuCu6], Keywos[https://github.com/Keywos], qiuxiuya[https://github.com/qiuxiuya], anyehttp[https://github.com/anyehttp], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
+desc: 网易云音乐全面净化
+author: RuCu6, Keywos, qiuxiuya, anyehttp, 可莉🅥
+homepage: https://github.com/sooyaaabo/Loon/blob/main/README.md
 icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/NeteaseMusic.png
+last_updated: 2025-04-17 11:00
 compat_arguments:
-  # 底部导航栏控制
-  隐藏底部发现标签: 'ture'
-  隐藏底部漫游标签: 'ture'
-  隐藏底部笔记标签: 'ture'
-  
-  # 首页内容过滤
-  隐藏首页问候语: 'false'
+  隐藏底部发现标签: 'true'
+  隐藏底部漫游标签: 'true'
+  隐藏底部笔记标签: 'true'
+  隐藏首页问候语: 'true'
   隐藏首页排行榜: 'false'
-  隐藏首页每日推荐: 'false'
+  隐藏首页每日推荐: 'true'
   隐藏首页推荐歌单: 'false'
   隐藏首页最近常听: 'false'
-  隐藏首页雷达歌单: 'false'
-  隐藏首页音乐合伙人: 'false'
+  隐藏首页雷达歌单: 'true'
+  隐藏首页音乐合伙人: 'true'
   隐藏首页专属歌单: 'false'
   隐藏首页你的专属歌单: 'false'
-  
-  # 会员功能控制
-  启用共享会员: 'ture'
-
+  启用共享会员: 'true'
 compat_arguments_desc: |
-  布局控制参数 (true=隐藏/false=显示):
-  ├─ 底部导航: 发现/漫游/笔记标签
-  ├─ 首页模块: 问候语/排行榜/每日推荐等
-  └─ 会员功能: 共享VIP状态开关
-  参数格式: 
-  隐藏类 → [true, false] 
-  会员开关 → [true, false]
+  隐藏参数：[true, false]
+  会员参数：[true, false]
 rules:
-- domain:
-    match: iadmat.nosdn.127.net
-    policy: REJECT
-- domain:
-    match: iadmatapk.nosdn.127.net
-    policy: REJECT
-- domain:
-    match: iadmusicmat.music.126.net
-    policy: REJECT
-- domain:
-    match: iadmusicmatvideo.music.126.net
-    policy: REJECT
-- domain:
-    match: ipv4.music.163.com
-    policy: REJECT
-- domain:
-    match: ipv6.music.163.com
-    policy: REJECT
+- DOMAIN, iadmat.nosdn.127.net, REJECT
+- DOMAIN, iadmatapk.nosdn.127.net, REJECT
+- DOMAIN, iadmusicmat.music.126.net, REJECT
+- DOMAIN, iadmusicmatvideo.music.126.net, REJECT
+- DOMAIN, ipv4.music.163.com, REJECT
+- DOMAIN, ipv6.music.163.com, REJECT
 map_locals:
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:delivery\/(batch-)?deliver|moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/)
+- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ 
   status_code: 200
-  body: '{}'
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:community\/friends\/fans-group\/artist\/group\/|mine\/applet\/redpoint|music\/songshare\/text\/recommend\/|resniche\/position\/play\/new\/|resniche\/tspopup\/show|resource\/comments?\/musiciansaid\/|user\/sub\/artist)
-  status_code: 200
-  body: '{}'
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:ios\/version|mlivestream\/entrance\/playpage\/|link\/position\/show\/strategy|link\/scene\/show\/resource|v1\/content\/exposure\/comment\/banner\/)
-  status_code: 200
-  body: '{}'
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/w?eapi\/(?:activity\/bonus\/playpage\/time\/query|resource-exposure\/|search\/(?:chart\/|rcmd\/keyword\/|specialkeyword\/))
-  status_code: 200
-  body: '{}'
-- match: ^https:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/my\/podcast\/tab\/recommend
-  status_code: 200
-  body: '{}'
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/e?api\/(ocpc\/)?ad\/
-  headers:
-    Content-Type: text/plain
-  body: ''
-- match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163.com\/w?e?api\/search\/default
-  headers:
-    Content-Type: text/plain
   body: ''
 scriptings:
 - http_request:
-    name: 黑胶会员解锁核心接口
+    name: 会员解锁
     match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/.*(player\/url|entrance|\/eapi\/search\/)
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-
-- http_request:
-    name: 播放页会员歌曲解锁
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs)
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 歌曲详情解锁
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/v3\/song\/detail
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 特殊音效功能解锁
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get)
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 播放器皮肤解锁
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/playermode\/
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 搜索结果会员过滤
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page)
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 侧边栏VIP状态显示
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/vipnewcenter\/app\/resource\/newaccountpage
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 歌单VIP认证处理
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/w?e?api\/(?:homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe))
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_request:
-    name: 音质认证接口处理
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
-    body_required: false
-    binary_body: false
-
-- http_response:
-    name: 评论区广告过滤
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:batch|v2\/resource\/comment\/floor\/get)
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
-    body_required: true
-    binary_body: true
-
-- http_response:
-    name: 主页推荐内容过滤
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:homepage\/block\/page|link\/page\/rcmd\/(?:block\/resource\/multi\/refresh|resource\/show))
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+    script: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    requires-body: true
     arguments:
-      _compat.$argument: '{"PRGG":{{{隐藏首页问候语}}},"PRRK":{{{隐藏首页排行榜}}},"PRDRD":{{{隐藏首页每日推荐}}},"PRSCVPT":{{{隐藏首页推荐歌单}}},"PRST":{{{隐藏首页最近常听}}},"PRRR":{{{隐藏首页雷达歌单}}},"HMPR":{{{隐藏首页音乐合伙人}}},"PRMST":{{{隐藏首页专属歌单}}},"PRCN":{{{隐藏首页你的专属歌单}}}}'
-    body_required: true
-    binary_body: true
-
+      enable: '{{{启用共享会员}}}'
 - http_response:
-    name: 底部导航栏调整
+    name: 界面净化
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(homepage\/block\/page|link\/page\/rcmd\/(block\/resource\/multi\/refresh|resource\/show))
+    script: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+    requires-body: true
+    arguments:
+      params: '[{{{隐藏首页问候语}}},{{{隐藏首页排行榜}}},{{{隐藏首页每日推荐}}},{{{隐藏首页推荐歌单}}},{{{隐藏首页最近常听}}},{{{隐藏首页雷达歌单}}},{{{隐藏首页音乐合伙人}}},{{{隐藏首页专属歌单}}},{{{隐藏首页你的专属歌单}}}]'
+- http_response:
+    name: 底部导航
     match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/link\/home\/framework\/tab
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+    script: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+    requires-body: true
     arguments:
-      _compat.$argument: '{"MY":{{{隐藏底部漫游标签}}},"DT":{{{隐藏底部笔记标签}}},"FX":{{{隐藏底部发现标签}}}}'
-    body_required: true
-    binary_body: true
-
-- http_response:
-    name: 发现页内容过滤
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/link\/page\/discovery\/resource\/show
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
-    body_required: true
-    binary_body: true
-
-- http_response:
-    name: 个人页面布局调整
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/link\/position\/show\/resource
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
-    body_required: true
-    binary_body: true
-
-- http_response:
-    name: 关注列表净化
-    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/user\/follow\/users\/mixed\/get
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
-    body_required: true
-    binary_body: true
+      params: '[{{{隐藏底部漫游标签}}},{{{隐藏底部笔记标签}}},{{{隐藏底部发现标签}}}]'
 mitm:
   hostnames:
     includes:
-    - interface*.music.163.com
-    - ipv4.music.163.com
+    - '*.music.163.com'
+    - 'interface*.music.163.com'
