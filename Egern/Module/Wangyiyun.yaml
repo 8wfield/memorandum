@@ -1,15 +1,12 @@
 name: 网易云音乐
-description: 网易云音乐全面净化
+description: 网易云音乐全面净化解锁黑胶SVIP
 open_url: https://apps.apple.com/app/id590338362
 author: RuCu6[https://github.com/RuCu6], Keywos[https://github.com/Keywos], qiuxiuya[https://github.com/qiuxiuya], anyehttp[https://github.com/anyehttp], 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md]
 icon: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Icon/App-Icon/NeteaseMusic.png
 compat_arguments:
-  # 底部导航栏控制
   隐藏底部发现标签: 'true'
   隐藏底部漫游标签: 'ture'
   隐藏底部笔记标签: 'true'
-  
-  # 首页内容过滤
   隐藏首页问候语: 'true'
   隐藏首页排行榜: 'false'
   隐藏首页每日推荐: 'false'
@@ -19,8 +16,7 @@ compat_arguments:
   隐藏首页音乐合伙人: 'true'
   隐藏首页专属歌单: 'false'
   隐藏首页你的专属歌单: 'false'
-compat_arguments_desc: |
-  布局控制参数 (true=隐藏/false=显示):
+compat_arguments_desc: "屏蔽参数：[true, false]"
 rules:
 - domain:
     match: iadmat.nosdn.127.net
