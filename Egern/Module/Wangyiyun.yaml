@@ -17,7 +17,7 @@ compat_arguments:
   排行榜: '0'
   推荐专属歌单: '1'
   你的专属歌单: '1'
-  脚本伪vip: 'true'
+  脚本伪vip: '1'
 compat_arguments_desc: '将 # 改成任意名称即可开启对应脚本\n\n隐藏为:1/true  不隐藏为:0/false'
 icon: https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 rules:
