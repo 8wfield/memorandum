@@ -1,7 +1,7 @@
 name: 网易云音乐去广告
 description: |-
   网易云音乐去广告 - 解锁黑胶SVIP
-  作者：@Key @RuCu6 @kokoryh
+  作者：@Keywos @RuCu6 @anyehttp
 compat_arguments:
   隐藏底部标签开关↓: --
   发现: '0'
@@ -64,7 +64,7 @@ scriptings:
 - http_response:
     name: '{{{脚本伪vip}}}'
     match: ^https?:\/\/(ipv4|interface\d?)\.music\.163\.com\/e?api\/(music-vip-membership\/client\/vip\/info|vipnewcenter\/app\/resource\/newaccountpage)
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+    script_url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/vip/wyy.js
     timeout: 20
     body_required: true
     binary_body: true
