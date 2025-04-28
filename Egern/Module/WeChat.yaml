@@ -408,6 +408,24 @@ body_rewrites:
     match: ^https:\/\/saas-ad\.cloudpnr\.com\/huifuad-base-api\/api\/tactics\/ad$
     filter: delpaths([["data",2]])
 map_locals:
+- match: ^https:\/\/web\.meituan\.com\/api\/miniprogram\/my\/novelZone
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/web\.meituan\.com\/api\/miniprogram\/my\/resources
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/npay\.meituan\.com\/conch\/flow\/mypage-wallet-info
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/web\.meituan\.com\/newUser\/returnMoney\/popWindow
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/npay\.meituan\.com\/conch\/walletv3\/wechat-pop-window
+  status_code: 200
+  body: '{}'
+- match: ^https:\/\/api\.m\.jd\.com\/\?loginType=11
+  status_code: 200
+  body: '{}'
 - match: ^http:\/\/\w+\.wxs\.qq\.com\/\d+\/\d+\/(snscosdownload|snssvpdownload)\/(SH|SZ)\/reserved\/\w+
   status_code: 200
   body: '{}'
@@ -1052,6 +1070,9 @@ scriptings:
 mitm:
   hostnames:
     includes:
+    - wx.17u.cn
+    - web.meituan.com
+    - npay.meituan.com
     - mp.weixin.qq.com
     - 3pp.starbucks.com.cn
     - aag.enmonster.com
