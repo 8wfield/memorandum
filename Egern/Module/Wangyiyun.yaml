@@ -1,6 +1,6 @@
-name: 网易云
+name: 网易云音乐去广告
 description: |-
-  网易云去广告 - 解锁黑胶SVIP
+  网易云音乐去广告 - 解锁黑胶SVIP
   作者：@Key @RuCu6 @kokoryh
 compat_arguments:
   隐藏底部标签开关↓: --
