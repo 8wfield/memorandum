@@ -1,4 +1,4 @@
-name: 网易云音乐去广告
+/name: 网易云音乐去广告
 description: |-
   网易云音乐去广告 - 解锁黑胶SVIP
   作者：@Keywos @RuCu6
@@ -62,7 +62,7 @@ scriptings:
     body_required: true
     binary_body: true
 - http_response:
-    name: '{{{脚本伪vip}}}'
+    name: 脚本伪vip
     match: ^https?:\/\/(ipv4|interface\d?)\.music\.163\.com\/e?api\/(music-vip-membership\/client\/vip\/info|vipnewcenter\/app\/resource\/newaccountpage)
     script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
     timeout: 20
