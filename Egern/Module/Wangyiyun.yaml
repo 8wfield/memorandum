@@ -1,7 +1,7 @@
 name: 网易云音乐去广告
 description: |-
   网易云音乐去广告 - 解锁黑胶SVIP
-  作者：@Keywos @RuCu6
+  作者：@Keywos @RuCu6 @anyehttp
 compat_arguments:
   隐藏底部标签开关↓: --
   发现: '0'
@@ -17,7 +17,7 @@ compat_arguments:
   排行榜: '0'
   推荐专属歌单: '1'
   你的专属歌单: '1'
-  脚本伪vip: '1'
+  共享会员: '#'
 compat_arguments_desc: '将 # 改成任意名称即可开启对应脚本\n\n隐藏为:1/true  不隐藏为:0/false'
 icon: https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
 rules:
@@ -61,13 +61,53 @@ scriptings:
     timeout: 20
     body_required: true
     binary_body: true
-- http_response:
-    name: 脚本伪vip
-    match: ^https?:\/\/(ipv4|interface\d?)\.music\.163\.com\/e?api\/(music-vip-membership\/client\/vip\/info|vipnewcenter\/app\/resource\/newaccountpage)
-    script_url: https://raw.githubusercontent.com/Keywos/rule/main/script/wy/js/wyres.js
+- http_request:
+    name: 黑胶会员
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/.*(player\/url|entrance|\/eapi\/search\/)
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 60
+- http_request:
+    name: 播放会员歌曲
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs)
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
     timeout: 20
-    body_required: true
-    binary_body: true
+- http_request:
+    name: 播放会员歌曲
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/v3\/song\/detail
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 播放会员歌曲
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get)
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 播放器会员皮肤
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/playermode\/
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 搜索结果会员歌曲
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page)
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 侧边栏会员等级
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/vipnewcenter\/app\/resource\/newaccountpage
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 歌单列表会员认证
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/w?e?api\/(?:homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe))
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    timeout: 20
+- http_request:
+    name: 会员认证
+    match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/CloudMusicVIP.js
+    arguments:
+      _compat.$argument: '{"Music163_VIP_Shared":"{{{共享会员}}}"}'
+    timeout: 20
 - http_response:
     name: 网易云音乐
     match: ^https?:\/\/(ipv4|interface\d?)\.music\.163\.com\/e?api\/link\/home\/framework\/tab
