@@ -1,5 +1,7 @@
-name: 去广告 - 网易云音乐
-description: 可自定 - 全面净化
+name: 网易云
+description: |-
+  网易云去广告 - 解锁黑胶SVIP
+  作者：@Key @RuCu6 @kokoryh
 compat_arguments:
   隐藏底部标签开关↓: --
   发现: '0'
