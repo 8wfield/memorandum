@@ -408,6 +408,7 @@ body_rewrites:
     match: ^https:\/\/saas-ad\.cloudpnr\.com\/huifuad-base-api\/api\/tactics\/ad$
     filter: delpaths([["data",2]])
 map_locals:
+# 同程旅行
 - match: ^https:\/\/wx\.17u\.cn\/xcxhomeapi\/aggregator\/index
   status_code: 200
   body: ''
@@ -450,6 +451,7 @@ map_locals:
 - match: ^https:\/\/wx\.17u\.cn\/platformpubapi\/customer\/lead\/getInfo
   status_code: 200
   body: ''
+# 美团
 - match: ^https:\/\/web\.meituan\.com\/api\/miniprogram\/my\/novelZone
   status_code: 200
   body: ''
@@ -465,6 +467,7 @@ map_locals:
 - match: ^https:\/\/npay\.meituan\.com\/conch\/walletv3\/wechat-pop-window
   status_code: 200
   body: ''
+# 京东
 - match: ^https:\/\/api\.m\.jd\.com\/\?loginType=11
   status_code: 200
   body: ''
