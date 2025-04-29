@@ -1,0 +1,13 @@
+name: Github 429
+description: |-
+ 解除 Github 429 限制
+header_rewrites:
+- replace:
+    match: raw.githubusercontent.com
+    name: Accept-Language
+    value: en-us
+    type: request
+mitm:
+  hostnames:
+    includes:
+    - raw.githubusercontent.com
