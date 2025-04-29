@@ -1,13 +1,21 @@
-name: Github 429
+name: 解除Github429限制
 description: |-
  解除 Github 429 限制
 header_rewrites:
 - replace:
-    match: raw.githubusercontent.com
+    match: ^https:\/\/(raw|gist)\.githubusercontent\.com\/
+    name: Accept-Language
+    value: en-us
+    type: request
+- replace:
+    match: ^https:\/\/github\.com\/
     name: Accept-Language
     value: en-us
     type: request
 mitm:
   hostnames:
     includes:
+    - raw.githubusercontent.com
+    - gist.githubusercontent.com
+    - github.com
     - raw.githubusercontent.com
