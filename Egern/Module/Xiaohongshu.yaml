@@ -18,19 +18,19 @@ body_rewrites:
 map_locals:
 - match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/surprisebox\/(?:get_style|open|submit_action)
   status_code: 200
-  body: '{}'
+  body: ''
 - match: ^https?:\/\/www\.xiaohongshu\.com\/api\/marketing\/box\/trigger\?
   status_code: 200
-  body: '{}'
+  body: ''
 - match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/guide\?
   status_code: 200
-  body: '{}'
+  body: ''
 - match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/guide\/user_banner
   status_code: 200
-  body: '{}'
+  body: ''
 - match: ^https?:\/\/www\.xiaohongshu\.com\/api\/sns\/(v\d\/ads\/resource|v\d\/hey\/\w+\/hey_gallery)
   status_code: 200
-  body: '{}'
+  body: ''
 - match: ^https?:\/\/ci\.xiaohongshu\.com\/system_config\/watermark
   status_code: 200
   body: ''
