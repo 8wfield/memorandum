@@ -1,4 +1,4 @@
-name: 解除Github429限制
+name: Github 429
 description: |-
  解除 Github 429 限制
 header_rewrites:
