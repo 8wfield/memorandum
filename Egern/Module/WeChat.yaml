@@ -411,576 +411,576 @@ map_locals:
 # 同城旅行 @怎么肥事
 - match: ^https:\/\/wx\.17u\.cn\/xcxhomeapi\/aggregator\/index
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/mytourapi\/mytrip\/blankflight
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/membermessageuserapi\/message\/list
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/wechatmypubapi\/myInfo\/messageBox
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/membermessageuserapi\/category\/getCategory
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/homemarketapi\/search\/recommend
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/mytourapi\/blankpage\/recommendList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/homemarketapi\/aggregator\/index
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/wxocbdapi\/adService\/getAd
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/wechatmypubapi\/myInfo\/orderRemind
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/wechatmypubapi\/myInfo\/icons
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/wechatmypubapi\/myInfo\/memberShow
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/xcxhomeapi\/home\/converge
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.17u\.cn\/platformpubapi\/customer\/lead\/getInfo
   status_code: 200
-  body: ''
+  body: '{}'
 # 美团 @怎么肥事
 - match: ^https:\/\/web\.meituan\.com\/api\/miniprogram\/my\/novelZone
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/web\.meituan\.com\/api\/miniprogram\/my\/resources
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/npay\.meituan\.com\/conch\/flow\/mypage-wallet-info
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/web\.meituan\.com\/newUser\/returnMoney\/popWindow
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/npay\.meituan\.com\/conch\/walletv3\/wechat-pop-window
   status_code: 200
-  body: ''
+  body: '{}'
 # 京东 @怎么肥事
 - match: ^https:\/\/api\.m\.jd\.com\/\?loginType=11
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^http:\/\/\w+\.wxs\.qq\.com\/\d+\/\d+\/(snscosdownload|snssvpdownload)\/(SH|SZ)\/reserved\/\w+
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\?
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webapi\.qmai\.cn\/web\/catering\/advertising\/
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/images\.qmai\.cn\/s214925\/2023
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/api\/v2\/clientPage\/modulesAggregated\?
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/api\/v2\/clientPage\/getHomeLiveInfo$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/dsp\.fcbox\.com\/adSearch\/
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/post\/suggestion\/query$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/marketingEntrance\/v2\/infoWithItems$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/marketingEntrance\/info$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/res\.pizzahut\.com\.cn\/CRM
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.mcd\.cn\/bff\/portal\/home\/hotActivity
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/popup
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/index\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/index\/global
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wechat-api\.i-xiaoma\.com\.cn\/app\/v1\/bus\/wechat\/content
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apiproxy\.zuche\.com\/resource\/carrctapi\/home\/marketing
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apiproxy\.zuche\.com\/resource\/carrctapi\/home\/page\/advertising
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/miniprogram\.ishansong\.com\/cms\/faq\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ads\.ishansong\.com\/advert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/minicap\.caocaokeji\.cn\/advert-bss\/pullAdvert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/r2\.gzyct\.com\/qrcode\/advert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/applets\.jtexpress\.com\.cn
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hellobike\.com\/api\?adx
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.kuaidihelp\.com\/g_order_core\/v2\/mina\/User\/getBannerList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxproj\.seeyouyima\.com\/data\/today_tips
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/suyun-guest\.daojia\.com\/api\/kuaigou\/banjia\/review
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/ads
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/home_new_user
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/get_service_list
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/appuser-static\.huolala\.cn\/imgs
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apis\.alenable\.com\/mall\/v1\/api\/mall\/skin\/user\/get
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apis\.alenable\.com\/ycx\/v1\/api\/adPut
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/dock\.tenchii\.com\/DockCard\/api\/mini\/card\/list
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/customer-app\.sto\.cn\/api\/app\/banner\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/sto-customer-app\.oss-cn-shanghai\.aliyuncs\.com\/images
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/supplier-api\.imdada\.cn\/fe\/public\/ad\/spot\?forwardServiceName=growth-activity
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mobile-api\.imlaidian\.com\/api\/args
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxs-weixin\.sd\.zhumanggroup\.com\/api\/v2\/ad
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/s\.jiediankeji\.com\/adv
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/smarket\.dian\.so
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/file\.dian\.so\/c\/leto
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.songguo7\.com\/(\w{3})?mp\/v2\/misc\/(toast|user_operate_info|unlock_without_order|unlock_operate_info)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tm-api\.pin-dao\.cn\/home\/api\/index\/activeConfig\/v2
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tm-api\.pin-dao\.cn\/home\/api\/resource\/config\/homeBannerNodes
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api-fouth-mem\.huazhu\.com\/api\/rights\/bannerList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxapp\.bestwehotel\.com\/gw3\/app-mini\/trip-hotel-banner\/activity\/getActivityInfo
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.bthhotels\.com\/miniapp\/weixin\/v1\/home\/index_banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v6\/indexs
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v5\/local
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v5\/index
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/adinfo\/adplace\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=cms\.htw\.delivery
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.combineHomepageInfo
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.mallRecommend
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/lawsonapi\.yorentown\.com\/area\/sh-lawson\/app\/v1\/mina\/systemSetting
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/plt\.yorentown\.com\/pltapp\/v1\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/member\.lxjchina\.com\.cn\/mini-server\/home\/page\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/cbd-gateway-service-applets\.hualala\.com\/arch\/api\/banner\/QueryBannerImgList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/alittle-tea\.oss-cn-shanghai\.aliyuncs\.com\/images\/platform\/alittle
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.prod\.dj\.mstand\.cn\/scrm\/app\/mdm\/index\/listAdv\?types
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/gw-passenger-wap\.01zhuanche\.com\/gw-passenger-wap\/zhuanche-passenger-token\/commonSkipToken\/common\/getAdList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/www\.deppon\.com\/gwapi\/memberService\/eco\/member\/grade\/commonInterface
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/passengerapi\.saicmobility\.com\/(ad\/requestAd|pay\/v1\/queryOpenedCouponPackages)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/passenger\.t3go\.cn\/passenger-activity-api\/notoken\/api\/v1\/resource\/getSource
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/m\.ctrip\.com\/restapi\/soa2\/13916\/tripAds
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/m\.ctrip\.com\/restapi\/soa2\/12673\/queryWeChatHotEvent
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ad\.maoyan\.com\/api\/position\/detail
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/api\/mobile\/(hotMatchList|eSportsIps)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/vod-movie\.maoyan\.com\/vod\/video\/onlineMovies\.json
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/movie\/wonderShow
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/performances\/calendar\/0
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/performances\/rob\/main
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/celebrityBasicList\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/recommend\/performances
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.maoyan\.com\/sns\/common\/feed\/channel\/v2\/list\.json
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/ad\/detail
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mkt-gateway\.tuhu\.cn\/mkt-scene-marketing-service\/api\/scene\/queryScheme
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hengdianfilm\.com\/\/cinema\/queryAvailableBannerInfo\/2\?cid=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hengdianfilm\.com\/\/cinema\/queryAvailableBannerInfo\/4\?cid=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tbgapplet\.carlsberg\.asia\/tuborg\/banner\/(loading|index)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ucmp\.sf-express\.com\/proxy\/operation-platform\/info-flow-adver\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ucmp\.sf-express\.com\/proxy\/esgcempcore\/memberGoods\/pointMallService\/goodsList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/conf\?ns=daijia-front&name=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/daijia\.kuaidadi\.com\/gateway\?api=prado\.cms\.delivery\.batch&apiVe
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^http:\/\/\w+\.wxs\.qq\.com\/\d+\/\d+\/(snscosdownload|snssvpdownload)\/(SH|SZ)\/reserved\/\w+
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\?
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webapi\.qmai\.cn\/web\/catering\/advertising\/
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/images\.qmai\.cn\/s214925\/2023
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/api\/v2\/clientPage\/modulesAggregated\?
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/api\/v2\/clientPage\/getHomeLiveInfo$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/dsp\.fcbox\.com\/adSearch\/
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/post\/suggestion\/query$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/marketingEntrance\/v2\/infoWithItems$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/webchatapp\.fcbox\.com\/fcboxactivityweb\/marketingEntrance\/info$
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/res\.pizzahut\.com\.cn\/CRM
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.mcd\.cn\/bff\/portal\/home\/hotActivity
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/popup
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/index\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/3pp\.starbucks\.com\.cn\/wxmem\/index\/global
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wechat-api\.i-xiaoma\.com\.cn\/app\/v1\/bus\/wechat\/content
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apiproxy\.zuche\.com\/resource\/carrctapi\/home\/marketing
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apiproxy\.zuche\.com\/resource\/carrctapi\/home\/page\/advertising
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/miniprogram\.ishansong\.com\/cms\/faq\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ads\.ishansong\.com\/advert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/minicap\.caocaokeji\.cn\/advert-bss\/pullAdvert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/r2\.gzyct\.com\/qrcode\/advert
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/applets\.jtexpress\.com\.cn
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hellobike\.com\/api\?adx
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.kuaidihelp\.com\/g_order_core\/v2\/mina\/User\/getBannerList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxproj\.seeyouyima\.com\/data\/today_tips
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/suyun-guest\.daojia\.com\/api\/kuaigou\/banjia\/review
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/ads
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/home_new_user
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/qapi\.huolala\.cn\/get_service_list
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/appuser-static\.huolala\.cn\/imgs
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apis\.alenable\.com\/mall\/v1\/api\/mall\/skin\/user\/get
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/apis\.alenable\.com\/ycx\/v1\/api\/adPut
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/dock\.tenchii\.com\/DockCard\/api\/mini\/card\/list
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/customer-app\.sto\.cn\/api\/app\/banner\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/sto-customer-app\.oss-cn-shanghai\.aliyuncs\.com\/images
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/supplier-api\.imdada\.cn\/fe\/public\/ad\/spot\?forwardServiceName=growth-activity
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mobile-api\.imlaidian\.com\/api\/args
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxs-weixin\.sd\.zhumanggroup\.com\/api\/v2\/ad
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/s\.jiediankeji\.com\/adv
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/smarket\.dian\.so
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/file\.dian\.so\/c\/leto
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.songguo7\.com\/(\w{3})?mp\/v2\/misc\/(toast|user_operate_info|unlock_without_order|unlock_operate_info)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tm-api\.pin-dao\.cn\/home\/api\/index\/activeConfig\/v2
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tm-api\.pin-dao\.cn\/home\/api\/resource\/config\/homeBannerNodes
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api-fouth-mem\.huazhu\.com\/api\/rights\/bannerList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wxapp\.bestwehotel\.com\/gw3\/app-mini\/trip-hotel-banner\/activity\/getActivityInfo
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.bthhotels\.com\/miniapp\/weixin\/v1\/home\/index_banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v6\/indexs
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v5\/local
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/app\.homeinns\.com\/api\/v5\/index
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/adinfo\/adplace\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=cms\.htw\.delivery
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.combineHomepageInfo
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/htwkop\.xiaojukeji\.com\/gateway\?api=hm\.fa\.mallRecommend
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/lawsonapi\.yorentown\.com\/area\/sh-lawson\/app\/v1\/mina\/systemSetting
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/plt\.yorentown\.com\/pltapp\/v1\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/member\.lxjchina\.com\.cn\/mini-server\/home\/page\/banner
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/cbd-gateway-service-applets\.hualala\.com\/arch\/api\/banner\/QueryBannerImgList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/alittle-tea\.oss-cn-shanghai\.aliyuncs\.com\/images\/platform\/alittle
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.prod\.dj\.mstand\.cn\/scrm\/app\/mdm\/index\/listAdv\?types
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/gw-passenger-wap\.01zhuanche\.com\/gw-passenger-wap\/zhuanche-passenger-token\/commonSkipToken\/common\/getAdList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/www\.deppon\.com\/gwapi\/memberService\/eco\/member\/grade\/commonInterface
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/passengerapi\.saicmobility\.com\/(ad\/requestAd|pay\/v1\/queryOpenedCouponPackages)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/passenger\.t3go\.cn\/passenger-activity-api\/notoken\/api\/v1\/resource\/getSource
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/m\.ctrip\.com\/restapi\/soa2\/13916\/tripAds
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/m\.ctrip\.com\/restapi\/soa2\/12673\/queryWeChatHotEvent
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ad\.maoyan\.com\/api\/position\/detail
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/api\/mobile\/(hotMatchList|eSportsIps)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/vod-movie\.maoyan\.com\/vod\/video\/onlineMovies\.json
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/movie\/wonderShow
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/performances\/calendar\/0
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/performances\/rob\/main
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/celebrityBasicList\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/recommend\/performances
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.maoyan\.com\/sns\/common\/feed\/channel\/v2\/list\.json
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/wx\.maoyan\.com\/maoyansh\/myshow\/ajax\/ad\/detail
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/mkt-gateway\.tuhu\.cn\/mkt-scene-marketing-service\/api\/scene\/queryScheme
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hengdianfilm\.com\/\/cinema\/queryAvailableBannerInfo\/2\?cid=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/api\.hengdianfilm\.com\/\/cinema\/queryAvailableBannerInfo\/4\?cid=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/tbgapplet\.carlsberg\.asia\/tuborg\/banner\/(loading|index)
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ucmp\.sf-express\.com\/proxy\/operation-platform\/info-flow-adver\/query
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/ucmp\.sf-express\.com\/proxy\/esgcempcore\/memberGoods\/pointMallService\/goodsList
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/as\.xiaojukeji\.com\/ep\/as\/conf\?ns=daijia-front&name=
   status_code: 200
-  body: ''
+  body: '{}'
 - match: ^https:\/\/daijia\.kuaidadi\.com\/gateway\?api=prado\.cms\.delivery\.batch&apiVe
   status_code: 200
-  body: ''
+  body: '{}'
 scriptings:
 - http_response:
     name: 微信外部链接解锁
