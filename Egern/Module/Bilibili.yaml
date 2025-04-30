@@ -75,7 +75,7 @@ map_locals:
 scriptings:
 - http_response:
     name: Proto处理
-    match: ^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.(?:   app\.(?:     interface\.v1\.(?:Teenagers\/ModeStatus|Search\/DefaultWords)|     show\.v1\.Popular\/Index|     dynamic\.v2\.Dynamic\/DynAll|     view(?:unite)?\.v1\.View\/(?:View|ViewProgress|TFInfo|RelatesFeed)|     playurl\.v1\.PlayURL\/PlayView|     playerunite\.v1\.Player\/PlayViewUnite   )|   polymer\.app\.search\.v1\.Search\/SearchAll|   community\.service\.dm\.v1\.DM\/DmView|   main\.community\.reply\.v1\.Reply\/MainList|   pgc\.gateway\.player\.v2\.PlayURL\/PlayView )$
+    match: ^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.(?:app\.(?:interface\.v1\.(?:Teenagers\/ModeStatus|Search\/DefaultWords)|show\.v1\.Popular\/Index|dynamic\.v2\.Dynamic\/DynAll|view(?:unite)?\.v1\.View\/(?:View|ViewProgress|TFInfo|RelatesFeed)|playurl\.v1\.PlayURL\/PlayView|playerunite\.v1\.Player\/PlayViewUnite)|polymer\.app\.search\.v1\.Search\/SearchAll|community\.service\.dm\.v1\.DM\/DmView|main\.community\.reply\.v1\.Reply\/MainList|pgc\.gateway\.player\.v2\.PlayURL\/PlayView)$
     script_url: https://kelee.one/Resource/Script/Bilibili/Bilibili_proto_kokoryh.js
     arguments:
       _compat.$argument: '"{"showUpList":"{{{动态最常访问}}}","filterTopReplies":{{{过滤置顶评论广告}}}}",'
