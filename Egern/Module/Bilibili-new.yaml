@@ -38,11 +38,12 @@ map_locals:
     content-type: ' application/json'
   body: '{}'
 
-- http_request:
-    name: 替换鉴权字段
+header_rewrites:
+- replace:
     match: ^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.(?:playerunite\.v1\.Player\/PlayViewUnite|pgc\.gateway\.player\.v2\.PlayURL\/PlayView)$
-    headers:
-      Authorization: "{{{Authorization}}}"
+    name: 替换鉴权字段
+    value: "{{{Authorization}}}"
+    type: request
 
 body_rewrites:
 - response_jq:
