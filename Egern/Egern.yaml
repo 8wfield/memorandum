@@ -54,7 +54,7 @@ dns:
 # > 上游DNS服务列表
   upstreams:
     Ali:
-    - quic://dns.alidns.com:853
+    - https://dns.alidns/dns-query
     Google:
     - https://dns.google/dns-query
 
@@ -66,9 +66,6 @@ dns:
   - wildcard:
       match: '*'
       value: Ali
-
-# > 公网IP查询
-  public_ip_lookup_url: https://api.ipify.org
 
 # > 策略组配置
 policy_groups:
