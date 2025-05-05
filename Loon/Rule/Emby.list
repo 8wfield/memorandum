@@ -1,11 +1,12 @@
 # 规则名称: Emby
-# 规则统计: 163
+# 规则统计: 164
 
 DOMAIN,195.201.86.86
 DOMAIN,cc.coemn.com
 DOMAIN,cminf.sfcat.link
 DOMAIN,cuinf.sfcat.link
 DOMAIN,notnetflix.cos.cat
+DOMAIN-SUFFIX,69yun69.com
 DOMAIN-SUFFIX,123456.al
 DOMAIN-SUFFIX,16bit.cfd
 DOMAIN-SUFFIX,20120714.xyz
