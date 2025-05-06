@@ -53,9 +53,9 @@ domain_suffix_set:
   -  claude.ai
   -  claudeusercontent.com
 ip_cidr_set:
-  -  160.79.104.0/23, no-resolve
+  -  160.79.104.0/23
 ip_cidr6_set:
-  -  2607:6bc0::/48, no-resolve
+  -  2607:6bc0::/48
 
 # JetBrains AI
   -  grazie.ai

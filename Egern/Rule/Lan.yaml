@@ -7,13 +7,13 @@ no_resolve: true
 # 规则统计: 9
 
 ip_cidr_set:
-  -  10.0.0.0/8, no-resolve
-  -  100.64.0.0/10, no-resolve
-  -  172.16.0.0/12, no-resolve
-  -  192.0.0.0/24, no-resolve
-  -  192.168.0.0/16, no-resolve
-  -  198.18.0.0/15, no-resolve
+  -  10.0.0.0/8
+  -  100.64.0.0/10
+  -  172.16.0.0/12
+  -  192.0.0.0/24
+  -  192.168.0.0/16
+  -  198.18.0.0/15
 ip_cidr6_set:
-  -  ::1/128, no-resolve
-  -  fc00::/7, no-resolve
-  -  fe80::/10, no-resolve
+  -  ::1/128
+  -  fc00::/7
+  -  fe80::/10
