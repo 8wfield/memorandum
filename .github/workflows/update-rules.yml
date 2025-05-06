@@ -35,6 +35,7 @@ jobs:
             ["TikTok"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list"
             ["Instagram"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list"
             ["GitHub"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list"
+            ["Emby"]="https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/Loon/Rules/Emby.list"
             ["Google"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list"
           )
           for name in "${!rules[@]}"; do
