@@ -2,7 +2,6 @@
 # 规则名称: Spotify
 # 规则统计: 30
 
-# NAME: Spotify
 DOMAIN,audio4-ak-spotify-com.akamaized.net
 DOMAIN,cdn-spotify-experiments.conductrics.com
 DOMAIN,heads-ak-spotify-com.akamaized.net
