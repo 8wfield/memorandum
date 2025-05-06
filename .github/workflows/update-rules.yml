@@ -1,9 +1,9 @@
 name: Update Loon and Egern Rules
 
 on:
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *" # 每6小时运行一次
+    - cron: "0 */6 * * *"
 
 permissions:
   actions: write
@@ -13,16 +13,14 @@ jobs:
   UpdateRules:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Shanghai # 设置时区为中国
+      TZ: Asia/Shanghai
 
     steps:
-      # 检出仓库
       - name: Checkout Repository
         uses: actions/checkout@v4.2.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 下载 Loon 规则（保留 Emby）
       - name: Download Loon Rules
         run: |
           mkdir -p Loon/Rule Temp
@@ -48,111 +46,118 @@ jobs:
               echo "Failed to download $name from $url" >> error.log
             fi
           done
-          # 列出 Temp 目录内容以供调试
           ls -la Temp/ > temp_download_contents.log
 
-      # 处理 Loon 规则（只保留规则名称和统计，跳过 Emby 的 .url 处理）
       - name: Process Loon Rules
         run: |
           for file in Temp/*.list; do
             if [[ -f "$file" ]]; then
-              file_names=$(basename "$file" .list)
-              # 跳过 Emby 的 .url 文件处理或检查 .url 文件存在性
-              if [[ "$file_names" == "Emby" ]]; then
+              file_name=$(basename "$file" .list)
+              if [[ "$file_name" == "Emby" ]]; then
                 url="Skipped URL"
-              elif [[ -f "Temp/$file_names.url" ]]; then
-                url=$(cat "Temp/$file_names.url")
+              elif [[ -f "Temp/$file_name.url" ]]; then
+                url=$(cat "Temp/$file_name.url")
               else
                 url="Unknown URL"
-                echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
+                echo "Warning: Temp/$file_name.url not found for $file_name" >> warning.log
               fi
-              # 移除所有以 # 开头的注释
               sed -i '/^#/d' "$file"
-              # 移除 PROCESS-NAME
               sed -i -e '/^PROCESS-NAME/d' "$file"
-              # 计算规则统计（总行数减去空行）
               line_count=$(grep -v '^$' "$file" | wc -l)
-              # 创建临时文件，只添加规则名称和统计
               {
-                echo "# 规则名称: $file_names"
+                echo "# 规则名称: $file_name"
                 echo "# 规则统计: $line_count"
                 echo ""
                 cat "$file"
               } > tmpfile
               mv tmpfile "$file"
-              # 移动到 Loon/Rule
-              mv "$file" "Loon/Rule/$file_names.list"
+              mv "$file" "Loon/Rule/$file_name.list"
             else
               echo "$file not found."
             fi
           done
-          # 列出 Temp 目录内容以供调试
           ls -la Temp/ > temp_process_contents.log
 
-      # 转换为 Egern 格式（只保留规则名称和统计，跳过 Emby 的 .url 处理）
       - name: Convert to Egern Format
         run: |
           mkdir -p Egern/Rule
           for file in Loon/Rule/*.list; do
             if [[ -f "$file" ]]; then
-              file_names=$(basename "$file" .list)
-              yaml_file="Temp/$file_names.yaml"
+              file_name=$(basename "$file" .list)
+              yaml_file="Egern/Rule/$file_name.yaml"
               cp "$file" "$yaml_file"
-              # 跳过 Emby 的 .url 文件处理或检查 .url 文件存在性
-              if [[ "$file_names" == "Emby" ]]; then
+              if [[ "$file_name" == "Emby" ]]; then
                 url="Skipped URL"
-              elif [[ -f "Temp/$file_names.url" ]]; then
-                url=$(cat "Temp/$file_names.url")
+              elif [[ -f "Temp/$file_name.url" ]]; then
+                url=$(cat "Temp/$file_name.url")
               else
                 url="Unknown URL"
-                echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
+                echo "Warning: Temp/$file_name.url not found for $file_name" >> warning.log
               fi
-              # 移除所有以 # 开头的注释（包括之前的规则名称和统计）
               sed -i '/^#/d' "$yaml_file"
-              # 第一部分：清理规则并添加集合标识
-              sed -i -e '/^USER-AGENT/d' "$yaml_file"
-              sed -i -e '/^PROCESS-NAME/d' "$yaml_file"
-              sed -i -e '/^AND/d' "$yaml_file"
-              sed -i -e '/^OR/d' "$yaml_file"
-              sed -i -e '/^NOT/d' "$yaml_file"
-              awk '/^DOMAIN,/ && !added {print "domain_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-SUFFIX,/ && !added {print "domain_suffix_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-KEYWORD,/ && !added {print "domain_keyword_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-WILDCARD,/ && !added {print "domain_wildcard_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-CIDR,/ && !added {print "ip_cidr_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-CIDR6,/ && !added {print "ip_cidr6_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-ASN,/ && !added {print "asn_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^URL-REGEX,/ && !added {print "url_regex_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DEST-PORT,/ && !added {print "dest_port_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^GEOIP,/ && !added {print "geoip_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              # 第二部分：格式化规则
-              if grep -qE '^IP-(ASN|CIDR|CIDR6).*no-resolve$' "$yaml_file"; then
-                sed -i '1i\no_resolve: true' "$yaml_file"
-              fi
-              sed -i -E 's/^(URL-REGEX,)([^,]+)$/\1"\2"/' "$yaml_file"
-              sed -i -E 's/^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|DEST-PORT|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|GEOIP),/  - /g' "$yaml_file"
-              sed -i 's/,no-resolve//g' "$yaml_file"
-              # 计算规则统计（只统计以 "  - " 开头的规则行）
-              line_count=$(grep -c '^  - ' "$yaml_file")
-              # 创建临时文件，只添加规则名称和统计
+              sed -i -e '/^USER-AGENT/d' -e '/^PROCESS-NAME/d' -e '/^AND/d' -e '/^OR/d' -e '/^NOT/d' "$yaml_file"
+              # Initialize variables to track category insertion
+              declare -A categories
+              categories=(
+                ["DOMAIN"]="domain_set"
+                ["DOMAIN-SUFFIX"]="domain_suffix_set"
+                ["DOMAIN-KEYWORD"]="domain_keyword_set"
+                ["DOMAIN-WILDCARD"]="domain_wildcard_set"
+                ["IP-CIDR"]="ip_cidr_set"
+                ["IP-CIDR6"]="ip_cidr6_set"
+                ["IP-ASN"]="asn_set"
+                ["URL-REGEX"]="url_regex_set"
+                ["DEST-PORT"]="dest_port_set"
+                ["GEOIP"]="geoip_set"
+              )
+              # Create a temporary file for processing
+              touch tmpfile
+              echo "" > tmpfile
+              has_no_resolve=false
+              # Process each line and group by category
+              while IFS= read -r line; do
+                if [[ -z "$line" ]]; then
+                  continue
+                fi
+                for category in "${!categories[@]}"; do
+                  if [[ "$line" =~ ^${category}, ]]; then
+                    if [[ -z "${inserted[${categories[$category]}]}" ]]; then
+                      echo "${categories[$category]}:" >> tmpfile
+                      inserted[${categories[$category]}]=1
+                    fi
+                    if [[ "$line" =~ no-resolve$ ]]; then
+                      has_no_resolve=true
+                      line=${line%,no-resolve}
+                    fi
+                    rule=${line#${category},}
+                    if [[ "$category" == "URL-REGEX" ]]; then
+                      echo "  - \"$rule\"" >> tmpfile
+                    else
+                      echo "  - $rule" >> tmpfile
+                    fi
+                    break
+                  fi
+                done
+              done < "$yaml_file"
+              # Add no_resolve if applicable
               {
-                echo "# 规则名称: $file_names"
-                echo "# 规则统计: $line_count"
+                echo "# 规则名称: $file_name"
+                echo "# 规则统计: $(grep -c '^  - ' tmpfile)"
                 echo ""
-                cat "$yaml_file"
-              } > tmpfile
-              mv tmpfile "$yaml_file"
-              # 移动到 Egern/Rule
-              mv "$yaml_file" "Egern/Rule/$file_names.yaml"
+                if [[ "$has_no_resolve" == true ]]; then
+                  echo "no_resolve: true"
+                  echo ""
+                fi
+                cat tmpfile
+              } > "$yaml_file"
+              rm tmpfile
             else
               echo "$file not found."
             fi
           done
-          # 列出 Temp 目录内容以供调试
           ls -la Temp/ > temp_egern_contents.log
           rm -rf Temp
 
-      # 提交更改
       - name: Commit Changes
         run: |
           git config user.name "GitHub Action"
@@ -165,7 +170,6 @@ jobs:
             echo "No changes to commit."
           fi
 
-      # 清理旧的工作流运行记录
       - name: Clean Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
         with:
