@@ -1,10 +1,7 @@
-# 引用链接: Unknown URL
 # 规则名称: Lan
 # 规则统计: 9
 
 no_resolve: true
-# 规则名称: Lan
-# 规则统计: 9
 
 ip_cidr_set:
   -  10.0.0.0/8
