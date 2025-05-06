@@ -2,7 +2,6 @@
 # 规则名称: Telegram
 # 规则统计: 38
 
-# NAME: Telegram
 DOMAIN,api.imem.app
 DOMAIN,api.swiftgram.app
 DOMAIN-SUFFIX,cdn-telegram.org
