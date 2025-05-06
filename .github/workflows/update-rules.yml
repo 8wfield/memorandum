@@ -127,12 +127,20 @@ jobs:
               awk '/^DEST-PORT,/ && !added {print "dest_port_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
               awk '/^GEOIP,/ && !added {print "geoip_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
               # 第二部分：格式化规则
-              if grep -qE '^IP-(ASN|CIDR|CIDR6).*no-resolve$' "$yaml_file"; then
-                sed -i '1i\no_resolve: true' "$yaml_file"
+              # 检查是否存在no-resolve变体
+              has_no_resolve=false
+              if grep -qE ',no-resolve|, no-resolve|\(no-resolve\)' "$yaml_file"; then
+                has_no_resolve=true
               fi
+              # 删除所有no-resolve及其变体
+              sed -i -E 's/,?\s*\(?no-resolve\)?//g' "$yaml_file"
+              # 格式化规则行
               sed -i -E 's/^(URL-REGEX,)([^,]+)$/\1"\2"/' "$yaml_file"
               sed -i -E 's/^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|DEST-PORT|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|GEOIP),/  - /g' "$yaml_file"
-              sed -i 's/,no-resolve//g' "$yaml_file"
+              # 添加no_resolve标识
+              if [ "$has_no_resolve" = true ]; then
+                sed -i '1i\no_resolve: true' "$yaml_file"
+              fi
               # 计算规则统计（只统计以 "  - " 开头的规则行）
               line_count=$(grep -c '^  - ' "$yaml_file")
               # 创建临时文件，添加元信息
