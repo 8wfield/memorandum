@@ -1,5 +1,6 @@
 # 规则名称: AI
-# 规则统计: 55
+# 规则统计: 59
+
 
 AND, ((DOMAIN-KEYWORD, chatgpt-async-webps-prod-), (DOMAIN-SUFFIX, webpubsub.azure.com))
 AND, ((DOMAIN-KEYWORD, openaicom-api-), (DOMAIN-SUFFIX, azurefd.net))
@@ -7,9 +8,9 @@ DOMAIN, chatgpt.livekit.cloud
 DOMAIN, host.livekit.cloud
 DOMAIN, openai.com.cdn.cloudflare.net
 DOMAIN, openaiapi-site.azureedge.net
+DOMAIN, turn.livekit.cloud
 DOMAIN, openaicomproductionae4b.blob.core.windows.net
 DOMAIN, production-openaicom-storage.azureedge.net
-DOMAIN, turn.livekit.cloud
 DOMAIN-SUFFIX, chat.com
 DOMAIN-SUFFIX, chatgpt.com
 DOMAIN-SUFFIX, oaistatic.com
@@ -17,11 +18,18 @@ DOMAIN-SUFFIX, oaiusercontent.com
 DOMAIN-SUFFIX, openai.com
 DOMAIN-SUFFIX, sora.com
 
+DOMAIN, apple-relay.apple.com
+DOMAIN, apple-relay.cloudflare.com
+DOMAIN, apple-relay.fastly-edge.com
+DOMAIN, cp4.cloudflare.com
+DOMAIN, guzzoni.apple.com
+DOMAIN-SUFFIX, smoot.apple.com
+
 DOMAIN, api.githubcopilot.com
 DOMAIN, copilot-proxy.githubusercontent.com
 DOMAIN, copilot.microsoft.com
 DOMAIN, sydney.bing.com
-DOMAIN, www.bing.com
+DOMAIN-SUFFIX, githubcopilot.com
 
 DOMAIN, ai.google.dev
 DOMAIN, aida.googleapis.com
@@ -62,6 +70,3 @@ DOMAIN-SUFFIX, mistral.ai
 DOMAIN, api.x.ai
 DOMAIN-SUFFIX, x.ai
 DOMAIN-SUFFIX, grok.com
-
-DOMAIN, trae-api-sg.mchost.guru
-DOMAIN-SUFFIX, trae.ai

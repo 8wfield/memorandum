@@ -1,16 +1,17 @@
 # 规则名称: AI
-# 规则统计: 53
+# 规则统计: 57
 
 no_resolve: true
+
 
 domain_set:
   -  chatgpt.livekit.cloud
   -  host.livekit.cloud
   -  openai.com.cdn.cloudflare.net
   -  openaiapi-site.azureedge.net
+  -  turn.livekit.cloud
   -  openaicomproductionae4b.blob.core.windows.net
   -  production-openaicom-storage.azureedge.net
-  -  turn.livekit.cloud
 domain_suffix_set:
   -  chat.com
   -  chatgpt.com
@@ -19,11 +20,18 @@ domain_suffix_set:
   -  openai.com
   -  sora.com
 
+  -  apple-relay.apple.com
+  -  apple-relay.cloudflare.com
+  -  apple-relay.fastly-edge.com
+  -  cp4.cloudflare.com
+  -  guzzoni.apple.com
+  -  smoot.apple.com
+
   -  api.githubcopilot.com
   -  copilot-proxy.githubusercontent.com
   -  copilot.microsoft.com
   -  sydney.bing.com
-  -  www.bing.com
+  -  githubcopilot.com
 
   -  ai.google.dev
   -  aida.googleapis.com
@@ -66,6 +74,3 @@ ip_cidr6_set:
   -  api.x.ai
   -  x.ai
   -  grok.com
-
-  -  trae-api-sg.mchost.guru
-  -  trae.ai
