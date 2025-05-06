@@ -1,15 +1,8 @@
-# 引用链接: Skipped URL
+# 引用链接: https://github.com/Repcz/Tool/blob/X/Loon/Rules/Emby.list
 # 规则名称: Emby
 # 规则统计: 182
 
 no_resolve: true
-# 引用链接: Skipped URL
-# 规则名称: Emby
-# 规则统计: 183
-
-# 规则名称: Emby
-# 规则统计: 182
-
 domain_set:
   - 2pfdml.mobaiemby.site
   - cc.coemn.com
@@ -24,6 +17,7 @@ domain_set:
   - web-starharn.nebula-media.org
   - web.nebula-media.org
 domain_suffix_set:
+  - 69yun69.com
   - 123456.al
   - 16bit.cfd
   - 20120714.xyz
