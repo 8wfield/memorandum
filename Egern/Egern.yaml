@@ -235,16 +235,16 @@ rules:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Telegram.yaml
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Tiktok.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/TikTok.yaml
     policy: TikTok
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Twitter.yaml
     policy: Twitter
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/OpenAI.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/AI.yaml
     policy: ChatGPT
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Youtube.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/YouTube.yaml
     policy: YouTube
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Spotify.yaml
@@ -256,7 +256,7 @@ rules:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Emby.yaml
     policy: Emby
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Github.yaml
+    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/GitHub.yaml
     policy: GitHub
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Google.yaml
@@ -270,8 +270,6 @@ rules:
 - geoip:
     match: CN
     policy: DIRECT
-    no_resolve: true
-    disabled: false
 - default:
     policy: 兜底策略
 
