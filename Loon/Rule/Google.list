@@ -1,6 +1,8 @@
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list
 # 规则名称: Google
 # 规则统计: 704
 
+# NAME: Google
 DOMAIN,voice.telephony.goog
 DOMAIN-SUFFIX,0emm.com
 DOMAIN-SUFFIX,1e100.net

@@ -1,9 +1,14 @@
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list
 # 规则名称: YouTube
 # 规则统计: 183
 
 no_resolve: true
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list
+# 规则名称: YouTube
+# 规则统计: 190
 
-
+# NAME: YouTube
+domain_suffix_set:
   - ggpht.cn
   - ggpht.com
   - googlevideo.com
@@ -183,7 +188,10 @@ no_resolve: true
   - youtubemobilesupport.com
   - yt.be
   - ytimg.com
+domain_keyword_set:
   - youtube
+ip_cidr_set:
   - 172.110.32.0/21
   - 216.73.80.0/20
+ip_cidr6_set:
   - 2620:120:e000::/40

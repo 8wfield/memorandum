@@ -1,6 +1,8 @@
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list
 # 规则名称: Telegram
 # 规则统计: 38
 
+# NAME: Telegram
 DOMAIN,api.imem.app
 DOMAIN,api.swiftgram.app
 DOMAIN-SUFFIX,cdn-telegram.org

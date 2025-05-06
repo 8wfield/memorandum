@@ -1,10 +1,21 @@
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list
 # 规则名称: TikTok
-# 规则统计: 23
+# 规则统计: 27
 
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list
+# 规则名称: TikTok
+# 规则统计: 28
 
+# NAME: TikTok
+domain_set:
   - lf16-effectcdn.byteeffecttos-g.com
   - lf16-pkgcdn.pitaya-clientai.com
   - p16-tiktokcdn-com.akamaized.net
+domain_suffix_set:
+  - bytedapm.com
+  - bytegecko-i18n.com
+  - byteoversea.com
+  - capcut.com
   - ibytedtos.com
   - ibyteimg.com
   - ipstatp.com
@@ -23,5 +34,6 @@
   - tiktokv.com
   - tiktokv.us
   - ttwebview.com
+domain_keyword_set:
   - musical.ly
   - tiktok
