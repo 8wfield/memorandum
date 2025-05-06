@@ -31,7 +31,7 @@ jobs:
             ["YouTube"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list"
             ["Twitter"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list"
             ["Spotify"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list"
-            ["AI"]="https://kelee.one/Tool/Loon/Rule/AI.list"
+            ["AI"]="https://raw.githubusercontent.com/sooyaaabo/Loon/refs/heads/main/Rule/AI.list"
             ["TikTok"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list"
             ["Instagram"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list"
             ["GitHub"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list"
