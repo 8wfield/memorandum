@@ -2,7 +2,6 @@
 # 规则名称: YouTube
 # 规则统计: 190
 
-# NAME: YouTube
 DOMAIN-SUFFIX,ggpht.cn
 DOMAIN-SUFFIX,ggpht.com
 DOMAIN-SUFFIX,googlevideo.com
