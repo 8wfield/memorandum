@@ -1,14 +1,8 @@
 # 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list
 # 规则名称: Instagram
-# 规则统计: 11
+# 规则统计: 4
 
 # NAME: Instagram
-# AUTHOR: blackmatrix7
-# REPO: https://github.com/blackmatrix7/ios_rule_script
-# UPDATED: 2024-07-03 16:16:12
-# DOMAIN-KEYWORD: 1
-# DOMAIN-SUFFIX: 3
-# TOTAL: 4
 DOMAIN-SUFFIX,cdninstagram.com
 DOMAIN-SUFFIX,instagr.am
 DOMAIN-SUFFIX,instagram.com
