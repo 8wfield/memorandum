@@ -1,8 +1,6 @@
-# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list
 # 规则名称: YouTube
 # 规则统计: 190
 
-# NAME: YouTube
 DOMAIN-SUFFIX,ggpht.cn
 DOMAIN-SUFFIX,ggpht.com
 DOMAIN-SUFFIX,googlevideo.com

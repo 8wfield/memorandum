@@ -1,13 +1,8 @@
-# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list
 # 规则名称: Twitter
 # 规则统计: 32
 
 no_resolve: true
-# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list
-# 规则名称: Twitter
-# 规则统计: 32
 
-# NAME: Twitter
 domain_suffix_set:
   - ads-twitter.com
   - cms-twdigitalassets.com

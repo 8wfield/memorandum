@@ -1,14 +1,8 @@
-# 引用链接: https://kelee.one/Tool/Loon/Rule/AI.list
 # 规则名称: AI
 # 规则统计: 53
 
 no_resolve: true
-# 引用链接: https://kelee.one/Tool/Loon/Rule/AI.list
-# 规则名称: AI
-# 规则统计: 64
 
-# 2025-05-04 22:36:48
-# ChatGPT
 domain_set:
   -  chatgpt.livekit.cloud
   -  host.livekit.cloud
@@ -25,14 +19,12 @@ domain_suffix_set:
   -  openai.com
   -  sora.com
 
-# Copilot
   -  api.githubcopilot.com
   -  copilot-proxy.githubusercontent.com
   -  copilot.microsoft.com
   -  sydney.bing.com
   -  www.bing.com
 
-# Gemini
   -  ai.google.dev
   -  aida.googleapis.com
   -  aistudio.google.com
@@ -48,7 +40,6 @@ domain_suffix_set:
   -  makersuite.google.com
   -  proactivebackend-pa.googleapis.com
 
-# Claude
   -  anthropic.com
   -  claude.ai
   -  claudeusercontent.com
@@ -57,30 +48,24 @@ ip_cidr_set:
 ip_cidr6_set:
   -  2607:6bc0::/48, no-resolve
 
-# JetBrains AI
   -  grazie.ai
   -  grazie.aws.intellij.net
   -  jetbrains.ai
 
-# Meta AI
   -  imagine.meta.com
   -  meta.ai
 
-# Perplexity
   -  pplx.ai
   -  perplexity.ai
   -  perplexity.com
 
-# Mistral AI
   -  chat.mistral.ai
   -  console.mistral.ai
   -  mistral.ai
 
-# Grok AI
   -  api.x.ai
   -  x.ai
   -  grok.com
 
-# Trae AI
   -  trae-api-sg.mchost.guru
   -  trae.ai
