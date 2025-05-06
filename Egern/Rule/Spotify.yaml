@@ -1,7 +1,21 @@
-#name: Spotify
-#author: blackmatrix7
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list
+# 规则名称: Spotify
+# 规则统计: 29
 
 no_resolve: true
+# 规则名称: Spotify
+# 规则统计: 40
+
+# NAME: Spotify
+# AUTHOR: blackmatrix7
+# REPO: https://github.com/blackmatrix7/ios_rule_script
+# UPDATED: 2024-11-25 02:12:13
+# DOMAIN: 6
+# DOMAIN-KEYWORD: 1
+# DOMAIN-SUFFIX: 20
+# IP-CIDR: 2
+# USER-AGENT: 1
+# TOTAL: 30
 domain_set:
   - audio4-ak-spotify-com.akamaized.net
   - cdn-spotify-experiments.conductrics.com
@@ -9,7 +23,6 @@ domain_set:
   - spotify.com.edgesuite.net
   - spotify.map.fastly.net
   - spotify.map.fastlylb.net
-
 domain_suffix_set:
   - audio-ak-spotify-com.akamaized.net
   - byspotify.com
@@ -31,16 +44,8 @@ domain_suffix_set:
   - spotifynewsroom.jp
   - spotilocal.com
   - tospotify.com
-
 domain_keyword_set:
   - spotify
-
 ip_cidr_set:
   - 104.154.127.126/32
   - 35.186.224.47/32
-
-user_agent_set:
-  - Spotify*
-
-process_name_set:
-  - com.spotify.music

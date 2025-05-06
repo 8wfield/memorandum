@@ -1,8 +1,5 @@
 # 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list
 # 规则名称: Instagram
-# 规则统计: 4
-
-# 规则名称: Instagram
 # 规则统计: 11
 
 # NAME: Instagram
@@ -12,9 +9,7 @@
 # DOMAIN-KEYWORD: 1
 # DOMAIN-SUFFIX: 3
 # TOTAL: 4
-domain_suffix_set:
-  - cdninstagram.com
-  - instagr.am
-  - instagram.com
-domain_keyword_set:
-  - instagram
+DOMAIN-SUFFIX,cdninstagram.com
+DOMAIN-SUFFIX,instagr.am
+DOMAIN-SUFFIX,instagram.com
+DOMAIN-KEYWORD,instagram

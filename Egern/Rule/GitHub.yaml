@@ -1,0 +1,46 @@
+# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list
+# 规则名称: GitHub
+# 规则统计: 30
+
+# 规则名称: GitHub
+# 规则统计: 37
+
+# NAME: GitHub
+# AUTHOR: blackmatrix7
+# REPO: https://github.com/blackmatrix7/ios_rule_script
+# UPDATED: 2024-07-03 16:14:51
+# DOMAIN-KEYWORD: 1
+# DOMAIN-SUFFIX: 29
+# TOTAL: 30
+domain_suffix_set:
+  - atom.io
+  - dependabot.com
+  - ghcr.io
+  - git.io
+  - github-atom-io-herokuapp-com.freetls.fastly.net
+  - github-avatars.oss-cn-hongkong.aliyuncs.com
+  - github-cloud.s3.amazonaws.com
+  - github.blog
+  - github.com
+  - github.community
+  - github.dev
+  - github.io
+  - githubapp.com
+  - githubassets.com
+  - githubhackathon.com
+  - githubnext.com
+  - githubpreview.dev
+  - githubstatus.com
+  - githubuniverse.com
+  - githubusercontent.com
+  - myoctocat.com
+  - npm.community
+  - npmjs.com
+  - npmjs.org
+  - opensource.guide
+  - rawgit.com
+  - rawgithub.com
+  - repo.new
+  - thegithubshop.com
+domain_keyword_set:
+  - github
