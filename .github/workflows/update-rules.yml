@@ -41,22 +41,30 @@ jobs:
           for name in "${!rules[@]}"; do
             url=${rules[$name]}
             echo "Downloading $name from $url"
-            curl -L -H "User-Agent: Surge iOS/3450" "$url" -o "Temp/$name.list" || echo "Failed to download $name" >> error.log
-            # 保存 URL 到临时文件供后续使用
-            echo "$url" > "Temp/$name.url"
+            if curl -L -H "User-Agent: Surge iOS/3450" "$url" -o "Temp/$name.list" --fail; then
+              echo "$url" > "Temp/$name.url"
+              echo "Successfully downloaded $name"
+            else
+              echo "Failed to download $name from $url" >> error.log
+            fi
           done
+          # 列出 Temp 目录内容以供调试
+          ls -la Temp/ > temp_download_contents.log
 
-      # 处理 Loon 规则（跳过 Emby 的 .url 处理）
+      # 处理 Loon 规则（跳过 Emby 的 .url 处理并检查文件存在性）
       - name: Process Loon Rules
         run: |
           for file in Temp/*.list; do
             if [[ -f "$file" ]]; then
               file_names=$(basename "$file" .list)
-              # 跳过 Emby 的 .url 文件处理
+              # 跳过 Emby 的 .url 文件处理或检查 .url 文件存在性
               if [[ "$file_names" == "Emby" ]]; then
                 url="Skipped URL"
-              else
+              elif [[ -f "Temp/$file_names.url" ]]; then
                 url=$(cat "Temp/$file_names.url")
+              else
+                url="Unknown URL"
+                echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
               fi
               # 移除除引用链接、规则名称、规则统计外的其他元信息
               sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$file"
@@ -79,8 +87,10 @@ jobs:
               echo "$file not found."
             fi
           done
+          # 列出 Temp 目录内容以供调试
+          ls -la Temp/ > temp_process_contents.log
 
-      # 转换为 Egern 格式（跳过 Emby 的 .url 处理）
+      # 转换为 Egern 格式（跳过 Emby 的 .url 处理并检查文件存在性）
       - name: Convert to Egern Format
         run: |
           mkdir -p Egern/Rule
@@ -89,11 +99,14 @@ jobs:
               file_names=$(basename "$file" .list)
               yaml_file="Temp/$file_names.yaml"
               cp "$file" "$yaml_file"
-              # 跳过 Emby 的 .url 文件处理
+              # 跳过 Emby 的 .url 文件处理或检查 .url 文件存在性
               if [[ "$file_names" == "Emby" ]]; then
                 url="Skipped URL"
-              else
+              elif [[ -f "Temp/$file_names.url" ]]; then
                 url=$(cat "Temp/$file_names.url")
+              else
+                url="Unknown URL"
+                echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
               fi
               # 移除除引用链接、规则名称、规则统计外的其他元信息
               sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$yaml_file"
@@ -137,7 +150,8 @@ jobs:
               echo "$file not found."
             fi
           done
-          # 清理临时目录
+          # 列出 Temp 目录内容以供调试
+          ls -la Temp/ > temp_egern_contents.log
           rm -rf Temp
 
       # 提交更改
