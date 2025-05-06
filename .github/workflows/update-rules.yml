@@ -136,8 +136,13 @@ jobs:
           git config user.email "action@github.com"
           git add Loon/Rule/*.list Egern/Rule/*.yaml
           if git status -s | grep -q .; then
+            # 拉取远程更改并变基
+            git fetch origin
+            git pull --rebase origin main
+            # 提交更改
             git commit -m "Update Loon and Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
-            git push
+            # 推送更改
+            git push origin main
           else
             echo "No changes to commit."
           fi
