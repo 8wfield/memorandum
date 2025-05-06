@@ -9,6 +9,10 @@ permissions:
   actions: write
   contents: write
 
+concurrency:
+  group: update-rules
+  cancel-in-progress: true # 取消正在运行的同组工作流
+
 jobs:
   UpdateRules:
     runs-on: ubuntu-latest
@@ -136,13 +140,25 @@ jobs:
           git config user.email "action@github.com"
           git add Loon/Rule/*.list Egern/Rule/*.yaml
           if git status -s | grep -q .; then
-            # 拉取远程更改并变基
-            git fetch origin
-            git pull --rebase origin main
             # 提交更改
             git commit -m "Update Loon and Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
-            # 推送更改
-            git push origin main
+            # 尝试推送，重试最多3次
+            for i in {1..3}; do
+              git fetch origin
+              git pull --rebase origin main
+              if git push origin main; then
+                echo "Push succeeded"
+                break
+              else
+                echo "Push failed, retrying ($i/3)..."
+                sleep 5
+              fi
+            done
+            # 如果重试后仍失败，退出并报错
+            if [ $i -eq 3 ]; then
+              echo "Push failed after 3 retries"
+              exit 1
+            fi
           else
             echo "No changes to commit."
           fi
