@@ -2,11 +2,6 @@
 # 规则名称: GitHub
 # 规则统计: 30
 
-# 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list
-# 规则名称: GitHub
-# 规则统计: 30
-
-# NAME: GitHub
 domain_suffix_set:
   - atom.io
   - dependabot.com
