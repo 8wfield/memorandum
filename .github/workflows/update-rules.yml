@@ -52,17 +52,9 @@ jobs:
         run: |
           for file in Temp/*.list; do
             if [[ -f "$file" ]]; then
-              file_name=$(basename "$file" .list)
-              if [[ "$file_name" == "Emby" ]]; then
-                url="Skipped URL"
-              elif [[ -f "Temp/$file_name.url" ]]; then
-                url=$(cat "Temp/$file_name.url")
-              else
-                url="Unknown URL"
-                echo "Warning: Temp/$file_name.url not found for $file_name" >> warning.log
-              fi
               sed -i '/^#/d' "$file"
               sed -i -e '/^PROCESS-NAME/d' "$file"
+              file_name=$(basename "$file" .list)
               line_count=$(grep -v '^$' "$file" | wc -l)
               {
                 echo "# 规则名称: $file_name"
@@ -86,14 +78,6 @@ jobs:
               file_name=$(basename "$file" .list)
               yaml_file="Egern/Rule/$file_name.yaml"
               cp "$file" "$yaml_file"
-              if [[ "$file_name" == "Emby" ]]; then
-                url="Skipped URL"
-              elif [[ -f "Temp/$file_name.url" ]]; then
-                url=$(cat "Temp/$file_name.url")
-              else
-                url="Unknown URL"
-                echo "Warning: Temp/$file_name.url not found for $file_name" >> warning.log
-              fi
               sed -i '/^#/d' "$yaml_file"
               sed -i -e '/^USER-AGENT/d' -e '/^PROCESS-NAME/d' -e '/^OR/d' -e '/^NOT/d' "$yaml_file"
               # 处理 AND 规则，提取子规则
@@ -134,8 +118,14 @@ jobs:
                     rule=${line#${category},}
                     if [[ "$category" == "URL-REGEX" ]]; then
                       echo "  - \"$rule\"" >> tmpfile
+                    elif [[ "$category" == "IP-CIDR" || "$category" == "IP-CIDR6" || "$category" == "IP-ASN" ]]; then
+                      if [[ "$rule" =~ ^[0-9a-fA-F.:/]+ ]]; then
+                        echo "  - $rule" >> tmpfile
+                      fi
                     else
-                      echo "  - $rule" >> tmpfile
+                      if [[ ! "$rule" =~ ^[0-9a-fA-F.:/]+ ]]; then
+                        echo "  - $rule" >> tmpfile
+                      fi
                     fi
                     break
                   fi
