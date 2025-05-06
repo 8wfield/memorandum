@@ -1,0 +1,136 @@
+name: Update Loon 和 Egern Rules
+
+on:
+  workflow_dispatch: # 允许手动触发
+  schedule:
+    - cron: "0 */6 * * *" # 每6小时运行一次
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  UpdateRules:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai # 设置时区为中国
+
+    steps:
+      # 检出仓库
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 下载 Loon 规则
+      - name: Download Loon Rules
+        run: |
+          mkdir -p Loon/Rule Temp
+          declare -A rules=(
+            ["Telegram"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list"
+            ["YouTube"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list"
+            ["Twitter"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list"
+            ["Spotify"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list"
+            ["AI"]="https://kelee.one/Tool/Loon/Rule/AI.list"
+            ["TikTok"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list"
+            ["Instagram"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list"
+            ["GitHub"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GitHub/GitHub.list"
+            ["Google"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list"
+          )
+          for name in "${!rules[@]}"; do
+            url=${rules[$name]}
+            echo "Downloading $name from $url"
+            curl -L -H "User-Agent: Surge iOS/3450" "$url" -o "Temp/$name.list" || echo "Failed to download $name" >> error.log
+            # 保存 URL 到临时文件供后续使用
+            echo "$url" > "Temp/$name.url"
+          done
+
+      # 处理 Loon 规则
+      - name: Process Loon Rules
+        run: |
+          for file in Temp/*.list; do
+            if [[ -f "$file" ]]; then
+              # 移除 PROCESS-NAME
+              sed -i -e '/^PROCESS-NAME/d' "$file"
+              # 添加元信息
+              file_names=$(basename "$file" .list)
+              line_count=$(wc -l < "$file")
+              awk -v fname="$file_names" 'NR==1 {print "# 规则名称: " fname} {print}' "$file" > tmpfile && mv tmpfile "$file"
+              awk -v count="$line_count" 'NR==2 {print "# 规则统计: " count} {print}' "$file" > tmpfile && mv tmpfile "$file"
+              sed -i '2a\\' "$file"
+              # 添加引用链接
+              url=$(cat "Temp/$file_names.url")
+              echo -e "# 引用链接: $url\n$(cat "$file")" > "Loon/Rule/$file_names.list"
+            else
+              echo "$file not found."
+            fi
+          done
+
+      # 转换为 Egern 格式
+      - name: Convert to Egern Format
+        run: |
+          mkdir -p Egern/Rule
+          for file in Temp/*.list; do
+            if [[ -f "$file" ]]; then
+              # 转换为 YAML 格式
+              file_names=$(basename "$file" .list)
+              yaml_file="Temp/$file_names.yaml"
+              cp "$file" "$yaml_file"
+              # 第一部分：清理规则并添加集合标识
+              sed -i -e '/^USER-AGENT/d' "$yaml_file"
+              sed -i -e '/^PROCESS-NAME/d' "$yaml_file"
+              sed -i -e '/^AND/d' "$yaml_file"
+              sed -i -e '/^OR/d' "$yaml_file"
+              sed -i -e '/^NOT/d' "$yaml_file"
+              awk '/^DOMAIN,/ && !added {print "domain_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^DOMAIN-SUFFIX,/ && !added {print "domain_suffix_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^DOMAIN-KEYWORD,/ && !added {print "domain_keyword_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^DOMAIN-WILDCARD,/ && !added {print "domain_wildcard_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^IP-CIDR,/ && !added {print "ip_cidr_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^IP-CIDR6,/ && !added {print "ip_cidr6_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^IP-ASN,/ && !added {print "asn_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^URL-REGEX,/ && !added {print "url_regex_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^DEST-PORT,/ && !added {print "dest_port_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk '/^GEOIP,/ && !added {print "geoip_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              # 第二部分：格式化规则
+              if grep -qE '^IP-(ASN|CIDR|CIDR6).*no-resolve$' "$yaml_file"; then
+                sed -i '1i\no_resolve: true' "$yaml_file"
+              fi
+              sed -i -E 's/^(URL-REGEX,)([^,]+)$/\1"\2"/' "$yaml_file"
+              sed -i -E 's/^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|DEST-PORT|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|GEOIP),/  - /g' "$yaml_file"
+              sed -i 's/,no-resolve//g' "$yaml_file"
+              # 添加元信息
+              line_count=$(grep -c '^  - ' "$yaml_file")
+              awk -v fname="$file_names" 'NR==1 {print "# 规则名称: " fname} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              awk -v count="$line_count" 'NR==2 {print "# 规则统计: " count} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
+              sed -i '2a\\' "$yaml_file"
+              # 添加引用链接
+              url=$(cat "Temp/$file_names.url")
+              echo -e "# 引用链接: $url\n$(cat "$yaml_file")" > "Egern/Rule/$file_names.yaml"
+            else
+              echo "$file not found."
+            fi
+          done
+          # 清理临时目录
+          rm -rf Temp
+
+      # 提交更改
+      - name: Commit Changes
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add Loon/Rule/*.list Egern/Rule/*.yaml
+          if git status -s | grep -q .; then
+            git commit -m "Update Loon 和 Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          else
+            echo "No changes to commit."
+          fi
+
+      # 清理旧的工作流运行记录
+      - name: Clean Workflow Runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          retain_days: 0
+          keep_minimum_runs: 12
