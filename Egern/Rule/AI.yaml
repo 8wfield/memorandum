@@ -1,9 +1,13 @@
 # 规则名称: AI
-# 规则统计: 56
-
-no_resolve: true
+# 规则统计: 60
 
 
+domain_keyword_set:
+  -  chatgpt-async-webps-prod-
+domain_suffix_set:
+  -  webpubsub.azure.com
+  -  openaicom-api-
+  -  azurefd.net
 domain_set:
   -  chatgpt.livekit.cloud
   -  host.livekit.cloud
@@ -46,7 +50,9 @@ domain_set:
   -  anthropic.com
   -  claude.ai
   -  claudeusercontent.com
+ip_cidr_set:
   -  160.79.104.0/23, no-resolve
+ip_cidr6_set:
   -  2607:6bc0::/48, no-resolve
   -  grazie.ai
   -  grazie.aws.intellij.net

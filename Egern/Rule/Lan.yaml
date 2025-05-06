@@ -1,8 +1,6 @@
 # 规则名称: Lan
 # 规则统计: 9
 
-no_resolve: true
-
 
   -  10.0.0.0/8, no-resolve
   -  100.64.0.0/10, no-resolve

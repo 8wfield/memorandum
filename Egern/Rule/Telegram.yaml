@@ -29,6 +29,7 @@ no_resolve: true
   - tx.me
   - usercontent.dev
   - nicegram
+asn_set:
   - 211157
   - 44907
   - 59930
