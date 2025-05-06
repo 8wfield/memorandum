@@ -2,7 +2,6 @@
 # 规则名称: Twitter
 # 规则统计: 32
 
-# NAME: Twitter
 DOMAIN-SUFFIX,ads-twitter.com
 DOMAIN-SUFFIX,cms-twdigitalassets.com
 DOMAIN-SUFFIX,periscope.tv
