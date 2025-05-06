@@ -1,14 +1,10 @@
 # 规则名称: TikTok
-# 规则统计: 27
+# 规则统计: 23
 
 
   - lf16-effectcdn.byteeffecttos-g.com
   - lf16-pkgcdn.pitaya-clientai.com
   - p16-tiktokcdn-com.akamaized.net
-  - bytedapm.com
-  - bytegecko-i18n.com
-  - byteoversea.com
-  - capcut.com
   - ibytedtos.com
   - ibyteimg.com
   - ipstatp.com

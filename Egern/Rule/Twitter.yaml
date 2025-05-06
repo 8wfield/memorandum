@@ -1,11 +1,9 @@
 # 规则名称: Twitter
-# 规则统计: 32
+# 规则统计: 30
 
 no_resolve: true
 
 
-  - ads-twitter.com
-  - cms-twdigitalassets.com
   - periscope.tv
   - pscp.tv
   - t.co

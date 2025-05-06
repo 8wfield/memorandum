@@ -1,5 +1,5 @@
 # 规则名称: AI
-# 规则统计: 60
+# 规则统计: 58
 
 
 domain_keyword_set:
@@ -51,9 +51,7 @@ domain_set:
   -  claude.ai
   -  claudeusercontent.com
 ip_cidr_set:
-  -  160.79.104.0/23, no-resolve
 ip_cidr6_set:
-  -  2607:6bc0::/48, no-resolve
   -  grazie.ai
   -  grazie.aws.intellij.net
   -  jetbrains.ai

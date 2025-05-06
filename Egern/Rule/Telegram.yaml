@@ -1,14 +1,9 @@
 # 规则名称: Telegram
-# 规则统计: 38
+# 规则统计: 33
 
 no_resolve: true
 
 
-  - api.imem.app
-  - api.swiftgram.app
-  - cdn-telegram.org
-  - comments.app
-  - contest.com
   - graph.org
   - legra.ph
   - mbrx.app

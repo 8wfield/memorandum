@@ -1,6 +1,5 @@
 # 规则名称: GEOIP CN
-# 规则统计: 1
+# 规则统计: 0
 
 
 geoip_set:
-  - cn

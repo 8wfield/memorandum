@@ -1,9 +1,7 @@
 # 规则名称: GitHub
-# 规则统计: 30
+# 规则统计: 28
 
 
-  - atom.io
-  - dependabot.com
   - ghcr.io
   - git.io
   - github-atom-io-herokuapp-com.freetls.fastly.net
