@@ -2,7 +2,6 @@
 # 规则名称: Instagram
 # 规则统计: 4
 
-# NAME: Instagram
 DOMAIN-SUFFIX,cdninstagram.com
 DOMAIN-SUFFIX,instagr.am
 DOMAIN-SUFFIX,instagram.com
