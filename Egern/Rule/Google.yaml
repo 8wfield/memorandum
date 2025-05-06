@@ -3,9 +3,8 @@
 
 no_resolve: true
 
-domain_set:
+
   - voice.telephony.goog
-domain_suffix_set:
   - 0emm.com
   - 1e100.net
   - 1ucrs.com
@@ -696,16 +695,13 @@ domain_suffix_set:
   - zynamics.com
   - googledrive.com
   - googleusercontent.com
-domain_keyword_set:
   - appspot
   - blogspot
   - gmail
   - google
   - recaptcha
-ip_cidr_set:
   - 172.110.32.0/21
   - 173.194.0.0/16
   - 216.73.80.0/20
   - 74.125.0.0/16
-ip_cidr6_set:
   - 2620:120:e000::/40

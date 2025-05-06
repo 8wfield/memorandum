@@ -2,7 +2,6 @@
 # 规则统计: 30
 
 
-domain_suffix_set:
   - atom.io
   - dependabot.com
   - ghcr.io
@@ -32,5 +31,4 @@ domain_suffix_set:
   - rawgithub.com
   - repo.new
   - thegithubshop.com
-domain_keyword_set:
   - github

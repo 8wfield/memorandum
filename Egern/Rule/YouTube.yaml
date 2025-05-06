@@ -3,7 +3,7 @@
 
 no_resolve: true
 
-domain_suffix_set:
+
   - ggpht.cn
   - ggpht.com
   - googlevideo.com
@@ -183,10 +183,7 @@ domain_suffix_set:
   - youtubemobilesupport.com
   - yt.be
   - ytimg.com
-domain_keyword_set:
   - youtube
-ip_cidr_set:
   - 172.110.32.0/21
   - 216.73.80.0/20
-ip_cidr6_set:
   - 2620:120:e000::/40

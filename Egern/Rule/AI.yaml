@@ -1,5 +1,5 @@
 # 规则名称: AI
-# 规则统计: 57
+# 规则统计: 56
 
 no_resolve: true
 
@@ -12,27 +12,23 @@ domain_set:
   -  turn.livekit.cloud
   -  openaicomproductionae4b.blob.core.windows.net
   -  production-openaicom-storage.azureedge.net
-domain_suffix_set:
   -  chat.com
   -  chatgpt.com
   -  oaistatic.com
   -  oaiusercontent.com
   -  openai.com
   -  sora.com
-
   -  apple-relay.apple.com
   -  apple-relay.cloudflare.com
   -  apple-relay.fastly-edge.com
   -  cp4.cloudflare.com
   -  guzzoni.apple.com
   -  smoot.apple.com
-
   -  api.githubcopilot.com
   -  copilot-proxy.githubusercontent.com
   -  copilot.microsoft.com
   -  sydney.bing.com
   -  githubcopilot.com
-
   -  ai.google.dev
   -  aida.googleapis.com
   -  aistudio.google.com
@@ -47,30 +43,21 @@ domain_suffix_set:
   -  generativelanguage.googleapis.com
   -  makersuite.google.com
   -  proactivebackend-pa.googleapis.com
-
   -  anthropic.com
   -  claude.ai
   -  claudeusercontent.com
-ip_cidr_set:
   -  160.79.104.0/23, no-resolve
-ip_cidr6_set:
   -  2607:6bc0::/48, no-resolve
-
   -  grazie.ai
   -  grazie.aws.intellij.net
   -  jetbrains.ai
-
   -  imagine.meta.com
   -  meta.ai
-
   -  pplx.ai
   -  perplexity.ai
   -  perplexity.com
-
   -  chat.mistral.ai
   -  console.mistral.ai
   -  mistral.ai
-
   -  api.x.ai
   -  x.ai
-  -  grok.com

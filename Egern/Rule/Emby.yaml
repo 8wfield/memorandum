@@ -4,7 +4,6 @@
 no_resolve: true
 
 
-domain_set:
   - 2pfdml.mobaiemby.site
   - cc.coemn.com
   - cf-cdn1.nebula-media.org
@@ -17,7 +16,6 @@ domain_set:
   - starharn.nebula-media.org
   - web-starharn.nebula-media.org
   - web.nebula-media.org
-domain_suffix_set:
   - 123456.al
   - 16bit.cfd
   - 20120714.xyz
@@ -179,7 +177,6 @@ domain_suffix_set:
   - yunti.online
   - zi0.icu
   - zox.show
-ip_cidr_set:
   - 152.53.67.239/32
   - 168.119.137.205/32
   - 188.172.228.49/32

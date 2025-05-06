@@ -3,7 +3,7 @@
 
 no_resolve: true
 
-domain_suffix_set:
+
   - ads-twitter.com
   - cms-twdigitalassets.com
   - periscope.tv
@@ -29,9 +29,7 @@ domain_suffix_set:
   - twvid.com
   - vine.co
   - x.com
-domain_keyword_set:
   - twitter
-ip_cidr_set:
   - 192.133.76.0/22
   - 199.59.148.0/22
   - 199.96.56.0/21
