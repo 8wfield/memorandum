@@ -44,8 +44,9 @@ jobs:
             if curl -sL --fail -H "User-Agent: Surge iOS/3450" "$url" -o "$output"; then
               echo "$url" > "Temp/$name.url"
             else
-              echo "Failed to download $name from $url" >> Temp/error.log
+              echo "Failed to download $name from $url"
               rm -f "$output"
+              rm -f "Temp/$name.url"
             fi
           done
 
@@ -55,18 +56,12 @@ jobs:
             [ -f "$file" ] || continue
             name=$(basename "$file" .list)
             url_file="Temp/$name.url"
-            if [[ ! -s "$url_file" ]]; then
-              echo "Skipping $name: missing URL"
-              continue
-            fi
+            [ -s "$url_file" ] || { echo "Skipping $name: missing URL file"; continue; }
             url=$(cat "$url_file")
             sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$file"
             sed -i '/^PROCESS-NAME/d' "$file"
             line_count=$(grep -vc '^#' "$file")
-            if [[ "$line_count" -eq 0 ]]; then
-              echo "Skipping $name: no valid rules"
-              continue
-            fi
+            [ "$line_count" -eq 0 ] && { echo "Skipping $name: no valid rules"; continue; }
             {
               echo "# 引用链接: $url"
               echo "# 规则名称: $name"
@@ -82,10 +77,10 @@ jobs:
           for file in Loon/Rule/*.list; do
             [ -f "$file" ] || continue
             name=$(basename "$file" .list)
-            yaml="Temp/$name.yaml"
             url_file="Temp/$name.url"
-            [[ -s "$url_file" ]] || { echo "Missing URL for $name"; continue; }
+            [ -s "$url_file" ] || { echo "Skipping $name: missing URL file"; continue; }
             url=$(cat "$url_file")
+            yaml="Temp/$name.yaml"
             cp "$file" "$yaml"
             sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$yaml"
             sed -i -e '/^PROCESS-NAME/d' -e '/^USER-AGENT/d' -e '/^AND/d' -e '/^OR/d' -e '/^NOT/d' "$yaml"
