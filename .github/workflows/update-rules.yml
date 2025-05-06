@@ -73,7 +73,7 @@ jobs:
               mv tmpfile "$file"
               mv "$file" "Loon/Rule/$file_name.list"
             else
-              echo "$file not found."
+              echo "$file not found." >> error.log
             fi
           done
           ls -la Temp/ > temp_process_contents.log
@@ -95,10 +95,12 @@ jobs:
                 echo "Warning: Temp/$file_name.url not found for $file_name" >> warning.log
               fi
               sed -i '/^#/d' "$yaml_file"
-              sed -i -e '/^USER-AGENT/d' -e '/^PROCESS-NAME/d' -e '/^AND/d' -e '/^OR/d' -e '/^NOT/d' "$yaml_file"
-              # Initialize variables to track category insertion
-              declare -A categories
-              categories=(
+              sed -i -e '/^USER-AGENT/d' -e '/^PROCESS-NAME/d' -e '/^OR/d' -e '/^NOT/d' "$yaml_file"
+              # 处理 AND 规则，提取子规则
+              sed -E 's/AND, \(\((DOMAIN-KEYWORD,[^)]+)\), \((DOMAIN-SUFFIX,[^)]+)\)\)/\1\n\2/' "$yaml_file" > tmpfile
+              mv tmpfile "$yaml_file"
+              # 定义类别映射
+              declare -A categories=(
                 ["DOMAIN"]="domain_set"
                 ["DOMAIN-SUFFIX"]="domain_suffix_set"
                 ["DOMAIN-KEYWORD"]="domain_keyword_set"
@@ -110,11 +112,11 @@ jobs:
                 ["DEST-PORT"]="dest_port_set"
                 ["GEOIP"]="geoip_set"
               )
-              # Create a temporary file for processing
               touch tmpfile
               echo "" > tmpfile
               has_no_resolve=false
-              # Process each line and group by category
+              declare -A inserted
+              # 处理每一行规则
               while IFS= read -r line; do
                 if [[ -z "$line" ]]; then
                   continue
@@ -125,7 +127,7 @@ jobs:
                       echo "${categories[$category]}:" >> tmpfile
                       inserted[${categories[$category]}]=1
                     fi
-                    if [[ "$line" =~ no-resolve$ ]]; then
+                    if [[ "$line" =~ ,no-resolve$ ]]; then
                       has_no_resolve=true
                       line=${line%,no-resolve}
                     fi
@@ -139,7 +141,7 @@ jobs:
                   fi
                 done
               done < "$yaml_file"
-              # Add no_resolve if applicable
+              # 生成最终 YAML 文件
               {
                 echo "# 规则名称: $file_name"
                 echo "# 规则统计: $(grep -c '^  - ' tmpfile)"
@@ -151,8 +153,11 @@ jobs:
                 cat tmpfile
               } > "$yaml_file"
               rm tmpfile
+              # 调试：输出处理后的 YAML 文件内容
+              echo "Processed $yaml_file:" >> egern_process.log
+              cat "$yaml_file" >> egern_process.log
             else
-              echo "$file not found."
+              echo "$file not found." >> error.log
             fi
           done
           ls -la Temp/ > temp_egern_contents.log
@@ -167,7 +172,7 @@ jobs:
             git commit -m "Update Loon and Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
             git push
           else
-            echo "No changes to commit."
+            echo "No changes to commit." >> commit.log
           fi
 
       - name: Clean Workflow Runs
