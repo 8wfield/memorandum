@@ -1,9 +1,9 @@
 name: Update Loon and Egern Rules
 
 on:
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *" # 每6小时运行一次
+    - cron: "0 */6 * * *"
 
 permissions:
   actions: write
@@ -11,22 +11,18 @@ permissions:
 
 concurrency:
   group: update-rules
-  cancel-in-progress: true # 取消正在运行的同组工作流
+  cancel-in-progress: true
 
 jobs:
   UpdateRules:
     runs-on: ubuntu-latest
     env:
-      TZ: Asia/Shanghai # 设置时区为中国
+      TZ: Asia/Shanghai
 
     steps:
-      # 检出仓库
       - name: Checkout Repository
         uses: actions/checkout@v4.2.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 下载 Loon 规则
       - name: Download Loon Rules
         run: |
           mkdir -p Loon/Rule Temp
@@ -42,128 +38,110 @@ jobs:
             ["Google"]="https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list"
           )
           for name in "${!rules[@]}"; do
-            url=${rules[$name]}
+            url="${rules[$name]}"
+            output="Temp/$name.list"
             echo "Downloading $name from $url"
-            curl -L -H "User-Agent: Surge iOS/3450" "$url" -o "Temp/$name.list" || echo "Failed to download $name" >> error.log
-            # 保存 URL 到临时文件供后续使用
-            echo "$url" > "Temp/$name.url"
-          done
-
-      # 处理 Loon 规则
-      - name: Process Loon Rules
-        run: |
-          for file in Temp/*.list; do
-            if [[ -f "$file" ]]; then
-              file_names=$(basename "$file" .list)
-              url=$(cat "Temp/$file_names.url")
-              # 移除除引用链接、规则名称、规则统计外的其他元信息
-              sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$file"
-              # 移除 PROCESS-NAME
-              sed -i -e '/^PROCESS-NAME/d' "$file"
-              # 计算规则统计（总行数减去以 # 开头的行）
-              line_count=$(grep -v '^#' "$file" | wc -l)
-              # 创建临时文件，添加元信息
-              {
-                echo "# 引用链接: $url"
-                echo "# 规则名称: $file_names"
-                echo "# 规则统计: $line_count"
-                echo ""
-                cat "$file"
-              } > tmpfile
-              mv tmpfile "$file"
-              # 移动到 Loon/Rule
-              mv "$file" "Loon/Rule/$file_names.list"
+            if curl -sL --fail -H "User-Agent: Surge iOS/3450" "$url" -o "$output"; then
+              echo "$url" > "Temp/$name.url"
             else
-              echo "$file not found."
+              echo "Failed to download $name from $url" >> Temp/error.log
+              rm -f "$output"
             fi
           done
 
-      # 转换为 Egern 格式
+      - name: Process Loon Rules
+        run: |
+          for file in Temp/*.list; do
+            [ -f "$file" ] || continue
+            name=$(basename "$file" .list)
+            url_file="Temp/$name.url"
+            if [[ ! -s "$url_file" ]]; then
+              echo "Skipping $name: missing URL"
+              continue
+            fi
+            url=$(cat "$url_file")
+            sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$file"
+            sed -i '/^PROCESS-NAME/d' "$file"
+            line_count=$(grep -vc '^#' "$file")
+            if [[ "$line_count" -eq 0 ]]; then
+              echo "Skipping $name: no valid rules"
+              continue
+            fi
+            {
+              echo "# 引用链接: $url"
+              echo "# 规则名称: $name"
+              echo "# 规则统计: $line_count"
+              echo ""
+              cat "$file"
+            } > "Loon/Rule/$name.list"
+          done
+
       - name: Convert to Egern Format
         run: |
           mkdir -p Egern/Rule
           for file in Loon/Rule/*.list; do
-            if [[ -f "$file" ]]; then
-              file_names=$(basename "$file" .list)
-              yaml_file="Temp/$file_names.yaml"
-              cp "$file" "$yaml_file"
-              url=$(cat "Temp/$file_names.url")
-              # 移除除引用链接、规则名称、规则统计外的其他元信息
-              sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$yaml_file"
-              # 第一部分：清理规则并添加集合标识
-              sed -i -e '/^USER-AGENT/d' "$yaml_file"
-              sed -i -e '/^PROCESS-NAME/d' "$yaml_file"
-              sed -i -e '/^AND/d' "$yaml_file"
-              sed -i -e '/^OR/d' "$yaml_file"
-              sed -i -e '/^NOT/d' "$yaml_file"
-              awk '/^DOMAIN,/ && !added {print "domain_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-SUFFIX,/ && !added {print "domain_suffix_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-KEYWORD,/ && !added {print "domain_keyword_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DOMAIN-WILDCARD,/ && !added {print "domain_wildcard_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-CIDR,/ && !added {print "ip_cidr_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-CIDR6,/ && !added {print "ip_cidr6_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^IP-ASN,/ && !added {print "asn_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^URL-REGEX,/ && !added {print "url_regex_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^DEST-PORT,/ && !added {print "dest_port_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              awk '/^GEOIP,/ && !added {print "geoip_set:"; added=1} {print}' "$yaml_file" > tmpfile && mv tmpfile "$yaml_file"
-              # 第二部分：格式化规则
-              if grep -qE '^IP-(ASN|CIDR|CIDR6).*no-resolve$' "$yaml_file"; then
-                sed -i '1i\no_resolve: true' "$yaml_file"
-              fi
-              sed -i -E 's/^(URL-REGEX,)([^,]+)$/\1"\2"/' "$yaml_file"
-              sed -i -E 's/^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|DEST-PORT|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|GEOIP),/  - /g' "$yaml_file"
-              sed -i 's/,no-resolve//g' "$yaml_file"
-              # 计算规则统计（只统计以 "  - " 开头的规则行）
-              line_count=$(grep -c '^  - ' "$yaml_file")
-              # 创建临时文件，添加元信息
+            [ -f "$file" ] || continue
+            name=$(basename "$file" .list)
+            yaml="Temp/$name.yaml"
+            url_file="Temp/$name.url"
+            [[ -s "$url_file" ]] || { echo "Missing URL for $name"; continue; }
+            url=$(cat "$url_file")
+            cp "$file" "$yaml"
+            sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$yaml"
+            sed -i -e '/^PROCESS-NAME/d' -e '/^USER-AGENT/d' -e '/^AND/d' -e '/^OR/d' -e '/^NOT/d' "$yaml"
+
+            awk '
+              BEGIN { added["domain_set"] = 0; added["domain_suffix_set"] = 0; added["domain_keyword_set"] = 0;
+                      added["domain_wildcard_set"] = 0; added["ip_cidr_set"] = 0; added["ip_cidr6_set"] = 0;
+                      added["asn_set"] = 0; added["url_regex_set"] = 0; added["dest_port_set"] = 0;
+                      added["geoip_set"] = 0 }
               {
-                echo "# 引用链接: $url"
-                echo "# 规则名称: $file_names"
-                echo "# 规则统计: $line_count"
-                echo ""
-                cat "$yaml_file"
-              } > tmpfile
-              mv tmpfile "$yaml_file"
-              # 移动到 Egern/Rule
-              mv "$yaml_file" "Egern/Rule/$file_names.yaml"
-            else
-              echo "$file not found."
-            fi
+                if ($0 ~ /^DOMAIN,/ && !added["domain_set"]++) print "domain_set:"
+                else if ($0 ~ /^DOMAIN-SUFFIX,/ && !added["domain_suffix_set"]++) print "domain_suffix_set:"
+                else if ($0 ~ /^DOMAIN-KEYWORD,/ && !added["domain_keyword_set"]++) print "domain_keyword_set:"
+                else if ($0 ~ /^DOMAIN-WILDCARD,/ && !added["domain_wildcard_set"]++) print "domain_wildcard_set:"
+                else if ($0 ~ /^IP-CIDR,/ && !added["ip_cidr_set"]++) print "ip_cidr_set:"
+                else if ($0 ~ /^IP-CIDR6,/ && !added["ip_cidr6_set"]++) print "ip_cidr6_set:"
+                else if ($0 ~ /^IP-ASN,/ && !added["asn_set"]++) print "asn_set:"
+                else if ($0 ~ /^URL-REGEX,/ && !added["url_regex_set"]++) print "url_regex_set:"
+                else if ($0 ~ /^DEST-PORT,/ && !added["dest_port_set"]++) print "dest_port_set:"
+                else if ($0 ~ /^GEOIP,/ && !added["geoip_set"]++) print "geoip_set:"
+                print
+              }
+            ' "$yaml" > tmp && mv tmp "$yaml"
+
+            sed -i -E 's/^(URL-REGEX,)([^,]+)$/\1"\2"/' "$yaml"
+            sed -i -E 's/^(DOMAIN|DOMAIN-SUFFIX|DOMAIN-KEYWORD|DOMAIN-WILDCARD|DEST-PORT|IP-CIDR|IP-CIDR6|IP-ASN|URL-REGEX|GEOIP),/  - /g' "$yaml"
+            sed -i 's/,no-resolve//g' "$yaml"
+
+            line_count=$(grep -c '^  - ' "$yaml")
+            {
+              echo "# 引用链接: $url"
+              echo "# 规则名称: $name"
+              echo "# 规则统计: $line_count"
+              echo ""
+              cat "$yaml"
+            } > "Egern/Rule/$name.yaml"
           done
-          # 清理临时目录
           rm -rf Temp
 
-      # 提交更改
       - name: Commit Changes
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add Loon/Rule/*.list Egern/Rule/*.yaml
+          git add Loon/Rule/*.list Egern/Rule/*.yaml || true
           if git status -s | grep -q .; then
-            # 提交更改
             git commit -m "Update Loon and Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
-            # 尝试推送，重试最多3次
             for i in {1..3}; do
-              git fetch origin
               git pull --rebase origin main
-              if git push origin main; then
-                echo "Push succeeded"
-                break
-              else
-                echo "Push failed, retrying ($i/3)..."
-                sleep 5
-              fi
+              if git push origin main; then break; fi
+              echo "Retry push ($i)..."
+              sleep 5
             done
-            # 如果重试后仍失败，退出并报错
-            if [ $i -eq 3 ]; then
-              echo "Push failed after 3 retries"
-              exit 1
-            fi
           else
             echo "No changes to commit."
           fi
 
-      # 清理旧的工作流运行记录
       - name: Clean Workflow Runs
         uses: Mattraks/delete-workflow-runs@main
         with:
