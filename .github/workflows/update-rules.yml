@@ -1,4 +1,4 @@
-name: Update Loon 和 Egern Rules
+name: Update Loon and Egern Rules
 
 on:
   workflow_dispatch: # 允许手动触发
@@ -51,7 +51,7 @@ jobs:
           # 列出 Temp 目录内容以供调试
           ls -la Temp/ > temp_download_contents.log
 
-      # 处理 Loon 规则（跳过 Emby 的 .url 处理并检查文件存在性）
+      # 处理 Loon 规则（只保留规则名称和统计，跳过 Emby 的 .url 处理）
       - name: Process Loon Rules
         run: |
           for file in Temp/*.list; do
@@ -66,15 +66,14 @@ jobs:
                 url="Unknown URL"
                 echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
               fi
-              # 移除除引用链接、规则名称、规则统计外的其他元信息
-              sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$file"
+              # 移除所有以 # 开头的注释
+              sed -i '/^#/d' "$file"
               # 移除 PROCESS-NAME
               sed -i -e '/^PROCESS-NAME/d' "$file"
-              # 计算规则统计（总行数减去以 # 开头的行）
-              line_count=$(grep -v '^#' "$file" | wc -l)
-              # 创建临时文件，添加元信息
+              # 计算规则统计（总行数减去空行）
+              line_count=$(grep -v '^$' "$file" | wc -l)
+              # 创建临时文件，只添加规则名称和统计
               {
-                echo "# 引用链接: $url"
                 echo "# 规则名称: $file_names"
                 echo "# 规则统计: $line_count"
                 echo ""
@@ -90,7 +89,7 @@ jobs:
           # 列出 Temp 目录内容以供调试
           ls -la Temp/ > temp_process_contents.log
 
-      # 转换为 Egern 格式（跳过 Emby 的 .url 处理并检查文件存在性）
+      # 转换为 Egern 格式（只保留规则名称和统计，跳过 Emby 的 .url 处理）
       - name: Convert to Egern Format
         run: |
           mkdir -p Egern/Rule
@@ -108,8 +107,8 @@ jobs:
                 url="Unknown URL"
                 echo "Warning: Temp/$file_names.url not found for $file_names" >> warning.log
               fi
-              # 移除除引用链接、规则名称、规则统计外的其他元信息
-              sed -i -E '/^# (AUTHOR|REPO|UPDATED|DOMAIN(-[A-Z]+)?|IP-[A-Z0-9]+|USER-AGENT|TOTAL):/d' "$yaml_file"
+              # 移除所有以 # 开头的注释（包括之前的规则名称和统计）
+              sed -i '/^#/d' "$yaml_file"
               # 第一部分：清理规则并添加集合标识
               sed -i -e '/^USER-AGENT/d' "$yaml_file"
               sed -i -e '/^PROCESS-NAME/d' "$yaml_file"
@@ -135,9 +134,8 @@ jobs:
               sed -i 's/,no-resolve//g' "$yaml_file"
               # 计算规则统计（只统计以 "  - " 开头的规则行）
               line_count=$(grep -c '^  - ' "$yaml_file")
-              # 创建临时文件，添加元信息
+              # 创建临时文件，只添加规则名称和统计
               {
-                echo "# 引用链接: $url"
                 echo "# 规则名称: $file_names"
                 echo "# 规则统计: $line_count"
                 echo ""
@@ -161,7 +159,7 @@ jobs:
           git config user.email "action@github.com"
           git add Loon/Rule/*.list Egern/Rule/*.yaml
           if git status -s | grep -q .; then
-            git commit -m "Update Loon 和 Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
+            git commit -m "Update Loon and Egern Rules $(date +'%Y-%m-%d %H:%M:%S')"
             git push
           else
             echo "No changes to commit."
