@@ -1,0 +1,19 @@
+# 规则名称: talkatone
+
+no_resolve: true
+
+domain_suffix_set:
+- mobilefuse.com
+- inmobi.com
+- crashlytics.com
+- talkatone.com
+- kochava.com
+- cohere.com
+- ip-api.com
+- agkn.com
+- tktn.at
+ip_cidr_set:
+- 50.117.27.0/24
+- 69.46.75.0/24
+- 205.164.56.0/24
+- 63.251.124.0/24
