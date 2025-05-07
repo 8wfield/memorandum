@@ -1,11 +1,11 @@
 # 引用链接: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list
 # 规则名称: Telegram
-# 规则统计: 38
 
 no_resolve: true
 domain_set:
 - api.imem.app
 - api.swiftgram.app
+- api.iturrit.com
 domain_keyword_set:
 - nicegram
 domain_suffix_set:
