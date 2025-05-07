@@ -3,18 +3,6 @@
 
 no_resolve: true
 
-and:
-    match:
-    - domain_suffix:
-        match: azurefd.net
-    - domain_keyword:
-        match: openaicom-api-
-and:
-    match:
-    - domain_suffix:
-        match: webpubsub.azure.com
-    - domain_keyword:
-        match: chatgpt-async-webps-prod-
 domain_set:
 - chatgpt.livekit.cloud
 - host.livekit.cloud
