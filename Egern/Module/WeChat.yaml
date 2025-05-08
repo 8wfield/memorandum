@@ -411,8 +411,6 @@ map_locals:
 # 移除微信公众号文章底栏都在搜
 - match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/relatedsearchword
   status_code: 200
-  headers:
-    Content-Type: application/json
   body: '{}'
 # 同城旅行 @怎么肥事
 - match: ^https:\/\/wx\.17u\.cn\/xcxhomeapi\/aggregator\/index
