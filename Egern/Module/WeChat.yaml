@@ -250,6 +250,10 @@ rules:
     policy: DIRECT
     no_resolve: true
 url_rewrites:
+# 移除微信公众号文章低栏都在搜
+- match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/relatedsearchword
+  location: http://reject/
+  status_code: 307
 - match: ^https:\/\/webapi\.qmai\.cn\/web\/cmk-center\/marketing\/canvas\/advert-reach
   location: http://reject/
   status_code: 307
