@@ -250,10 +250,6 @@ rules:
     policy: DIRECT
     no_resolve: true
 url_rewrites:
-# 移除微信公众号文章低栏都在搜
-- match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/relatedsearchword
-  location: http://reject/
-  status_code: 307
 - match: ^https:\/\/webapi\.qmai\.cn\/web\/cmk-center\/marketing\/canvas\/advert-reach
   location: http://reject/
   status_code: 307
@@ -412,6 +408,12 @@ body_rewrites:
     match: ^https:\/\/saas-ad\.cloudpnr\.com\/huifuad-base-api\/api\/tactics\/ad$
     filter: delpaths([["data",2]])
 map_locals:
+# 移除微信公众号文章底栏都在搜
+- match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/relatedsearchword
+  status_code: 200
+  headers:
+    Content-Type: application/json
+  body: '{}'
 # 同城旅行 @怎么肥事
 - match: ^https:\/\/wx\.17u\.cn\/xcxhomeapi\/aggregator\/index
   status_code: 200
