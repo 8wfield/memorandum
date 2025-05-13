@@ -6,6 +6,7 @@ domain_set:
 - api.imem.app
 - api.swiftgram.app
 - api.iturrit.com
+- ws.intentchat.app
 domain_keyword_set:
 - nicegram
 domain_suffix_set:
