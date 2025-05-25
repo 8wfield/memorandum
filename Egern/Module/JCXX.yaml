@@ -19,14 +19,14 @@ scriptings:
     arguments:
       _compat.$argument: url={{{机场1订阅}}}&title={{{名称1}}}&icon={{{图标1}}}&color={{{颜色1}}}&reset_day={{{重置日期1}}}
     update_interval: 86400
-    timeout: 5
+    timeout: 10
 - generic:
     name: 2号机场
     script_url: https://raw.githubusercontent.com/ljrgov/conf/main/script/panel/airport.js
     arguments:
       _compat.$argument: url={{{机场2订阅}}}&title={{{名称2}}}&icon={{{图标2}}}&color={{{颜色2}}}&reset_day={{{重置日期2}}}
     update_interval: 86400
-    timeout: 5
+    timeout: 10
 panels:
 - name: Panel1
 - name: Panel2
