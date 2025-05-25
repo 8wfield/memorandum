@@ -1,24 +1,16 @@
 name: 机场信息
 description: 流量信息/智能提醒/到期日期
 compat_arguments:
-  是否注释机场1？: 可#在此注释
   机场1订阅: url编码后的链接
   名称1: 机场1名称
   图标1: airplane.departure
   颜色1: '#8DB600'
   重置日期1: 购买日
-  是否注释机场2？: 可#在此注释
   机场2订阅: url编码后的链接
   名称2: 机场2名称
   图标2: airplane.departure
   颜色2: '#B76E79'
   重置日期2: 购买日
-  是否注释机场3？: 可#在此注释
-  机场3订阅: url编码后的链接
-  名称3: 机场3名称
-  图标3: airplane.departure
-  颜色3: '#9B59B6'
-  重置日期3: 购买日
 compat_arguments_desc: '- 关于注释：输入#，# 注释的机场在面板处隐藏，留空则于面板处显示； \n- 机场订阅：订阅链接url编码后的链接; \n- 名称：自定义命名你的机场; \n- 图标：面板处显示的图标,sf symbols复制图标名粘贴; \n- url编码：网址urlencoder.org 或通过快捷指令  \n- 重置日期：比如1号购买，那么下个月1号重置 \n- 图标颜色：颜色代码参考^_^ \n石榴红#C0392B  孔雀绿#16A085  紫水晶#9B59B6  \n橙玫瑰#F39C12  墨绿色#1F618D  琥珀色#FFBF00  \n靛青色#2980B9  银蓝色#5DADE2  赤金色#E74C3C   \n橄榄青#556B2F  玫瑰金#B76E79  深宝蓝#0E4D92  \n铜黄色#B87333  孔雀蓝#005E7D  绯红色#A61C3C   \n橄榄木#808000  藏青色#4A4E4D  紫罗兰#C21E56   \n琥珀褐#6C2E1F   珍珠灰#EAEAEA  蔚蓝色#1E90FF \n青柠色#7FFF00  浅粉色#FFB6C1  淡青色#00CED1 \n淡黄色#FFFFE0  水鸭色#00CED1  淡蓝色#ADD8E6  \n苹果绿#8DB600  金菊色#DAA520  甜豆色#DAA520'
 scriptings:
 - generic:
@@ -35,14 +27,6 @@ scriptings:
       _compat.$argument: url={{{机场2订阅}}}&title={{{名称2}}}&icon={{{图标2}}}&color={{{颜色2}}}&reset_day={{{重置日期2}}}
     update_interval: 86400
     timeout: 5
-- generic:
-    name: 3号机场
-    script_url: https://raw.githubusercontent.com/ljrgov/conf/main/script/panel/airport.js
-    arguments:
-      _compat.$argument: url={{{机场3订阅}}}&title={{{名称3}}}&icon={{{图标3}}}&color={{{颜色3}}}&reset_day={{{重置日期3}}}
-    update_interval: 86400
-    timeout: 5
 panels:
-- name: '{{{是否注释机场1？}}}Sub-info'
-- name: '{{{是否注释机场2？}}}Sub-info'
-- name: '{{{是否注释机场3？}}}Sub-info'
+- name: Panel1
+- name: Panel2
