@@ -39,7 +39,4 @@ scriptings:
     update_interval: 0
     timeout: 10
 panels:
-- name: '{{{NAME_1}}}'
-- name: '{{{NAME_2}}}'
-- name: '{{{NAME_3}}}'
-- name: '{{{NAME_4}}}'
+- name: 第一个机场的名字
