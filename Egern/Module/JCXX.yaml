@@ -38,6 +38,7 @@ scriptings:
       _compat.$argument: url={{{URL_2}}}&reset_day={{{RESET-Day_2}}}&title={{{NAME_2}}}&icon={{{ICON_2}}}&color={{{COLOR_2}}}
     update_interval: 0
     timeout: 10
-panels:
-- name: '{{{NAME_1}}}'
-- name: '{{{NAME_2}}}'
+[Panel]
+{{{NAME_1}}}=script-name={{{NAME_1}}},update-interval=3600
+
+{{{NAME_2}}}=script-name={{{NAME_2}}},update-interval=3600
