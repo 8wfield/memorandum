@@ -1,7 +1,10 @@
 name: Spotify去广告
-description: 移除播放广告，恢复歌手和专辑列表的正常展示。
+description: |-
+  移除播放广告，恢复歌手和专辑列表的正常展示。
+  部分解锁premium,音质不能设置为超高。
+  将Spotify的外语歌词翻译为简体中文，并提供双语翻译支持。
 open_url: https://apps.apple.com/app/id324684580
-author: 001ProMax[https://github.com/001ProMax]
+author: 001ProMax[https://github.com/001ProMax] 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md] VirgilClyne[https://github.com/VirgilClyne] app2smile[https://github.com/app2smile/rules]
 compat_arguments:
   移除低栏创建按钮: '1'
   启用Apple设备接力: '#'
@@ -14,6 +17,25 @@ rules:
     - protocol:
         match: QUIC
     policy: REJECT
+# > 部分解锁premium,音质不能设置为超高(建议登录后再打开脚本,重启app等待脚本生效)
+header_rewrites:
+- delete:
+    match: ^https:\/\/spclient\.wg\.spotify\.com\/user-customization-service\/v1\/customize$
+    name: if-none-match
+    type: request
+scriptings:
+- http_request:
+    name: spotify-json
+    match: ^https:\/\/spclient\.wg\.spotify\.com\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/
+    script_url: https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-json.js
+    body_required: false
+- http_response:
+    name: spotify-proto
+    match: ^https:\/\/spclient\.wg\.spotify\.com\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$
+    script_url: https://raw.githubusercontent.com/app2smile/rules/master/js/spotify-proto.js
+    update_interval: 0
+    body_required: true
+    binary_body: true
 url_rewrites:
 - match: ^https:\/\/spclient\.wg\.spotify\.com\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone
   location: https://spclient.wg.spotify.com/$1/$2platform=ipad
@@ -34,7 +56,47 @@ scriptings:
     timeout: 10
     body_required: true
     binary_body: true
+# > 歌词翻译
+- http_response:
+    name: 跟踪响应·JSON
+    match: ^https?:\/\/api\.spotify\.com\/v1\/tracks\?
+    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_response.js
+    body_required: true
+- http_request:
+    name: 歌词请求·JSON
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json
+    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
+    body_required: true
+- http_request:
+    name: 歌词请求·Proto
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/\w+\?(.*)
+    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 翻译歌词响应·JSON
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json(.*)subtype=Translate
+    script_url: https://kelee.one/Resource/Script/Spotify/Translate_response.js
+    body_required: true
+- http_response:
+    name: 翻译歌词响应·Proto
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/\w+\?(.*)subtype=Translate
+    script_url: https://kelee.one/Resource/Script/Spotify/Translate_response.js
+    body_required: true
+    binary_body: true
+- http_response:
+    name: 外部歌词响应·JSON
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json(.*)subtype=External
+    script_url: https://kelee.one/Resource/Script/Spotify/External_Lyrics_response.js
+    body_required: true
+- http_response:
+    name: 外部歌词响应·Proto
+    match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/\w+\?(.*)subtype=External
+    script_url: https://kelee.one/Resource/Script/Spotify/External_Lyrics_response.js
+    body_required: true
+    binary_body: true
 mitm:
   hostnames:
     includes:
     - spclient.wg.spotify.com
+    - api.spotify.com
