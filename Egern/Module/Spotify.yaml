@@ -1,7 +1,7 @@
 name: Spotify去广告
 description: |-
   移除播放广告，恢复歌手和专辑列表的正常展示。
-  部分解锁premium,音质不能设置为超高。
+  部分解锁premium,音质不能设置为超高。(建议登录后再打开脚本,重启app等待脚本生效)
   将Spotify的外语歌词翻译为简体中文，并提供双语翻译支持。
 open_url: https://apps.apple.com/app/id324684580
 author: 001ProMax[https://github.com/001ProMax] 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md] VirgilClyne[https://github.com/VirgilClyne] app2smile[https://github.com/app2smile/rules]
@@ -17,7 +17,7 @@ rules:
     - protocol:
         match: QUIC
     policy: REJECT
-# > 部分解锁premium,音质不能设置为超高(建议登录后再打开脚本,重启app等待脚本生效)
+# > 部分解锁premium
 header_rewrites:
 - delete:
     match: ^https:\/\/spclient\.wg\.spotify\.com\/user-customization-service\/v1\/customize$
@@ -33,7 +33,7 @@ map_locals:
   headers:
     Content-Type: application/json
   body: '{}'
-# > 解锁premium,音质不能设置为超高
+# > 部分解锁premium
 scriptings:
 - http_request:
     name: spotify-json
@@ -47,6 +47,7 @@ scriptings:
     update_interval: 0
     body_required: true
     binary_body: true
+# > Spotify去广告
 - http_response:
     name: Protobuf处理
     match: ^https:\/\/spclient\.wg\.spotify\.com\/(?:bootstrap|user-customization-service)
@@ -62,11 +63,21 @@ scriptings:
     match: ^https?:\/\/api\.spotify\.com\/v1\/tracks\?
     script_url: https://kelee.one/Resource/Script/Spotify/Spotify_response.js
     body_required: true
+- schedule:
+    name: 跟踪响应·JSON
+    cron: '"http-response ^https?:\/\/api\.spotify\.com\/v1\/tracks\? requires-body = true'
+    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_response.js
+    timeout: 120
 - http_request:
     name: 歌词请求·JSON
     match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json
     script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
     body_required: true
+- schedule:
+    name: 歌词请求·JSON
+    cron: '"http-request ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json requires-body = true'
+    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
+    timeout: 120
 - http_request:
     name: 歌词请求·Proto
     match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/\w+\?(.*)
