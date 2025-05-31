@@ -10,103 +10,102 @@ rules:
     - domain_suffix:
         match: xiaohongshu.com
     policy: REJECT
-body_rewrites:
-- response_jq:
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/search\/banner_list$
-    filter: if (getpath([]) | has("data")) then (setpath(["data"]; {})) else . end
-- response_jq:
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/search\/hot_list$
-    filter: if (getpath(["data"]) | has("items")) then (setpath(["data","items"]; [])) else . end
-- response_jq:
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v4\/search\/hint
-    filter: if (getpath(["data"]) | has("hint_words")) then (setpath(["data","hint_words"]; [])) else . end
-- response_jq:
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v4\/search\/trending\?
-    filter: if (getpath(["data"]) | has("queries")) then (setpath(["data","queries"]; [])) else . end
-- response_jq:
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v4\/search\/trending\?
-    filter: if (getpath(["data"]) | has("hint_word")) then (setpath(["data","hint_word"]; {})) else . end
 map_locals:
-- match: ^https:\/\/ci\.xiaohongshu\.com\/system_config\/watermark
-  status_code: 200
-  body: ''
 - match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/surprisebox\/(?:get_style|open|submit_action)
   status_code: 200
-  body: ''
-- match: ^https:\/\/www\.xiaohongshu\.com\/api\/marketing\/box\/trigger\?
+  body: '{}'
+- match: ^https?:\/\/www\.xiaohongshu\.com\/api\/marketing\/box\/trigger\?
   status_code: 200
-  body: ''
-- match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/(?:v2\/guide\/user_banner|v3\/note\/guide)
+  body: '{}'
+- match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/guide\?
   status_code: 200
-  body: ''
-- match: ^https:\/\/www\.xiaohongshu\.com\/api\/sns\/(?:v1\/ads\/resource|v2\/hey\/\w+\/hey_gallery)
+  body: '{}'
+- match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/guide\/user_banner
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/www\.xiaohongshu\.com\/api\/sns\/(v\d\/ads\/resource|v\d\/hey\/\w+\/hey_gallery)
+  status_code: 200
+  body: '{}'
+- match: ^https?:\/\/ci\.xiaohongshu\.com\/system_config\/watermark
   status_code: 200
   body: ''
 scriptings:
 - http_response:
-    name: 移除图片和实况照片水印
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/note\/(?:imagefeed|live_photo\/save)
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除整体配置 ui
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/system\/service\/ui\/config\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除开屏广告 config
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/system_service\/config\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除开屏广告 splash_config
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/system_service\/splash_config
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除详情页小部件、关注页感兴趣的人
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/(?:note\/widgets|user\/followings\/followfeed)
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除信息流广告
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v4\/followfeed\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
-    body_required: true
-- http_response:
-    name: 移除详情页感兴趣的人
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v5\/recommend\/user\/follow_recommend\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    name: 移除搜索页广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/(banner|hot)_list
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 - http_response:
     name: 移除搜索页广告
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v10\/search\/notes\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/(hint|trending)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 - http_response:
-    name: 移除评论区实况照片水印
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/(?:v1\/interaction\/comment\/video\/download|v5\/note\/comment\/list)
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    name: 移除搜索页广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/search\/notes\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 - http_response:
-    name: 移除图片和视频水印
-    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/(?:v2\/note\/feed|v3\/note\/videofeed)
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    name: 移除开屏广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/system_service\/config\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 - http_response:
-    name: 移除信息流广告
-    match: ^https:\/\/(?:edith|rec)\.xiaohongshu\.com\/api\/sns\/v6\/homefeed\?
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    name: 移除开屏广告
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/system_service\/splash_config
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 - http_response:
-    name: 移除视频水印
-    match: ^https:\/\/(?:edith|rec|www)\.xiaohongshu\.com\/api\/sns\/(?:v4\/note\/videofeed|v10\/note\/video\/save)
-    script_url: https://kelee.one/Resource/Script/RedPaper/RedPaper_remove_ads.js
+    name: 移除详情页感兴趣的人
+    match: ^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v\d\/note\/widgets
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/v\d\/note\/(imagefeed|live_photo\/save)
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/v\d\/(followfeed|homefeed)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/(v2\/note\/feed|v3\/note\/videofeed)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除图片视频水印
+    match: ^https?:\/\/(edith|rec|www)\.xiaohongshu\.com\/api\/sns\/(v4\/note\/videofeed|v10\/note\/video\/save)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除小红书评论区水印并存储
+    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/(v5\/note\/comment\/list|v3\/note\/comment\/sub_comments)\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
+    body_required: true
+- http_response:
+    name: 移除小红书评论区去水印并下载
+    match: ^https:\/\/edith\.xiaohongshu\.com\/api\/sns\/v1\/interaction\/comment\/video\/download\?
+    script_url: https://github.com/fmz200/wool_scripts/raw/main/Scripts/xiaohongshu/xiaohongshu.js
+    timeout: 60
     body_required: true
 mitm:
   hostnames:
     includes:
-    - ci.xiaohongshu.com
     - edith.xiaohongshu.com
-    - rec.xiaohongshu.com
     - www.xiaohongshu.com
+    - ci.xiaohongshu.com
+    - rec.xiaohongshu.com
