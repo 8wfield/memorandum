@@ -23,6 +23,17 @@ header_rewrites:
     match: ^https:\/\/spclient\.wg\.spotify\.com\/user-customization-service\/v1\/customize$
     name: if-none-match
     type: request
+url_rewrites:
+- match: ^https:\/\/spclient\.wg\.spotify\.com\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone
+  location: https://spclient.wg.spotify.com/$1/$2platform=ipad
+  status_code: 307
+map_locals:
+- match: ^https:\/\/spclient\.wg\.spotify\.com\/pendragon\/
+  status_code: 200
+  headers:
+    Content-Type: application/json
+  body: '{}'
+# > 解锁premium,音质不能设置为超高
 scriptings:
 - http_request:
     name: spotify-json
@@ -36,17 +47,6 @@ scriptings:
     update_interval: 0
     body_required: true
     binary_body: true
-url_rewrites:
-- match: ^https:\/\/spclient\.wg\.spotify\.com\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone
-  location: https://spclient.wg.spotify.com/$1/$2platform=ipad
-  status_code: 307
-map_locals:
-- match: ^https:\/\/spclient\.wg\.spotify\.com\/pendragon\/
-  status_code: 200
-  headers:
-    Content-Type: application/json
-  body: '{}'
-scriptings:
 - http_response:
     name: Protobuf处理
     match: ^https:\/\/spclient\.wg\.spotify\.com\/(?:bootstrap|user-customization-service)
