@@ -1,103 +1,54 @@
 #name: Apple
-#author: https://github.com/sooyaaabo/Loon/blob/main/Rule/Apple.list
+
 
 no_resolve: true
+
 domain_set:
-  - albert.apple.com
-  - captive.apple.com
-  - gs.apple.com
-  - humb.apple.com
-  - static.ips.apple.com
-  - sq-device.apple.com
-  - tbsc.apple.com
-  - time-ios.apple.com
-  - time.apple.com
-  - time-macos.apple.com
-  - push.apple.com
-  - deviceenrollment.apple.com
-  - deviceservices-external.apple.com
-  - gdmf.apple.com
-  - identity.apple.com
-  - iprofiles.apple.com
-  - mdmenrollment.apple.com
-  - setup.icloud.com
-  - vpp.itunes.apple.com
-  - appattest.apple.com
-  - appldnld.apple.com
-  - configuration.apple.com
-  - gg.apple.com
-  - ig.apple.com
-  - mesu.apple.com
-  - ns.itunes.apple.com
-  - oscdn.apple.com
-  - osrecovery.apple.com
-  - skl.apple.com
-  - swcdn.apple.com
-  - swdist.apple.com
-  - swdownload.apple.com
-  - swscan.apple.com
-  - updates-http.cdn-apple.com
-  - updates.cdn-apple.com
-  - xp.apple.com
-  - ppq.apple.com
-  - api.apple-cloudkit.com
-  - apps-marketplace.apple.com
-  - token.safebrowsing.apple.com
-  - beta.apple.com
-  - testflight.apple.com
-  - appldnld.apple.com.edgesuite.net
-  - itunes.com
-  - bpapi.apple.com
-  - cssubmissions.apple.com
-  - fba.apple.com
-  - account.apple.com
-  - appleid.cdn-apple.com
-  - idmsa.apple.com
-  - gsa.apple.com
-  - mask.icloud.com
-  - mask-h2.icloud.com
-  - mask-api.icloud.com
-  - guzzoni.apple.com
-  - app-site-association.cdn-apple.com
-  - app-site-association.networking.apple
-
-domain_keyword_set:
-  - apple.com.akadns.net
-  - apple.com.edgekey.net
-  - apple-support.akadns.net
-
+  - apple.comscoreresearch.com
 domain_suffix_set:
   - aaplimg.com
+  - apple
+  - apple-cloudkit.com
+  - apple-dns.net
+  - apple-livephotoskit.com
   - apple-mapkit.com
   - apple-support.akadns.net
+  - apple.cn
   - apple.co
   - apple.com
+  - apple.com.cdn20.com
   - apple.com.cn
   - apple.com.edgekey.net
-  - itunes.apple.com
-  - apps.apple.com
-  - mzstatic.com
-  - apple-cloudkit.com
-  - apple-livephotoskit.com
-  - apzones.com
+  - apple.com.edgekey.net.globalredir.akadns.net
+  - apple.com.mwcloudcdn.com
+  - apple.com.mwcname.com
+  - apple.news
+  - appsto.re
+  - appstore.com
   - cdn-apple.com
-  - gc.apple.com
-  - icloud.com
-  - icloud.com.cn
-  - icloud.apple.com
-  - icloud-content.com
-  - iwork.apple.com
-  - smoot.apple.com
-
+  - crashlytics.com
+  - digicert.com
+  - itunes.com
+  - itunes.com.edgekey.net
+  - me.com
+  - mzstatic.com
+domain_keyword_set:
+  - apple.com.akadns.net
+  - icloud
+  - testflight
 ip_cidr_set:
-  - 17.249.0.0/16
-  - 17.252.0.0/16
-  - 17.57.144.0/22
-  - 17.188.128.0/18
-  - 17.188.20.0/23
-
+  - 139.178.128.0/18
+  - 144.178.0.0/19
+  - 144.178.36.0/22
+  - 144.178.48.0/20
+  - 17.0.0.0/8
+  - 192.35.50.0/24
+  - 198.183.17.0/24
+  - 205.180.175.0/24
+  - 63.92.224.0/19
+  - 65.199.22.0/23
 ip_cidr6_set:
-  - 2620:149:a44::/48
-  - 2403:300:a42::/48
-  - 2403:300:a51::/48
-  - 2a01:b740:a42::/48
+  - 2403:300::/32
+  - 2620:149::/32
+  - 2a01:b740::/32
+  - 2a01:b747::/32
