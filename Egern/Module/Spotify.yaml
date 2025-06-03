@@ -28,6 +28,11 @@ map_locals:
   headers:
     Content-Type: application/json
   body: '{}'
+header_rewrites:
+- delete:
+    match: ^https:\/\/spclient\.wg\.spotify\.com\/user-customization-service\/v1\/customize$
+    name: if-none-match
+    type: request
 # > 部分解锁premium
 scriptings:
 - http_request:
