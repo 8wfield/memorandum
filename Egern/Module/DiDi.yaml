@@ -5,9 +5,6 @@ author: ZenmoFeiShi[https://github.com/ZenmoFeiShi],可莉🅥[https://github.co
 icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DiDi.png
 rules:
 - domain:
-    match: hd.xiaojukeji.com
-    policy: REJECT
-- domain:
     match: gwp.xiaojukeji.com
     policy: REJECT
 - and:
@@ -49,45 +46,100 @@ body_rewrites:
 map_locals:
 - match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/getMulti\?
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/xpget
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/ct\.xiaojukeji\.com\/agent\/v3\/feeds
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/freight\.xiaojukeji\.com\/gateway
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/daijia\.kuaidadi\.com:443\/gateway
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/mget
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/fast
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/conf\.diditaxi\.com\.cn\/dynamic\/conf
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 - match: ^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v1\/other\/slow
   status_code: 200
+  headers:
+    Content-Type: application/json
   body: '{}'
 mitm:
   hostnames:
     includes:
-    - common.diditaxi.com.cn
-    - freight.xiaojukeji.com
-    - daijia.kuaidadi.com
-    - 162.14.157.*
-    - ct.xiaojukeji.com
     - res.xiaojukeji.com
+    - lion.didialift.com
     - conf.diditaxi.com.cn
-    - api.udache.com
-    - 123.207.209.*
-    - 112.53.55.225
-    - 120.241.142.*
-    - 120.241.143.*
-    - 116.85.*
-    - 139.199.240.84
+    - common.diditaxi.com.cn
+    - ct.xiaojukeji.com
+    - 117.51.169.4
+    - 117.51.169.11
+    - 120.241.143.6
+    - 120.241.143.11
+    - 123.207.209.41
+    - 123.207.209.42
+    - 123.207.209.177
+    - 157.255.76.17
+    - 157.255.76.19
+    - 2402:4e00:4040::15
+    - 2402:4e00:4040::16
+    - 2408:8756:c5f:a00::27
+    - 2408:8756:c5f:a00::28
+    - 2409:8c54:872:40::10
+    - 2409:8c54:872:40::11
+    - 240e:97c:34:540::10
+    - 240e:97c:34:540::13
+    - 123.207.209.142
+    - 123.207.209.143
+    - 157.255.76.12
+    - 157.255.76.15
+    - 117.51.168.12
+    - 117.51.168.13
+    - 120.241.142.11
+    - 120.241.142.13
+    - 2402:4e00:4040::5
+    - 2402:4e00:4040::b
+    - 2408:8756:c5f:a00::20
+    - 2408:8756:c5f:a00::21
+    - 240e:97c:34:510::6
+    - 240e:97c:34:510::15
+    - 2409:8c54:872::11
+    - 2409:8c54:872::13
+    - 116.85.1.6
+    - 116.85.1.7
+    - 2402:840:d002::f
+    - 2402:840:d002::10
+    - 123.207.209.56
+    - 123.207.209.57
+    - 123.207.209.160
+    - 2402:4e00:4040::c
+    - 2402:4e00:4040::f
+    - 116.85.2.14
+    - 116.85.2.15
+    - 2402:840:d001::3
+    - 2402:840:d001::4
