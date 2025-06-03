@@ -17,12 +17,6 @@ rules:
     - protocol:
         match: QUIC
     policy: REJECT
-# > 部分解锁premium
-header_rewrites:
-- delete:
-    match: ^https:\/\/spclient\.wg\.spotify\.com\/user-customization-service\/v1\/customize$
-    name: if-none-match
-    type: request
 # > Spotify去广
 url_rewrites:
 - match: ^https:\/\/spclient\.wg\.spotify\.com\/(artistview\/v1\/artist|album-entity-view\/v2\/album)\/(.*)platform=iphone
