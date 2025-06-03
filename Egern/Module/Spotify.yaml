@@ -64,21 +64,11 @@ scriptings:
     match: ^https?:\/\/api\.spotify\.com\/v1\/tracks\?
     script_url: https://kelee.one/Resource/Script/Spotify/Spotify_response.js
     body_required: true
-- schedule:
-    name: 跟踪响应·JSON
-    cron: '"http-response ^https?:\/\/api\.spotify\.com\/v1\/tracks\? requires-body = true'
-    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_response.js
-    timeout: 120
 - http_request:
     name: 歌词请求·JSON
     match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json
     script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
     body_required: true
-- schedule:
-    name: 歌词请求·JSON
-    cron: '"http-request ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/(.+)\?(.*)format=json requires-body = true'
-    script_url: https://kelee.one/Resource/Script/Spotify/Spotify_request.js
-    timeout: 120
 - http_request:
     name: 歌词请求·Proto
     match: ^https?:\/\/spclient\.wg\.spotify\.com\/color-lyrics\/v2\/track\/\w+\?(.*)
