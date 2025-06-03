@@ -80,4 +80,5 @@ scriptings:
 mitm:
   hostnames:
     includes:
+    - api.spotify.com
     - '*.spotify.com'
