@@ -3,7 +3,7 @@ description: |-
   移除播放广告，恢复歌手和专辑列表的正常展示。
   将Spotify的外语歌词翻译为简体中文，并提供双语翻译支持。
 open_url: https://apps.apple.com/app/id324684580
-author: 001ProMax[https://github.com/001ProMax] 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md] VirgilClyne[https://github.com/VirgilClyne] app2smile[https://github.com/app2smile/rules]
+author: 001ProMax[https://github.com/001ProMax] 可莉🅥[https://github.com/luestr/ProxyResource/blob/main/README.md] VirgilClyne[https://github.com/VirgilClyne]
 compat_arguments:
   移除低栏创建按钮: '1'
   启用Apple设备接力: '#'
@@ -27,6 +27,7 @@ map_locals:
   headers:
     Content-Type: application/json
   body: '{}'
+scriptings:
 # > Spotify去广
 - http_response:
     name: Protobuf
