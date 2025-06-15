@@ -15,7 +15,6 @@
 - [滴滴去广告](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/DiDi.yaml)
 - [MissAv](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/MissAv.yaml)
 - [QQ外部链接](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/QQ.yaml)
-- [Spotify去广解锁](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/Spotify.yaml)
 - [网易云去广解锁](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/Wangyiyun.yaml)
 - [微信增强去广](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/WeChat.yaml)
 - [小红书去广增强](https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Module/Xiaohongshu.yaml)
