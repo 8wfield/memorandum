@@ -47,7 +47,7 @@ dns:
   hosts:
     iosapps.itunes.apple.com:
     - iosapps.itunes.apple.com.download.ks-cdn.com
-  public_ip_lookup_url: ' https://ifconfig.me/ip'
+  public_ip_lookup_url: https://api.ipify.org
 
 # > 策略组配置
 policy_groups:
