@@ -20,52 +20,34 @@ proxy_latency_test_url: http://www.gstatic.com/generate_204
 # > 直连延迟测试URL
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
-# > 绕过代理
-bypass_tunnel_proxy:
-- 192.168.0.0/16
-- 10.0.0.0/8
-- 172.16.0.0/12
-- localhost
-- '*.local'
-- e.crashlynatics.com
 
-# > 绕过路由
-vif_excluded_routes:
-- 10.0.0.0/8
-- 100.64.0.0/10
-- 127.0.0.0/8
-- 169.254.0.0/16
-- 172.16.0.0/12
-- 192.0.0.0/24
-- 192.0.2.0/24
-- 192.88.99.0/24
-- 192.168.0.0/16
-- 198.51.100.0/24
-- 203.0.113.0/24
-- 224.0.0.0/4
-- 255.255.255.255/32
-
-# > DNS引导
+# > DNS设置
 dns:
   bootstrap:
-  - 119.29.29.29
+  - 114.114.114.114
   - 223.5.5.5
-
-# > 上游DNS服务列表
+  - SYSTEM
   upstreams:
-    Ali:
-    - https://dns.alidns/dns-query
+    Alidns:
+    - https://doh.dnspod.com/dns-query
+    - https://dns.alidns.com/dns-query
     Google:
+    - https://8.8.8.8
     - https://dns.google/dns-query
-
-# > 转发DNS规则
   forward:
   - proxy_rule_set:
-      match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Proxy/Proxy_All.list
-      value: Google
+      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Apple.list
+      value: SYSTEM
+  - proxy_rule_set:
+      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ChinaDomain.list
+      value: Alidns
   - wildcard:
       match: '*'
-      value: Ali
+      value: Google
+  hosts:
+    iosapps.itunes.apple.com:
+    - iosapps.itunes.apple.com.download.ks-cdn.com
+  public_ip_lookup_url: ' https://ifconfig.me/ip'
 
 # > 策略组配置
 policy_groups:
@@ -73,7 +55,7 @@ policy_groups:
     name: 代理节点
     type: select
     urls:
-    - “复制你的订阅链接”
+    - “机场订阅链接”
     icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
 - select:
     name: Telegram
