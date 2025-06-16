@@ -1,10 +1,18 @@
 # 参考官方文档：https://doc.egernapp.com/zh-CN/docs/configuration/example
-# FieldW18自用配置
-# 时间：2025.4.17
+# FieldW18自用配置 2025/6/16
 
 
 # > 仅虚拟网接口模式
 vif_only: true
+
+# > 绕过代理
+bypass_tunnel_proxy:
+- 192.168.0.0/24
+- 10.0.0.0/8
+- 172.16.0.0/12
+- 127.0.0.1
+- localhost
+- '*.local'
 
 # > DNS劫持
 hijack_dns:
@@ -20,6 +28,11 @@ proxy_latency_test_url: http://www.gstatic.com/generate_204
 # > 直连延迟测试URL
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
+# > 排除路由
+vif_excluded_routes:
+- 192.168.0.0/16
+- 10.0.0.0/8
+- 172.16.0.0/12
 
 # > DNS设置
 dns:
@@ -44,6 +57,7 @@ dns:
   - wildcard:
       match: '*'
       value: Google
+# > 增强App Store下载速度
   hosts:
     iosapps.itunes.apple.com:
     - iosapps.itunes.apple.com.download.ks-cdn.com
