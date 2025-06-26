@@ -1,9 +1,9 @@
 # 引用链接: https://github.com/Repcz/Tool/blob/X/Loon/Rules/Emby.list
 # 规则名称: Emby
-# 规则统计: 182
 
 no_resolve: true
 domain_set:
+  - ap-cn01.emby.bangumi.ca
   - 2pfdml.mobaiemby.site
   - cc.coemn.com
   - cf-cdn1.nebula-media.org
@@ -17,6 +17,7 @@ domain_set:
   - web-starharn.nebula-media.org
   - web.nebula-media.org
 domain_suffix_set:
+  - 5msky.com
   - 69yun69.com
   - 123456.al
   - 16bit.cfd
