@@ -18,14 +18,12 @@ bypass_tunnel_proxy:
 hijack_dns:
 - '*:53'
 
-# > 自定义Geoip数据库URL
+# > 自定义数据库URL
 geoip_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.country-only-cn-private.mmdb
-# > 自定义ASN数据库URL
 asn_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.asn.mmdb
 
-# > 代理延迟测试URL
+# > 延迟测试URL
 proxy_latency_test_url: http://www.gstatic.com/generate_204
-# > 直连延迟测试URL
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
 # > 排除路由
@@ -37,12 +35,10 @@ vif_excluded_routes:
 # > DNS设置
 dns:
   bootstrap:
-  - 114.114.114.114
-  - 223.5.5.5
   - SYSTEM
   upstreams:
     Alidns:
-    - https://doh.dnspod.com/dns-query
+    - https://223.5.5.5/dns-query
     - https://dns.alidns.com/dns-query
     Google:
     - https://8.8.8.8
@@ -54,14 +50,16 @@ dns:
   - proxy_rule_set:
       match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ChinaDomain.list
       value: Alidns
+  - proxy_rule_set:
+      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ProxyGFWlist.list
+      value: Google
   - wildcard:
       match: '*'
-      value: Google
+      value: Alidns
 # > 增强App Store下载速度
   hosts:
     iosapps.itunes.apple.com:
     - iosapps.itunes.apple.com.download.ks-cdn.com
-  public_ip_lookup_url: https://api.ipify.org
 
 # > 策略组配置
 policy_groups:
