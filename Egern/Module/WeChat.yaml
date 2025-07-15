@@ -10,127 +10,127 @@ rules:
 # WeChat用户请走代理，微信用户直连
 - domain:
     match: btrace.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: dldir1.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: wup.imtt.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: vweixinf.tc.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: wxapp.tc.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: soup.v.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: weixin110.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: wx.tenpay.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: dl.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sgfindershort.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sgilinkshort.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sglong.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sgminorshort.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sgquic.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: sgshort.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: tencentmap.wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: slife.xy-asia.com
-    policy: PROXY
+    policy: DIRECT
 - domain:
     match: apd-pcdnwxlogin.teg.tencent-cloud.net
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: qlogo.cn
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: qpic.cn
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: lbs.gtimg.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wx.gtimg.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: iot-tencent.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: up-hl.3g.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: yun-hl.3g.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: map.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: vweixinthumb.tc.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wxapp.tc.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: weixin.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wx.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wxs.qq.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: servicewechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: tenpay.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wechat.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wechatpay.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: weixin.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: weixinbridge.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: weixinsxy.com
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wechatlegal.net
-    policy: PROXY
+    policy: DIRECT
 - domain_suffix:
     match: wechatos.net
-    policy: PROXY
+    policy: DIRECT
 - asn:
     match: '132203'
-    policy: PROXY
+    policy: DIRECT
     no_resolve: true
 # WeChatPay
 - domain_keyword:
