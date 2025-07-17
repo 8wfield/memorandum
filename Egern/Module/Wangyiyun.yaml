@@ -69,7 +69,7 @@ scriptings:
 - http_request:
     name: 播放会员歌曲
     match: ^https?:\/\/(?:ipv4|interface\d?)\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs)
-    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/NeteaseMusicVIP.js.js
+    script_url: https://raw.githubusercontent.com/sooyaaabo/Loon/main/Script/NeteaseMusic/NeteaseMusicVIP.js
     timeout: 20
 - http_request:
     name: 播放会员歌曲
