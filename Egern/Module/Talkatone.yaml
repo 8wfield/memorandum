@@ -1,0 +1,108 @@
+name: Talkatone
+description: Talkatone仅限登录分流，模块内选择代理节点。
+compat_arguments:
+  Talkatone: PROXY
+compat_arguments_desc: |-
+  分流代理策略
+
+  · 支持填入节点名称或代理分组名称指定分流
+
+  · 默认值是首页节点
+
+  · 本模块包含去广告规则，可去除部分第三方广告，仅适用于登陆后使用，不适用于软件注册。Talkatone 针对使用者 IP 的审查趋于严格，单纯的分流降低敏感度的做法可能不再有效，建议分别测试有效节点
+rules:
+- domain_keyword:
+    match: tktn.at
+    policy: PROXY
+- domain_keyword:
+    match: tktn.be
+    policy: PROXY
+- domain_suffix:
+    match: tenor.com
+    policy: PROXY
+- domain_suffix:
+    match: vm.talkatone.com
+    policy: PROXY
+- domain_suffix:
+    match: agkn.com
+    policy: DIRECT
+- domain_suffix:
+    match: ip-api.com
+    policy: DIRECT
+- domain_suffix:
+    match: cohere.com
+    policy: DIRECT
+- domain_suffix:
+    match: inmobi.com
+    policy: DIRECT
+- domain_suffix:
+    match: kochava.com
+    policy: DIRECT
+- domain_suffix:
+    match: talkatone.com
+    policy: DIRECT
+- domain_suffix:
+    match: crashlytics.com
+    policy: DIRECT
+- domain_suffix:
+    match: mobilefuse.com
+    policy: DIRECT
+- domain_suffix:
+    match: inner-active.mobi
+    policy: DIRECT
+- ip_cidr:
+    match: 69.46.75.0/24
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 50.117.27.0/24
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 63.251.124.0/24
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 205.164.56.0/24
+    policy: DIRECT
+    no_resolve: true
+- ip_cidr:
+    match: 216.172.154.0/24
+    policy: DIRECT
+    no_resolve: true
+- domain_suffix:
+    match: tappx.com
+    policy: REJECT
+- domain_suffix:
+    match: criteo.com
+    policy: REJECT
+- domain_suffix:
+    match: inmobi.com
+    policy: REJECT
+- domain_suffix:
+    match: smaato.net
+    policy: REJECT
+- domain_suffix:
+    match: appier.net
+    policy: REJECT
+- domain_suffix:
+    match: pubmatic.com
+    policy: REJECT
+- domain_suffix:
+    match: adsappier.com
+    policy: REJECT
+- domain_suffix:
+    match: appiersig.com
+    policy: REJECT
+- domain_suffix:
+    match: ads.inmobi.com
+    policy: REJECT
+- domain_suffix:
+    match: inner-active.mobi
+    policy: REJECT
+- domain_suffix:
+    match: amazon-adsystem.com
+    policy: REJECT
+- domain_suffix:
+    match: googleads.g.doubleclick.net
+    policy: REJECT
