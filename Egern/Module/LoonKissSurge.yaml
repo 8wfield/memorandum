@@ -4,7 +4,7 @@ author: 原作者@iKeLee
 body_rewrites:
 - response_regex:
     match: ^https:\/\/surge\.qingr\.moe
-    find: surge:\/\/\/install-module\?url=([^\s"']+)
+    find: (?:surge:\/\/\/install-module|scriptable:\/\/\/run\/SurgeModuleTool)\?url=([^\s"'&]+)
     replace: egern:///modules/new?url=$1
 mitm:
   hostnames:
