@@ -1,12 +1,25 @@
-name: LoonKissSurge
-description: 支持直接点击Surge图标给Egern安装使用; 非Loon用户切勿反馈插件任何问题，尊重原创
+name: LoonKissEgern
+description: |
+  本插件同时支持以下两个插件中心直接安装 Egern 使用：
+  1. 可莉插件中心：https://pluginhub.kelee.one
+  2. Surge 插件站：https://surge.qingr.moe
+  实现将原始安装链接转换为 Egern 模块链接。
+  非 Loon 用户切勿反馈任何问题，尊重原作者。
 author: 原作者@iKeLee
+
 body_rewrites:
-- response_regex:
-    match: ^https:\/\/surge\.qingr\.moe
-    find: (?:surge:\/\/\/install-module|scriptable:\/\/\/run\/SurgeModuleTool)\?url=([^\s"'&]+)
-    replace: egern:///modules/new?url=$1
+  # 可莉插件中心 - Loon 插件链接替换
+  - response_regex:
+      match: https://kelee\.one/Tool/Loon/Lpx_list\.json
+      find: loon://import\?plugin=(https://kelee.one/Tool/Loon/Lpx/(.+)\.lpx)
+      replace: egern:///modules/new?name=$2&url=http://script.hub/file/_start_/$1/_end_/$2.sgmodule%3Ftype%3Dloon-plugin%26target%3Dsurge-module%26del%3Dtrue%26jqEnabled%3Dtrue%26pm%3D.%26sni%3D.
+  # Surge 插件链接
+  - response_regex:
+      match: ^https:\/\/surge\.qingr\.moe
+      find: surge:\/\/\/install-module\?url=([^\s"']+)
+      replace: egern:///modules/new?url=$1
 mitm:
   hostnames:
     includes:
-    - surge.qingr.moe
+      - kelee.one
+      - surge.qingr.moe
