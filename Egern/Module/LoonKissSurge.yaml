@@ -1,0 +1,12 @@
+name: LoonKissSurge
+description: 支持直接点击Surge图标给Egern安装使用; 非Loon用户切勿反馈插件任何问题，尊重原创
+author: 原作者@iKeLee
+body_rewrites:
+- response_regex:
+    match: ^https:\/\/surge\.qingr\.moe
+    find: surge:\/\/\/install-module\?url=([^\s"']+)
+    replace: egern:///modules/new?url=$1
+mitm:
+  hostnames:
+    includes:
+    - surge.qingr.moe
