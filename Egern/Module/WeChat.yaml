@@ -293,6 +293,22 @@ body_rewrites:
     match: ^https:\/\/chong\.qq\.com\/tws\/usernumberinfo\/GetUserInfo\?
     filter: delpaths([["data","request","number","servicehallFuncList"]])
 map_locals:
+# 云快充小程序 去除页面内推广
+- match: ^https:\/\/gw3\.ykccn\.com\/api\/omp\/mt\/enterpriseWeChatConfig\/app\/queryCityConfig
+  status_code: 200
+  headers:
+    Content-Type: application/json
+  body: '{}'
+- match: ^https:\/\/gw3\.ykccn\.com\/api\/omp\/mt\/appAdvertising\/queryAdvertisingByParams
+  status_code: 200
+  headers:
+    Content-Type: application/json
+  body: '{}'
+- match: ^https:\/\/gw3\.ykccn\.com\/api\/omp\/mt\/charge\/activity\/package\/newest
+  status_code: 200
+  headers:
+    Content-Type: application/json
+  body: '{}'
 - match: ^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\?
   status_code: 200
   headers:
@@ -1008,6 +1024,7 @@ scriptings:
 mitm:
   hostnames:
     includes:
+    - gw3.ykccn.com
     - mp.weixin.qq.com
     - weixin110.qq.com
     - security.wechat.com
