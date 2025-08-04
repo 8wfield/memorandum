@@ -18,5 +18,5 @@ body_rewrites:
 mitm:
   hostnames:
     includes:
-      - kelee.one
+      - pluginhub.kelee.one
       - surge.qingr.moe
