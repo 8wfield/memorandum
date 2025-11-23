@@ -79,13 +79,13 @@ ip_cidr_set:
 - 160.79.104.0/23
 ip_cidr6_set:
 - 2607:6bc0::/48
-- and:
+and:
     match:
       - domain_suffix:
           match: azurefd.net
       - domain_keyword:
           match: openaicom-api-
-- and:
+and:
     match:
       - domain_suffix:
           match: webpubsub.azure.com
