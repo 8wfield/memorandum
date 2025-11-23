@@ -2,81 +2,92 @@
 
 no_resolve: true
 domain_set:
-- api.statsig.com
-- browser-intake-datadoghq.com
-- static.cloudflareinsights.com
-- cdn.usefathom.com
-- ai.google.dev
-- makersuite.google.com
-- api.msn.com
-- assets.msn.com
-- copilot.microsoft.com
-- gateway.bingviz.microsoft.net
-- gateway.bingviz.microsoftapp.net
-- in.appcenter.ms
-- location.microsoft.com
-- odc.officeapps.live.com
-- r.bing.com
-- self.events.data.microsoft.com
-- services.bingapis.com
-- sydney.bing.com
-- www.bing.com
-- openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+- chatgpt.livekit.cloud
+- host.livekit.cloud
+- openai.com.cdn.cloudflare.net
+- openaiapi-site.azureedge.net
 - openaicomproductionae4b.blob.core.windows.net
 - production-openaicom-storage.azureedge.net
-- pplx-res.cloudinary.com
-domain_suffix_set:
-- algolia.net
-- auth0.com
-- cloudflare.com
-- arkoselabs.com
-- statsigapi.net
-- featuregates.org
-- identrust.com
-- intercom.io
-- intercomcdn.com
-- launchdarkly.com
-- segment.io
-- amazonaws.com
-- wp.com
-- sentry.io
-- stripe.com
-- anthropic.com
-- claude.ai
-- claudeusercontent.com
-- cursor.sh
-- dify.ai
-- gemini.google.com
-- apis.google.com
-- clients6.google.com
-- clients4.google.com
+- turn.livekit.cloud
+- api.githubcopilot.com
+- copilot-proxy.githubusercontent.com
+- copilot.microsoft.com
+- sydney.bing.com
+- ai.google.dev
+- aida.googleapis.com
+- aistudio.google.com
+- alkalicore-pa.clients6.google.com
+- alkalimakersuite-pa.clients6.google.com
+- bard.google.com
 - deepmind.com
 - deepmind.google
+- geller-pa.googleapis.com
+- gemini.google
+- gemini.google.com
 - generativeai.google
-- colab.google.com
-- colab.research.google.com
-- developerprofiles.google.com
-- googleusercontent.com
+- generativelanguage.googleapis.com
+- makersuite.google.com
 - proactivebackend-pa.googleapis.com
-- grazie.ai
-- meta.ai
-- meta.com
-- api.microsoftapp.net
-- bing-shopping.microsoft-falcon.io
-- edgeservices.bing.com
-- midjourney.com
-- ai.com
+- robinfrontend-pa.googleapis.com
+- webchannel-alkalimakersuite-pa.clients6.google.com
+- notebooklm.google
+- notebooklm.google.com
+- jules.google
+- jules.google.com
+- labs.google
+- aisandbox-pa.googleapis.com
+- imagine.meta.com
+- pplx-res.cloudinary.com
+- chat.mistral.ai
+- console.mistral.ai
+- api.x.ai
+- trae-api-sg.mchost.guru
+- api.hyperbolic.xyz
+- aiplatform.googleapis.com
+domain_suffix_set:
+- chat.com
 - chatgpt.com
-- livekit.cloud
 - oaistatic.com
 - oaiusercontent.com
 - openai.com
-- azureedge.net
-- imgix.net
-- perplexity.ai
+- sora.com
+- anthropic.com
+- claude.ai
+- claudeusercontent.com
+- grazie.ai
+- grazie.aws.intellij.net
+- jetbrains.ai
+- meta.ai
 - pplx.ai
+- perplexity.ai
 - perplexity.com
-- poe.com
-- poecdn.net
+- mistral.ai
 - x.ai
 - grok.com
+- trae.ai
+- openrouter.ai
+- tokenflux.ai
+- groq.com
+- together.ai
+- fireworks.ai
+- hyperbolic.ai
+- mistral.ai
+- jina.ai
+- voyageai.com
+- poe.com
+ip_cidr_set:
+- 160.79.104.0/23
+ip_cidr6_set:
+- 2607:6bc0::/48
+- and:
+    match:
+      - domain_suffix:
+          match: azurefd.net
+      - domain_keyword:
+          match: openaicom-api-
+- and:
+    match:
+      - domain_suffix:
+          match: webpubsub.azure.com
+      - domain_keyword:
+          match: chatgpt-async-webps-prod-
