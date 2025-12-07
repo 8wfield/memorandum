@@ -7,9 +7,6 @@ rules:
 - domain:
     match: p9-ad-sign.byteimg.com
     policy: REJECT
-- domain_suffix:
-    match: byteimg.com
-    policy: DIRECT
 - domain:
     match: i.snssdk.com
     policy: REJECT
@@ -39,6 +36,9 @@ rules:
     policy: REJECT
 - domain:
     match: is.snssdk.com
+    policy: REJECT
+- domain:
+    match: i.snssdk.com
     policy: REJECT
 - domain:
     match: v6-novelapp.ixigua.com
