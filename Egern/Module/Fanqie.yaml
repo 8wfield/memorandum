@@ -1,102 +1,5 @@
 name: 番茄小说
 description: 番茄小说去广告
-rules:
-- domain:
-    match: p6-ad-sign.byteimg.com
-    policy: REJECT
-- domain:
-    match: p9-ad-sign.byteimg.com
-    policy: REJECT
-- domain:
-    match: i.snssdk.com
-    policy: REJECT
-- domain:
-    match: i-lq.snssdk.com
-    policy: REJECT
-- domain:
-    match: dig.bdurl.net
-    policy: REJECT
-- domain_keyword:
-    match: zijieapi
-    policy: REJECT
-- domain:
-    match: activity-ag.awemeughun.com
-    policy: REJECT
-- domain:
-    match: mcs.snssdk.com
-    policy: REJECT
-- domain:
-    match: tnc3-alisc1.snssdk.com
-    policy: REJECT
-- domain:
-    match: security-lq.snssdk.com
-    policy: REJECT
-- domain:
-    match: tnc3-aliec2.snssdk.com
-    policy: REJECT
-- domain:
-    match: is.snssdk.com
-    policy: REJECT
-- domain:
-    match: i.snssdk.com
-    policy: REJECT
-- domain:
-    match: v6-novelapp.ixigua.com
-    policy: REJECT
-- domain:
-    match: '*novelapp.ixigua.com'
-    policy: REJECT
-- domain:
-    match: '*default.ixigua.com'
-    policy: REJECT
-- domain:
-    match: msync-im1-vip6-std.easemob.com
-    policy: REJECT
-- domain:
-    match: apd-pcdnwxlogin.teg.tencent-cloud.net
-    policy: REJECT
-- domain:
-    match: api.iegadp.qq.com
-    policy: REJECT
-- domain:
-    match: sf3-ttcdn-tos.pstatp.com
-    policy: REJECT
-- domain_suffix:
-    match: pglstatp-toutiao.com
-    policy: REJECT
-- domain_suffix:
-    match: byteorge.com
-    policy: REJECT
-- domain_suffix:
-    match: bytegoofy.com
-    policy: REJECT
-- domain_suffix:
-    match: bytedance.com
-    policy: REJECT
-- ip_cidr:
-    match: 49.71.37.101/32
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 117.71.105.23/32
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 218.94.207.205/32
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 117.92.229.188/32
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 101.36.166.16/32
-    policy: REJECT
-    no_resolve: true
-- ip_cidr:
-    match: 180.96.2.114/32
-    policy: REJECT
-    no_resolve: true
 url_rewrites:
 - match: ^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/
   location: http://reject/
@@ -122,7 +25,7 @@ url_rewrites:
 - match: ^https?:\/\/.+\.pstatp\.com\/obj\/mosaic-legacy\/.+\?from\=ad
   location: http://reject/
   status_code: 307
-- match: ^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/track-log\/src\/.+
+- match: ^https?:\/\/.+\.pstatp\.com\/bytecom\/resource\/track_log\/src\/.+
   location: http://reject/
   status_code: 307
 - match: ^https?:\/\/.+\.snssdk\.com\/video\/play\/1\/toutiao\/.+\/mp4
@@ -131,19 +34,16 @@ url_rewrites:
 - match: ^https?:\/\/.+\.snssdk.com\/api\/ad\/.+
   location: http://reject/
   status_code: 307
-- match: ^http:\/\/.+\.byteimg\.com\/ad-app-package
+- match: ^https?:\/\/.+\.byteimg\.com\/ad-app-package
   location: http://reject/
   status_code: 307
-- match: ^http:\/\/.+\.byteimg\.com\/web\.business\.image
-  location: http://reject/
-  status_code: 307
-- match: ^https?:\/\/.+?\.snssdk\.com\/motor\/operation\/activity\/display\/config\/V2\/
+- match: ^https?:\/\/.+\.byteimg\.com\/web\.business\.image
   location: http://reject/
   status_code: 307
 mitm:
   hostnames:
     includes:
-    - '*.pangolin-sdk-toutiao'
+    - '*.pangolin-sdk-toutiao.com'
     - '*.pangolin-sdk-toutiao.*'
     - '*.pstatp.com'
     - '*.pstatp.com.*'
@@ -151,4 +51,6 @@ mitm:
     - '*.pglstatp-toutiao.com'
     - gurd.snssdk.com
     - gurd.snssdk.com.*
+    - i-lq.snssdk.com
+    - i-lq.snssdk.com.*
     - '*default.ixigua.com'
