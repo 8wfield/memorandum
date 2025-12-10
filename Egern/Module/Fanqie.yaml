@@ -1,5 +1,108 @@
 name: 番茄小说
 description: 番茄小说去广告
+rules:
+- domain:
+    match: zlink.ugsdk.cn
+    policy: REJECT
+- domain:
+    match: mon.toutiaocloud.net
+    policy: REJECT
+- domain:
+    match: lf-normal-gr-sourcecdn.bytegecko.com
+    policy: REJECT
+- domain:
+    match: lf-webcast-gr-sourcecdn.bytegecko.com
+    policy: REJECT
+- domain:
+    match: p3-developer.bytemaimg.com
+    policy: REJECT
+- domain:
+    match: webcast-open.douyin.com
+    policy: REJECT
+- domain:
+    match: p11-webcast-sign.douyinpic.com
+    policy: REJECT
+- domain:
+    match: p3-webcast-sign.douyinpic.com
+    policy: REJECT
+- domain:
+    match: log3-applog.fqnovel.com
+    policy: REJECT
+- domain:
+    match: log5-applog.fqnovel.com
+    policy: REJECT
+- domain:
+    match: mon11-misc-lq.fqnovel.com
+    policy: REJECT
+- domain:
+    match: mon11-misc.fqnovel.com
+    policy: REJECT
+- domain:
+    match: mon3-misc.fqnovel.com
+    policy: REJECT
+- domain:
+    match: rtlog3-applog.fqnovel.com
+    policy: REJECT
+- domain:
+    match: rtlog5-applog.fqnovel.com
+    policy: REJECT
+- domain:
+    match: effect.snssdk.com
+    policy: REJECT
+- domain:
+    match: i.snssdk.com
+    policy: REJECT
+- domain:
+    match: is-lq.snssdk.com
+    policy: REJECT
+- domain:
+    match: is.snssdk.com
+    policy: REJECT
+- domain:
+    match: security.snssdk.com
+    policy: REJECT
+- domain:
+    match: vas.snssdk.com
+    policy: REJECT
+- domain:
+    match: mon.toutiaocloud.com
+    policy: REJECT
+- domain:
+    match: abtest3-misc.zijieapi.com
+    policy: REJECT
+- domain:
+    match: ads3-normal.zijieapi.com
+    policy: REJECT
+- domain:
+    match: ads5-normal.zijieapi.com
+    policy: REJECT
+- domain:
+    match: feedback-c.zijieapi.com
+    policy: REJECT
+- domain:
+    match: gecko3.zijieapi.com
+    policy: REJECT
+- domain:
+    match: gecko5.zijieapi.com
+    policy: REJECT
+- domain:
+    match: ma.zijieapi.com
+    policy: REJECT
+- domain:
+    match: minigame3-normal.zijieapi.com
+    policy: REJECT
+- domain:
+    match: minigame5-normal.zijieapi.com
+    policy: REJECT
+- domain:
+    match: mssdk.zijieapi.com
+    policy: REJECT
+- domain:
+    match: timon.zijieapi.com
+    policy: REJECT
+- domain:
+    match: vcs.zijieapi.com
+    policy: REJECT
 url_rewrites:
 - match: ^https?:\/\/.+\.pangolin-sdk-toutiao\.com\/api\/ad\/union\/sdk\/(get_ads|stats|settings)\/
   location: http://reject/
