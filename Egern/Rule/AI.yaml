@@ -80,11 +80,11 @@ ip_cidr_set:
 ip_cidr6_set:
 - 2607:6bc0::/48
 and_set:
-- domain_keyword_set:
-  match: chatgpt-async-webps-prod-
-- domain_suffix_set:
-  match: webpubsub.azure.com
-- domain_keyword_set:
-  match: openaicom-api-
-- domain_suffix_set:
-  match: azurefd.net
+  - domain_keyword_set:
+      match: chatgpt-async-webps-prod-
+  - domain_suffix_set:
+      match: webpubsub.azure.com
+  - domain_keyword_set:
+      match: openaicom-api-
+  - domain_suffix_set:
+      match: azurefd.net
