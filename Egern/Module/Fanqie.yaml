@@ -67,42 +67,6 @@ rules:
 - domain:
     match: mon.toutiaocloud.com
     policy: REJECT
-- domain:
-    match: abtest3-misc.zijieapi.com
-    policy: REJECT
-- domain:
-    match: ads3-normal.zijieapi.com
-    policy: REJECT
-- domain:
-    match: ads5-normal.zijieapi.com
-    policy: REJECT
-- domain:
-    match: feedback-c.zijieapi.com
-    policy: REJECT
-- domain:
-    match: gecko3.zijieapi.com
-    policy: REJECT
-- domain:
-    match: gecko5.zijieapi.com
-    policy: REJECT
-- domain:
-    match: ma.zijieapi.com
-    policy: REJECT
-- domain:
-    match: minigame3-normal.zijieapi.com
-    policy: REJECT
-- domain:
-    match: minigame5-normal.zijieapi.com
-    policy: REJECT
-- domain:
-    match: mssdk.zijieapi.com
-    policy: REJECT
-- domain:
-    match: timon.zijieapi.com
-    policy: REJECT
-- domain:
-    match: vcs.zijieapi.com
-    policy: REJECT
-- domain:
-    match: mcs.zijieapi.com
+- domain_keyword:
+    match: zijieapi
     policy: REJECT
