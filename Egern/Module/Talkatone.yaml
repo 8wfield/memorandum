@@ -1,7 +1,7 @@
 name: Talkatone
 description: Talkatone仅限登录分流，模块内选择代理节点。
 compat_arguments:
-  Talkatone: PROXY
+  Proxy: DIRECT
 compat_arguments_desc: |-
   分流代理策略
 
