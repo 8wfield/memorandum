@@ -11,16 +11,16 @@ compat_arguments_desc: |-
 rules:
 - domain_keyword:
     match: tktn.at
-    policy: PROXY
+    policy: Proxy
 - domain_keyword:
     match: tktn.be
-    policy: PROXY
+    policy: Proxy
 - domain_suffix:
     match: tenor.com
-    policy: PROXY
+    policy: Proxy
 - domain_suffix:
     match: vm.talkatone.com
-    policy: PROXY
+    policy: Proxy
 - domain_suffix:
     match: agkn.com
     policy: DIRECT
