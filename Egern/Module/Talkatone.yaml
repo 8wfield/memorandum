@@ -1,7 +1,7 @@
 name: Talkatone
 description: Talkatone仅限登录分流，模块内选择代理节点。
 compat_arguments:
-  Proxy: DIRECT
+  Proxy: Talkatone
 compat_arguments_desc: |-
   分流代理策略
 
@@ -11,16 +11,16 @@ compat_arguments_desc: |-
 rules:
 - domain_keyword:
     match: tktn.at
-    policy: Proxy
+    policy: Talkatone
 - domain_keyword:
     match: tktn.be
-    policy: Proxy
+    policy: Talkatone
 - domain_suffix:
     match: tenor.com
-    policy: Proxy
+    policy: Talkatone
 - domain_suffix:
     match: vm.talkatone.com
-    policy: Proxy
+    policy: Talkatone
 - domain_suffix:
     match: agkn.com
     policy: DIRECT
