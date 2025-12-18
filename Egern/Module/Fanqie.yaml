@@ -11,6 +11,9 @@ rules:
     match: lf-normal-gr-sourcecdn.bytegecko.com
     policy: REJECT
 - domain:
+    match: n98-lf-cdn-tos-ncdn.bytegecko.com
+    policy: REJECT
+- domain:
     match: lf-webcast-gr-sourcecdn.bytegecko.com
     policy: REJECT
 - domain:
