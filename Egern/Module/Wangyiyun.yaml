@@ -18,7 +18,7 @@ compat_arguments:
   推荐专属歌单: '0'
   你的专属歌单: '0'
   共享会员: '#'
-compat_arguments_desc: --
+compat_arguments_desc: |-
   将#改成任意名称即可开启对应脚本
   隐藏为:1/true  
   不隐藏为:0/false
