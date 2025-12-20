@@ -5,21 +5,23 @@ description: |-
 compat_arguments:
   隐藏底部标签开关↓: --
   发现: '0'
-  漫游: '1'
-  笔记: '1'
+  漫游: '0'
+  笔记: '0'
   隐藏首页卡片开关↓: --
-  问候语: '1'
+  问候语: '0'
   每日推荐: '0'
   推荐歌单: '0'
   最近常听: '0'
   音乐合伙人: '0'
-  雷达歌单: '1'
+  雷达歌单: '0'
   排行榜: '0'
-  推荐专属歌单: '1'
-  你的专属歌单: '1'
+  推荐专属歌单: '0'
+  你的专属歌单: '0'
   共享会员: '#'
-compat_arguments_desc: '将 # 改成任意名称即可开启对应脚本\n\n隐藏为:1/true  不隐藏为:0/false'
-icon: https://raw.githubusercontent.com/Keywos/rule/main/tv/app/144px/Netease.png
+compat_arguments_desc: --
+  将#改成任意名称即可开启对应脚本
+  隐藏为:1/true  
+  不隐藏为:0/false
 rules:
 - domain:
     match: iadmusicmat.music.126.net
