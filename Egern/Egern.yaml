@@ -1,5 +1,5 @@
 # 参考官方文档：https://doc.egernapp.com/zh-CN/docs/configuration/example
-# FieldW18自用配置 2025/6/16
+# 自用配置 2025/12/22
 
 
 # > 仅虚拟网接口模式
@@ -7,10 +7,9 @@ vif_only: true
 
 # > 绕过代理
 bypass_tunnel_proxy:
-- 192.168.0.0/24
+- 192.168.0.0/16
 - 10.0.0.0/8
 - 172.16.0.0/12
-- 127.0.0.1
 - localhost
 - '*.local'
 
@@ -23,43 +22,69 @@ geoip_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.cou
 asn_db_url: https://github.com/xream/geoip/releases/latest/download/ipinfo.asn.mmdb
 
 # > 延迟测试URL
-proxy_latency_test_url: http://www.gstatic.com/generate_204
+proxy_latency_test_url: https://www.gstatic.com/generate_204
 direct_latency_test_url: http://connectivitycheck.platform.hicloud.com/generate_204
 
 # > 排除路由
 vif_excluded_routes:
-- 192.168.0.0/16
 - 10.0.0.0/8
+- 100.64.0.0/10
+- 127.0.0.0/8
+- 169.254.0.0/16
 - 172.16.0.0/12
+- 192.0.0.0/24
+- 192.0.2.0/24
+- 192.88.99.0/24
+- 192.168.0.0/16
+- 198.51.100.0/24
+- 203.0.113.0/24
+- 224.0.0.0/4
+- 255.255.255.255/32
 
 # > DNS设置
 dns:
   bootstrap:
   - SYSTEM
   upstreams:
-    Alidns:
-    - https://223.5.5.5/dns-query
+    Ali:
     - https://dns.alidns.com/dns-query
     Google:
-    - https://8.8.8.8
     - https://dns.google/dns-query
+    ByteDance:
+    - 180.184.1.1
+    - 180.184.2.2
   forward:
   - proxy_rule_set:
-      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Apple.list
-      value: SYSTEM
+      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Apple.list
+      value: BOOTSTRAP
+      disabled: false
   - proxy_rule_set:
-      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ChinaDomain.list
-      value: Alidns
+      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/ByteDance.list
+      value: ByteDance
+      disabled: false
   - proxy_rule_set:
-      match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/ProxyGFWlist.list
+      match: https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt
+      value: Ali
+      disabled: false
+  - proxy_rule_set:
+      match: https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/proxy.txt
       value: Google
+      disabled: false
   - wildcard:
       match: '*'
-      value: Alidns
-# > 增强App Store下载速度
+      value: Google
+      disabled: false
   hosts:
+# > App Store 下载加速
+    updates.g.aaplimg.com:
+    - updates.cdn-apple.com.download.ks-cdn.com
+# > IOS 系统更新下载加速
     iosapps.itunes.apple.com:
+    - hls.itunes.apple.com.mwcname.com
     - iosapps.itunes.apple.com.download.ks-cdn.com
+
+# > 公网IP查询EDNS
+  public_ip_lookup_url: https://ipinfo.io/ip
 
 # > 策略组配置
 policy_groups:
@@ -90,7 +115,7 @@ policy_groups:
     - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/TikTok.png
 - select:
-    name: ChatGPT
+    name: AI
     policies:
     - 香港节点
     - 台湾节点
@@ -119,57 +144,6 @@ policy_groups:
     - 新国节点
     - 美国节点
     icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Twitter.png
-- select:
-    name: Spotify
-    policies:
-    - 香港节点
-    - 台湾节点
-    - 日本节点
-    - 韩国节点
-    - 新国节点
-    - 美国节点
-    icon: https://raw.githubusercontent.com/jnlaoshu/MySelf/main/image/Spotify.png
-- select:
-    name: Instagram
-    policies:
-    - 香港节点
-    - 台湾节点
-    - 日本节点
-    - 韩国节点
-    - 新国节点
-    - 美国节点
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Instagram.png
-- select:
-    name: Emby
-    policies:
-    - DIRECT
-    - 香港节点
-    - 台湾节点
-    - 日本节点
-    - 韩国节点
-    - 新国节点
-    - 美国节点
-    icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby.png
-- select:
-    name: GitHub
-    policies:
-    - 香港节点
-    - 台湾节点
-    - 日本节点
-    - 韩国节点
-    - 新国节点
-    - 美国节点
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png
-- select:
-    name: Google
-    policies:
-    - 香港节点
-    - 台湾节点
-    - 日本节点
-    - 韩国节点
-    - 新国节点
-    - 美国节点
-    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
 - select:
     name: 香港节点
     policies:
@@ -226,37 +200,22 @@ policy_groups:
 # > 代理分流规则
 rules:
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Telegram.yaml
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Telegram.list
     policy: Telegram
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/TikTok.yaml
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/TikTok.list
     policy: TikTok
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Twitter.yaml
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Twitter.list
     policy: Twitter
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/AI.yaml
-    policy: ChatGPT
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/AI.list
+    policy: AI
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/YouTube.yaml
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/YouTube.list
     policy: YouTube
 - rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Spotify.yaml
-    policy: Spotify
-- rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Instagram.yaml
-    policy: Instagram
-- rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Emby.yaml
-    policy: Emby
-- rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/GitHub.yaml
-    policy: GitHub
-- rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Google.yaml
-    policy: Google
-- rule_set:
-    match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/APPLE.yaml
+    match: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Apple.list
     policy: DIRECT
 - rule_set:
     match: https://raw.githubusercontent.com/8wfield/memorandum/refs/heads/main/Egern/Rule/Lan.yaml
